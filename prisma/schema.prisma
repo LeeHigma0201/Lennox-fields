@@ -1,0 +1,361 @@
+// Lennox Fields Clinical Mental Health Services - Database Schema
+// HIPAA-compliant data model with encryption for PHI
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Authentication and Authorization
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  role          UserRole  @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLogin     DateTime?
+
+  // Relations
+  client        Client?
+  therapist     Therapist?
+  sessions      Session[]
+
+  @@index([email])
+  @@map("users")
+}
+
+enum UserRole {
+  CLIENT
+  THERAPIST
+  ADMIN
+  SUPERVISOR
+}
+
+// Client Information (PHI - Encrypted)
+model Client {
+  id                String    @id @default(cuid())
+  userId            String    @unique
+  mrn               String    @unique // Medical Record Number
+  encryptedName     String    // Encrypted full name
+  encryptedContact  String    // Encrypted contact info
+  dateOfBirth       DateTime
+  status            ClientStatus @default(ACTIVE)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions          Session[]
+  treatmentPlans    TreatmentPlan[]
+  assessments       Assessment[]
+  documents         Document[]
+  progressNotes     ProgressNote[]
+
+  @@index([mrn])
+  @@map("clients")
+}
+
+enum ClientStatus {
+  ACTIVE
+  INACTIVE
+  DISCHARGED
+  WAITLIST
+}
+
+// Therapist/Clinician Information
+model Therapist {
+  id                String    @id @default(cuid())
+  userId            String    @unique
+  name              String
+  credentials       String[]  // ["M.Ed", "LPCA"]
+  specialties       String[]
+  licenseNumber     String?
+  licenseState      String[]  // ["NC", "IN"]
+  bio               String?
+  photoUrl          String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions          Session[]
+  treatmentPlans    TreatmentPlan[]
+  supervisionLogs   SupervisionLog[]
+
+  @@map("therapists")
+}
+
+// Clinical Sessions
+model Session {
+  id                String    @id @default(cuid())
+  clientId          String
+  therapistId       String
+  userId            String
+  sessionType       SessionType
+  sessionDate       DateTime
+  duration          Int       // minutes
+  encryptedNotes    String?   // Encrypted session notes
+  status            SessionStatus @default(SCHEDULED)
+  billingStatus     BillingStatus @default(PENDING)
+  amount            Float?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  therapist         Therapist @relation(fields: [therapistId], references: [id])
+  user              User      @relation(fields: [userId], references: [id])
+
+  @@index([clientId, sessionDate])
+  @@index([therapistId, sessionDate])
+  @@map("sessions")
+}
+
+enum SessionType {
+  INDIVIDUAL_THERAPY
+  COUPLES_THERAPY
+  FAMILY_THERAPY
+  TEEN_THERAPY
+  CAREER_COUNSELING
+  CLINICAL_SUPERVISION
+  INTAKE
+  FOLLOW_UP
+}
+
+enum SessionStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+  RESCHEDULED
+}
+
+enum BillingStatus {
+  PENDING
+  PAID
+  INSURANCE_SUBMITTED
+  INSURANCE_PAID
+  OVERDUE
+}
+
+// Treatment Plans
+model TreatmentPlan {
+  id                String    @id @default(cuid())
+  clientId          String
+  therapistId       String
+  diagnoses         String[]
+  presentingProblem String
+  longTermGoals     Json      // Array of goal objects
+  shortTermGoals    Json      // Array of goal objects
+  interventions     Json      // Array of intervention objects
+  modality          String[]
+  frequency         String
+  measurableOutcomes Json     // Array of outcome objects
+  reviewDate        DateTime
+  status            String    @default("ACTIVE")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  therapist         Therapist @relation(fields: [therapistId], references: [id])
+
+  @@index([clientId])
+  @@map("treatment_plans")
+}
+
+// Clinical Assessments
+model Assessment {
+  id                String    @id @default(cuid())
+  clientId          String
+  assessmentType    AssessmentType
+  scores            Json      // Structured score data
+  results           Json      // Detailed results
+  interpretation    String?
+  completedAt       DateTime  @default(now())
+  createdAt         DateTime  @default(now())
+
+  // Relations
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, assessmentType])
+  @@map("assessments")
+}
+
+enum AssessmentType {
+  BECK_DEPRESSION
+  GAD7_ANXIETY
+  ADHD_ASRS
+  AUTISM_AQ
+  PTSD_PCL5
+  ASAM_CRITERIA
+  STRONG_INTEREST
+  MBTI
+  HOLLAND_CODE
+  CUSTOM
+}
+
+// Progress Notes
+model ProgressNote {
+  id                String    @id @default(cuid())
+  clientId          String
+  noteType          NoteType
+  encryptedContent  String    // Encrypted note content
+  sessionDate       DateTime
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, sessionDate])
+  @@map("progress_notes")
+}
+
+enum NoteType {
+  SOAP
+  DAP
+  BIRP
+  CUSTOM
+}
+
+// Document Storage (HIPAA-compliant)
+model Document {
+  id                String    @id @default(cuid())
+  clientId          String
+  fileName          String
+  encryptedFilePath String    // Encrypted file location
+  fileType          String
+  fileSize          Int
+  uploadedAt        DateTime  @default(now())
+
+  // Relations
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@map("documents")
+}
+
+// Resources (Worksheets, Journals, etc.)
+model Resource {
+  id                String    @id @default(cuid())
+  title             String
+  description       String?
+  category          ResourceCategory
+  type              ResourceType
+  content           String?   // For text-based resources
+  filePath          String?   // For downloadable resources
+  isPremium         Boolean   @default(false)
+  isPublic          Boolean   @default(true)
+  tags              String[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([category, type])
+  @@map("resources")
+}
+
+enum ResourceCategory {
+  WORKSHEET
+  HABIT_TRACKER
+  JOURNAL
+  INFORMATION_SHEET
+  SAFETY_PLAN
+  SCREENING_TOOL
+  PROFESSIONAL_TOOL
+}
+
+enum ResourceType {
+  PDF
+  INTERACTIVE
+  TEMPLATE
+  GUIDE
+}
+
+// Supervision Logs (for professional development)
+model SupervisionLog {
+  id                String    @id @default(cuid())
+  therapistId       String
+  superviseeName    String
+  sessionDate       DateTime
+  hours             Float
+  type              SupervisionType
+  encryptedNotes    String?
+  signatureUrl      String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  therapist         Therapist @relation(fields: [therapistId], references: [id])
+
+  @@index([therapistId, sessionDate])
+  @@map("supervision_logs")
+}
+
+enum SupervisionType {
+  INDIVIDUAL
+  GROUP
+  TRIADIC
+}
+
+// Books/Publishing
+model Book {
+  id                String    @id @default(cuid())
+  title             String
+  description       String
+  ageRange          String
+  topics            String[]
+  isbn              String?   @unique
+  coverImageUrl     String?
+  previewUrl        String?
+  price             Float
+  stripeProductId   String?
+  stripePriceId     String?
+  isPublished       Boolean   @default(false)
+  publishedAt       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  purchases         BookPurchase[]
+
+  @@map("books")
+}
+
+// Book Purchases
+model BookPurchase {
+  id                String    @id @default(cuid())
+  bookId            String
+  customerEmail     String
+  customerName      String
+  amount            Float
+  stripeSessionId   String    @unique
+  purchasedAt       DateTime  @default(now())
+
+  // Relations
+  book              Book      @relation(fields: [bookId], references: [id])
+
+  @@index([customerEmail])
+  @@map("book_purchases")
+}
+
+// Audit Log (HIPAA Compliance Requirement)
+model AuditLog {
+  id                String    @id @default(cuid())
+  userId            String
+  action            String
+  resourceType      String
+  resourceId        String?
+  ipAddress         String?
+  userAgent         String?
+  timestamp         DateTime  @default(now())
+
+  @@index([userId, timestamp])
+  @@index([resourceType, resourceId])
+  @@map("audit_logs")
+}
