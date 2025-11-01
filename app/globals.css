@@ -9,10 +9,6 @@
     --font-quicksand: 'Quicksand', sans-serif;
   }
 
-  * {
-    @apply border-border;
-  }
-
   body {
     @apply bg-cream text-text-dark font-body;
     font-feature-settings: 'rlig' 1, 'calt' 1;

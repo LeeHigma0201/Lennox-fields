@@ -5,9 +5,6 @@ const nextConfig = {
     domains: ['localhost'],
     formats: ['image/avif', 'image/webp'],
   },
-  experimental: {
-    serverActions: true,
-  },
   // HIPAA compliance: ensure secure headers
   async headers() {
     return [
