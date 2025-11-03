@@ -23,7 +23,7 @@ export default function CTASection() {
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
               <Phone className="w-10 h-10 mx-auto mb-3" />
               <h3 className="text-lg font-semibold mb-2">Call Us</h3>
-              <p className="text-sm opacity-90">Speak with us directly at<br />(123) 456-7890</p>
+              <p className="text-sm opacity-90">Speak with us directly at<br />(919) 999-9999</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
               <Mail className="w-10 h-10 mx-auto mb-3" />

@@ -42,8 +42,23 @@ export default function HomePage() {
       {/* Services Overview */}
       <ServicesOverview />
 
-      {/* Tools & Resources Highlight */}
-      <ResourcesHighlight />
+      {/* Children's Books Section - Revenue Generator */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto text-center">
+            <BookOpen className="w-16 h-16 text-soft-rose mx-auto mb-6" />
+            <h2 className="text-4xl font-bold text-text-dark mb-6">Children's Mental Health Books</h2>
+            <p className="text-xl text-text-dark mb-8">
+              Engaging, therapeutic books that help children understand and cope with tough topics.
+              Perfect for parents, therapists, and educators.
+            </p>
+            <Link href="/books" className="btn btn-secondary inline-flex items-center">
+              Browse Book Collection
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Professional Resources Teaser */}
       <section className="section-padding bg-gradient-sage-bg text-white">
@@ -94,23 +109,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Children's Books Section */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <BookOpen className="w-16 h-16 text-soft-rose mx-auto mb-6" />
-            <h2 className="text-4xl font-bold text-text-dark mb-6">Children's Mental Health Books</h2>
-            <p className="text-xl text-text-dark mb-8">
-              Engaging, therapeutic books that help children understand and cope with tough topics.
-              Perfect for parents, therapists, and educators.
-            </p>
-            <Link href="/books" className="btn btn-secondary inline-flex items-center">
-              Browse Book Collection
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Free Tools & Resources - After Revenue Sections */}
+      <ResourcesHighlight />
 
       {/* Call to Action */}
       <CTASection />

@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-text-dark text-text-light">
+    <footer className="bg-gray-900 text-white">
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
@@ -14,16 +14,16 @@ export default function Footer() {
               <div className="w-10 h-10 bg-gradient-sage-bg rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">LF</span>
               </div>
-              <span className="font-heading text-lg font-bold">Lennox Fields</span>
+              <span className="font-heading text-lg font-bold text-white">Lennox Fields</span>
             </div>
-            <p className="text-sm text-gray-400 mb-4">
+            <p className="text-sm text-gray-300 mb-4">
               Evidence-based mental health care with compassion at its core.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary-sage transition-colors">
+              <a href="#" className="text-gray-300 hover:text-primary-sage transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary-sage transition-colors">
+              <a href="#" className="text-gray-300 hover:text-primary-sage transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
             </div>
@@ -31,8 +31,8 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
+            <h3 className="font-semibold text-lg mb-4 text-white">Quick Links</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
               <li>
                 <Link href="/services" className="hover:text-primary-sage transition-colors">
                   Services
@@ -63,8 +63,8 @@ export default function Footer() {
 
           {/* Resources */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Resources</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
+            <h3 className="font-semibold text-lg mb-4 text-white">Resources</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
               <li>
                 <Link href="/resources/worksheets" className="hover:text-primary-sage transition-colors">
                   Worksheets
@@ -95,8 +95,8 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Contact</h3>
-            <ul className="space-y-3 text-sm text-gray-400">
+            <h3 className="font-semibold text-lg mb-4 text-white">Contact</h3>
+            <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-start space-x-2">
                 <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
                 <a href="mailto:tamara@lennoxfields.org" className="hover:text-primary-sage transition-colors">
@@ -105,8 +105,8 @@ export default function Footer() {
               </li>
               <li className="flex items-start space-x-2">
                 <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <a href="tel:+1234567890" className="hover:text-primary-sage transition-colors">
-                  (123) 456-7890
+                <a href="tel:+19199999999" className="hover:text-primary-sage transition-colors">
+                  (919) 999-9999
                 </a>
               </li>
               <li className="flex items-start space-x-2">
@@ -120,9 +120,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-400">
+        <div className="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p>&copy; {currentYear} Lennox Fields Clinical Mental Health Services LLC. All rights reserved.</p>
+            <p className="text-gray-300">&copy; {currentYear} Lennox Fields Clinical Mental Health Services LLC. All rights reserved.</p>
             <div className="flex space-x-6">
               <Link href="/privacy" className="hover:text-primary-sage transition-colors">
                 Privacy Policy
@@ -135,9 +135,8 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <p className="text-xs text-gray-500 mt-4 text-center md:text-left">
-            If you or someone you know is in crisis, please call the National Suicide Prevention Lifeline at 988
-            or visit your nearest emergency room.
+          <p className="text-sm text-gray-200 mt-4 text-center md:text-left bg-alert-red/20 border border-alert-red/30 rounded-lg p-3">
+            <strong className="text-white">Crisis Support:</strong> If you or someone you know is in crisis, please call the National Suicide Prevention Lifeline at <strong className="text-white">988</strong> or visit your nearest emergency room.
           </p>
         </div>
       </div>
