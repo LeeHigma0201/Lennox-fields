@@ -100,7 +100,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="mt-10">
-              <Link href="/professional/supervision" className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center">
+              <Link href="/resources/professional" className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center">
                 Explore Professional Tools
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>

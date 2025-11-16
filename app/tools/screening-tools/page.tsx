@@ -23,6 +23,16 @@ const screeningTools = [
     color: 'bg-soft-rose',
   },
   {
+    icon: Heart,
+    title: 'PHQ-9 (Patient Health Questionnaire)',
+    slug: 'phq-9',
+    description: 'A 9-item screening tool for depression severity and symptom assessment.',
+    timeEstimate: '2-5 minutes',
+    questions: 9,
+    validated: true,
+    color: 'bg-soft-rose',
+  },
+  {
     icon: Focus,
     title: 'Adult ADHD Self-Report Scale (ASRS)',
     slug: 'adhd-asrs',

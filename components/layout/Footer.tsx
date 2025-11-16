@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* About */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
@@ -44,18 +44,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/tools/screening-tools" className="hover:text-primary-sage transition-colors">
-                  Free Screening Tools
-                </Link>
-              </li>
-              <li>
                 <Link href="/books" className="hover:text-primary-sage transition-colors">
                   Children's Books
                 </Link>
               </li>
               <li>
-                <Link href="/professional" className="hover:text-primary-sage transition-colors">
-                  Professional Resources
+                <Link href="/faq" className="hover:text-primary-sage transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/portal/login" className="hover:text-primary-sage transition-colors">
+                  Client Portal
                 </Link>
               </li>
             </ul>
@@ -81,39 +81,63 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/portal/login" className="hover:text-primary-sage transition-colors">
-                  Client Portal
+                <Link href="/tools/screening-tools" className="hover:text-primary-sage transition-colors">
+                  Screening Tools
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-primary-sage transition-colors">
-                  FAQ
+                <Link href="/tools/safety-planning" className="hover:text-primary-sage transition-colors">
+                  Safety Planning
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Professional Tools */}
           <div>
-            <h3 className="font-semibold text-lg mb-4 text-white">Contact</h3>
-            <ul className="space-y-3 text-sm text-gray-300">
-              <li className="flex items-start space-x-2">
-                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <a href="mailto:tamara@lennoxfields.org" className="hover:text-primary-sage transition-colors">
-                  tamara@lennoxfields.org
-                </a>
+            <h3 className="font-semibold text-lg mb-4 text-white">Professional Tools</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
+              <li>
+                <Link href="/resources/professional" className="hover:text-primary-sage transition-colors">
+                  Professional Resources
+                </Link>
               </li>
-              <li className="flex items-start space-x-2">
-                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <a href="tel:+19199999999" className="hover:text-primary-sage transition-colors">
-                  (919) 999-9999
-                </a>
+              <li>
+                <Link href="/resources/professional/supervision" className="hover:text-primary-sage transition-colors">
+                  Supervision Guidelines
+                </Link>
               </li>
-              <li className="flex items-start space-x-2">
-                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>
-                  Licensed in North Carolina & Indiana
-                </span>
+              <li>
+                <Link href="/tools/treatment-planning" className="hover:text-primary-sage transition-colors">
+                  Treatment Planning
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/notes-templates" className="hover:text-primary-sage transition-colors">
+                  Notes Templates
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="font-semibold text-lg mb-4 text-white">Legal</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
+              <li>
+                <Link href="/privacy" className="hover:text-primary-sage transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-primary-sage transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/hipaa" className="hover:text-primary-sage transition-colors">
+                  HIPAA Notice
+                </Link>
               </li>
             </ul>
           </div>
@@ -123,16 +147,23 @@ export default function Footer() {
         <div className="border-t border-gray-700 mt-8 pt-8 text-sm text-gray-300">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-300">&copy; {currentYear} Lennox Fields Clinical Mental Health Services LLC. All rights reserved.</p>
-            <div className="flex space-x-6">
-              <Link href="/privacy" className="hover:text-primary-sage transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="hover:text-primary-sage transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/hipaa" className="hover:text-primary-sage transition-colors">
-                HIPAA Notice
-              </Link>
+            <div className="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0 text-sm">
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                <a href="mailto:tamara@lennoxfields.org" className="hover:text-primary-sage transition-colors">
+                  tamara@lennoxfields.org
+                </a>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <a href="tel:+19199999999" className="hover:text-primary-sage transition-colors">
+                  (919) 999-9999
+                </a>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MapPin className="w-4 h-4 flex-shrink-0" />
+                <span>Licensed in NC & IN</span>
+              </div>
             </div>
           </div>
           <p className="text-sm text-gray-200 mt-4 text-center md:text-left bg-alert-red/20 border border-alert-red/30 rounded-lg p-3">
