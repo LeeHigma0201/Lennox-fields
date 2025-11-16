@@ -1,5 +1,44 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Calendar, Phone, Mail, MessageCircle, Clock, MapPin } from 'lucide-react'
+import { Calendar, Phone, Mail, MessageCircle, Clock, MapPin, AlertCircle, Shield, DollarSign, Video } from 'lucide-react'
+import ContactForm from '@/components/ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Contact & Schedule - Book Therapy Appointment | Lennox Fields NC & Indiana',
+  description: 'Schedule your free consultation with a licensed therapist in North Carolina and Indiana. Online and in-person appointments available. Book therapy today.',
+  keywords: [
+    'schedule therapy',
+    'book therapist',
+    'therapy appointment',
+    'free consultation',
+    'contact therapist',
+    'therapy scheduling',
+    'book counseling appointment',
+    'schedule mental health appointment',
+    'therapist North Carolina contact',
+    'therapist Indiana contact',
+    'online therapy booking',
+    'telehealth scheduling'
+  ],
+  openGraph: {
+    title: 'Contact & Schedule - Book Therapy Appointment',
+    description: 'Schedule your free consultation with a licensed therapist in NC and Indiana. Online and in-person appointments available.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-contact.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Contact and Schedule Appointment'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact & Schedule - Book Therapy Appointment',
+    description: 'Schedule your free consultation with a licensed therapist. Online and in-person appointments available in NC and IN.'
+  }
+}
 
 export default function ContactPage() {
   return (
@@ -9,199 +48,303 @@ export default function ContactPage() {
         <div className="container-custom text-center">
           <Calendar className="w-20 h-20 text-primary-sage mx-auto mb-6" />
           <h1 className="text-5xl md:text-6xl font-bold text-text-dark mb-6">
-            Schedule Your Free Consultation
+            Get Started Today
           </h1>
           <p className="text-xl text-text-dark max-w-3xl mx-auto">
-            Ready to take the first step? Book a complimentary 15-minute consultation
-            to discuss your needs and see if we're a good fit.
+            Ready to take the first step? Fill out the form below or book a complimentary
+            15-minute consultation to discuss your needs and see if we're a good fit.
           </p>
         </div>
       </section>
 
-      {/* Scheduling Options */}
+      {/* Crisis Resources Notice */}
+      <section className="bg-alert-red/10 border-y-2 border-alert-red/30 py-6">
+        <div className="container-custom">
+          <div className="flex items-start max-w-4xl mx-auto">
+            <AlertCircle className="w-8 h-8 text-alert-red flex-shrink-0 mr-4 mt-1" />
+            <div>
+              <h2 className="text-xl font-bold text-text-dark mb-2">
+                In Crisis? Get Immediate Help
+              </h2>
+              <p className="text-warm-gray mb-3">
+                If you're experiencing a mental health emergency, please don't wait for a response
+                to this form. Help is available 24/7:
+              </p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <a
+                  href="tel:988"
+                  className="bg-alert-red text-white px-4 py-3 rounded-lg font-semibold hover:bg-alert-red/90 transition-colors flex items-center justify-center"
+                >
+                  <Phone className="w-5 h-5 mr-2" />
+                  Call 988 - Suicide & Crisis Lifeline
+                </a>
+                <a
+                  href="sms:988"
+                  className="bg-alert-red text-white px-4 py-3 rounded-lg font-semibold hover:bg-alert-red/90 transition-colors flex items-center justify-center"
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Text 988
+                </a>
+              </div>
+              <p className="text-sm text-warm-gray mt-3">
+                Other resources: Call 911 for immediate emergencies • National Domestic Violence Hotline: 1-800-799-7233 •
+                SAMHSA National Helpline: 1-800-662-4357
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content: Form + Sidebar */}
       <section className="section-padding bg-white">
+        <div className="container-custom max-w-7xl">
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Main Form */}
+            <div className="lg:col-span-2">
+              <h2 className="text-4xl font-bold text-text-dark mb-6">
+                Contact Form
+              </h2>
+              <p className="text-warm-gray mb-8 text-lg">
+                Fill out the form below and I'll respond within 24 hours. Prefer a different method?
+                See the options on the right.
+              </p>
+
+              <ContactForm />
+            </div>
+
+            {/* Sidebar: Contact Info & Options */}
+            <div className="space-y-6">
+              {/* Office Hours */}
+              <div className="card">
+                <div className="flex items-center mb-4">
+                  <Clock className="w-6 h-6 text-primary-sage mr-3" />
+                  <h3 className="text-xl font-bold text-text-dark">Office Hours</h3>
+                </div>
+                <div className="space-y-2 text-text-dark">
+                  <div className="flex justify-between">
+                    <span className="text-warm-gray">Monday - Thursday:</span>
+                    <span className="font-medium">9am - 7pm</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-warm-gray">Friday:</span>
+                    <span className="font-medium">9am - 4pm</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-warm-gray">Saturday:</span>
+                    <span className="font-medium">By Appointment</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-warm-gray">Sunday:</span>
+                    <span className="font-medium">Closed</span>
+                  </div>
+                </div>
+                <p className="text-sm text-warm-gray mt-4">
+                  All times are EST. Evening and weekend appointments available for established clients.
+                </p>
+              </div>
+
+              {/* Quick Contact Methods */}
+              <div className="card bg-primary-sage/5">
+                <h3 className="text-xl font-bold text-text-dark mb-4">Other Ways to Reach Me</h3>
+
+                <div className="space-y-3">
+                  <a
+                    href="https://calendly.com/tamara-lennoxfields"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow group"
+                  >
+                    <Calendar className="w-5 h-5 text-primary-sage mr-3 group-hover:scale-110 transition-transform" />
+                    <div className="flex-1">
+                      <div className="font-medium text-text-dark">Book Online</div>
+                      <div className="text-xs text-warm-gray">Instant scheduling</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="tel:+19199999999"
+                    className="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow group"
+                  >
+                    <Phone className="w-5 h-5 text-clinical-blue mr-3 group-hover:scale-110 transition-transform" />
+                    <div className="flex-1">
+                      <div className="font-medium text-text-dark">(919) 999-9999</div>
+                      <div className="text-xs text-warm-gray">Mon-Fri 9am-5pm</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="mailto:tamara@lennoxfields.org"
+                    className="flex items-center p-3 bg-white rounded-lg hover:shadow-md transition-shadow group"
+                  >
+                    <Mail className="w-5 h-5 text-soft-rose mr-3 group-hover:scale-110 transition-transform" />
+                    <div className="flex-1">
+                      <div className="font-medium text-text-dark">Email Direct</div>
+                      <div className="text-xs text-warm-gray">tamara@lennoxfields.org</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="card">
+                <div className="flex items-center mb-4">
+                  <MapPin className="w-6 h-6 text-primary-sage mr-3" />
+                  <h3 className="text-xl font-bold text-text-dark">Serving</h3>
+                </div>
+                <div className="space-y-3">
+                  <div>
+                    <div className="font-medium text-text-dark flex items-center">
+                      <Video className="w-4 h-4 mr-2 text-clinical-blue" />
+                      Telehealth (Secure Video)
+                    </div>
+                    <p className="text-sm text-warm-gray ml-6">
+                      Available to clients in North Carolina and Indiana
+                    </p>
+                  </div>
+                  <div>
+                    <div className="font-medium text-text-dark">In-Person Sessions</div>
+                    <p className="text-sm text-warm-gray">
+                      Raleigh/Durham area by appointment
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-cream rounded-lg">
+                  <p className="text-xs text-warm-gray">
+                    Specific office address provided upon scheduling to protect client privacy.
+                  </p>
+                </div>
+              </div>
+
+              {/* Insurance & Payment */}
+              <div className="card bg-accent-gold/5">
+                <div className="flex items-center mb-4">
+                  <DollarSign className="w-6 h-6 text-accent-gold mr-3" />
+                  <h3 className="text-xl font-bold text-text-dark">Insurance & Payment</h3>
+                </div>
+                <ul className="space-y-2 text-sm text-text-dark">
+                  <li className="flex items-start">
+                    <span className="text-success-green mr-2">✓</span>
+                    <span>Superbills for insurance reimbursement</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-success-green mr-2">✓</span>
+                    <span>HSA/FSA accepted</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-success-green mr-2">✓</span>
+                    <span>Sliding scale available</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-success-green mr-2">✓</span>
+                    <span>Payment plans for packages</span>
+                  </li>
+                </ul>
+                <Link
+                  href="/services#pricing"
+                  className="text-sm text-primary-sage hover:text-earth-green font-medium mt-3 inline-block"
+                >
+                  View detailed pricing →
+                </Link>
+              </div>
+
+              {/* Free Consultation CTA */}
+              <div className="card gradient-sage-bg text-white text-center">
+                <h3 className="text-xl font-bold mb-3">Free 15-Minute Consultation</h3>
+                <p className="text-sm opacity-90 mb-4">
+                  Not sure if therapy is right for you? Let's talk! No commitment required.
+                </p>
+                <a
+                  href="https://calendly.com/tamara-lennoxfields"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn bg-white text-primary-sage hover:bg-cream w-full"
+                >
+                  Schedule Free Call
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What to Expect */}
+      <section className="section-padding bg-cream">
         <div className="container-custom max-w-5xl">
           <h2 className="text-4xl font-bold text-text-dark mb-12 text-center">
-            How to Get Started
+            What to Expect in Your Free Consultation
           </h2>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {/* Option 1: Schedule Online */}
-            <div className="card text-center group hover:scale-105 transition-all">
-              <div className="bg-primary-sage/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-sage transition-colors">
-                <Calendar className="w-10 h-10 text-primary-sage group-hover:text-white transition-colors" />
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <Clock className="w-5 h-5" />
               </div>
-              <h3 className="text-2xl font-bold text-text-dark mb-4">Book Online</h3>
-              <p className="text-warm-gray mb-6">
-                Use our secure online scheduling system to find a time that works for you.
-              </p>
-              <a
-                href="https://calendly.com/tamara-lennoxfields"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary w-full"
-              >
-                Schedule Now
-              </a>
-              <p className="text-xs text-warm-gray mt-3">
-                Available 24/7 • Instant confirmation
-              </p>
-            </div>
-
-            {/* Option 2: Call */}
-            <div className="card text-center group hover:scale-105 transition-all">
-              <div className="bg-clinical-blue/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-clinical-blue transition-colors">
-                <Phone className="w-10 h-10 text-clinical-blue group-hover:text-white transition-colors" />
-              </div>
-              <h3 className="text-2xl font-bold text-text-dark mb-4">Call Us</h3>
-              <p className="text-warm-gray mb-6">
-                Speak with us directly to schedule your consultation or ask questions.
-              </p>
-              <a
-                href="tel:+19199999999"
-                className="btn btn-primary w-full"
-              >
-                (919) 999-9999
-              </a>
-              <p className="text-xs text-warm-gray mt-3">
-                Mon-Fri 9am-5pm EST
-              </p>
-            </div>
-
-            {/* Option 3: Email */}
-            <div className="card text-center group hover:scale-105 transition-all">
-              <div className="bg-soft-rose/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-soft-rose transition-colors">
-                <Mail className="w-10 h-10 text-soft-rose group-hover:text-white transition-colors" />
-              </div>
-              <h3 className="text-2xl font-bold text-text-dark mb-4">Email Us</h3>
-              <p className="text-warm-gray mb-6">
-                Send us your availability and we'll coordinate a consultation time.
-              </p>
-              <a
-                href="mailto:tamara@lennoxfields.org?subject=Free Consultation Request"
-                className="btn btn-primary w-full"
-              >
-                Send Email
-              </a>
-              <p className="text-xs text-warm-gray mt-3">
-                Response within 24 hours
-              </p>
-            </div>
-          </div>
-
-          {/* What to Expect */}
-          <div className="bg-cream rounded-xl p-8 mb-12">
-            <h3 className="text-2xl font-bold text-text-dark mb-6 text-center">
-              What to Expect in Your Free Consultation
-            </h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="flex items-start space-x-4">
-                <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">15-Minute Call</h4>
-                  <p className="text-warm-gray text-sm">
-                    A brief, no-pressure conversation to discuss your needs and goals.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">Share Your Story</h4>
-                  <p className="text-warm-gray text-sm">
-                    Tell me what brings you to therapy and what you hope to achieve.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">Discuss Options</h4>
-                  <p className="text-warm-gray text-sm">
-                    Learn about my approach, services, and scheduling options.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">Next Steps</h4>
-                  <p className="text-warm-gray text-sm">
-                    If we're a good fit, we'll schedule your first full session.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Services & Pricing Quick Reference */}
-          <div className="bg-white border-2 border-primary-sage/20 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-text-dark mb-6 text-center">
-              Services & Investment
-            </h3>
-            <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-bold text-text-dark mb-3">Therapy Services</h4>
-                <ul className="space-y-2 text-text-dark">
-                  <li className="flex justify-between">
-                    <span>Individual Therapy</span>
-                    <span className="font-semibold">$150/session</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Couples Therapy</span>
-                    <span className="font-semibold">$200/session</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Career Counseling</span>
-                    <span className="font-semibold">$125/session</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Clinical Supervision</span>
-                    <span className="font-semibold">$75/hour</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-text-dark mb-3">Payment Options</h4>
-                <ul className="space-y-2 text-text-dark">
-                  <li>✓ Credit/Debit cards accepted</li>
-                  <li>✓ HSA/FSA eligible</li>
-                  <li>✓ Monthly packages available</li>
-                  <li>✓ Superbills for insurance reimbursement</li>
-                  <li>✓ Sliding scale for qualified clients</li>
-                </ul>
+                <h4 className="font-bold text-text-dark mb-2">15-Minute Call</h4>
+                <p className="text-warm-gray text-sm">
+                  A brief, no-pressure conversation to discuss your needs and goals.
+                </p>
               </div>
             </div>
-            <div className="mt-6 text-center">
-              <Link href="/services" className="text-primary-sage hover:text-earth-green font-medium">
-                View All Services & Details →
-              </Link>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <MessageCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-text-dark mb-2">Share Your Story</h4>
+                <p className="text-warm-gray text-sm">
+                  Tell me what brings you to therapy and what you hope to achieve.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-text-dark mb-2">Discuss Options</h4>
+                <p className="text-warm-gray text-sm">
+                  Learn about my approach, services, and scheduling options.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                <Shield className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-bold text-text-dark mb-2">Privacy Guaranteed</h4>
+                <p className="text-warm-gray text-sm">
+                  All communications are confidential and HIPAA-compliant.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="section-padding bg-cream">
+      <section className="section-padding bg-white">
         <div className="container-custom max-w-4xl">
           <h2 className="text-4xl font-bold text-text-dark mb-12 text-center">
             Common Questions
           </h2>
 
           <div className="space-y-6">
-            <div className="bg-white rounded-lg p-6">
+            <div className="bg-cream rounded-lg p-6">
+              <h3 className="text-xl font-bold text-text-dark mb-3">
+                How quickly will you respond to my inquiry?
+              </h3>
+              <p className="text-warm-gray">
+                I typically respond to all contact form submissions within 24 hours during business days.
+                If you need immediate assistance, please call or use the online booking system for instant
+                scheduling.
+              </p>
+            </div>
+
+            <div className="bg-cream rounded-lg p-6">
               <h3 className="text-xl font-bold text-text-dark mb-3">
                 Do you accept insurance?
               </h3>
@@ -212,7 +355,18 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-6">
+            <div className="bg-cream rounded-lg p-6">
+              <h3 className="text-xl font-bold text-text-dark mb-3">
+                Is this contact form secure and confidential?
+              </h3>
+              <p className="text-warm-gray">
+                Yes! All form submissions are encrypted and handled according to HIPAA privacy standards.
+                However, please don't include specific health information (PHI) in your initial message.
+                We'll discuss details during your secure consultation.
+              </p>
+            </div>
+
+            <div className="bg-cream rounded-lg p-6">
               <h3 className="text-xl font-bold text-text-dark mb-3">
                 Do you offer telehealth sessions?
               </h3>
@@ -222,34 +376,14 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-6">
+            <div className="bg-cream rounded-lg p-6">
               <h3 className="text-xl font-bold text-text-dark mb-3">
-                What if I need to cancel or reschedule?
+                What if I'm not sure which service I need?
               </h3>
               <p className="text-warm-gray">
-                Life happens! I ask for 24-hour notice for cancellations or rescheduling to avoid a
-                cancellation fee. You can reschedule through the client portal or by calling/emailing.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6">
-              <h3 className="text-xl font-bold text-text-dark mb-3">
-                How long are sessions?
-              </h3>
-              <p className="text-warm-gray">
-                Standard therapy sessions are 50-60 minutes. Initial intake sessions are typically
-                60-90 minutes to allow time for comprehensive assessment and treatment planning.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6">
-              <h3 className="text-xl font-bold text-text-dark mb-3">
-                How do I know if we're a good fit?
-              </h3>
-              <p className="text-warm-gray">
-                That's what the free consultation is for! We'll discuss your needs, my approach, and
-                whether I can effectively support your goals. The therapeutic relationship is crucial
-                to successful outcomes, so fit matters.
+                That's completely normal! Select "Not Sure / Need Guidance" in the form, and we'll discuss
+                your needs during the free consultation. I'll help you determine the best approach for your
+                situation.
               </p>
             </div>
           </div>

@@ -1,5 +1,45 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Heart, CheckCircle, Calendar } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Individual Therapy in NC & IN - CBT, EMDR & Trauma Counseling | Lennox Fields',
+  description: 'Professional individual therapy for anxiety, depression, trauma, and life transitions. Evidence-based CBT and EMDR therapy in North Carolina and Indiana. Licensed LPCA.',
+  keywords: [
+    'individual therapy',
+    'personal counseling',
+    'CBT therapy',
+    'EMDR therapy',
+    'trauma therapy',
+    'anxiety counseling',
+    'depression therapy',
+    'therapy North Carolina',
+    'therapy Indiana',
+    'online therapy',
+    'telehealth counseling',
+    'mental health therapy',
+    'one-on-one therapy',
+    'individual counseling'
+  ],
+  openGraph: {
+    title: 'Individual Therapy in NC & IN - CBT, EMDR & Trauma Counseling',
+    description: 'Professional individual therapy for anxiety, depression, trauma, and life transitions. Evidence-based CBT and EMDR therapy.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-individual-therapy.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Individual Therapy Services'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Individual Therapy in NC & IN - CBT, EMDR & Trauma Counseling',
+    description: 'Professional individual therapy for anxiety, depression, trauma, and life transitions using evidence-based approaches.'
+  }
+}
 
 export default function IndividualTherapyPage() {
   return (

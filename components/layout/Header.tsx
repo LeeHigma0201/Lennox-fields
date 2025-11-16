@@ -40,6 +40,7 @@ const navigation = [
     ],
   },
   { name: 'Books', href: '/books' },
+  { name: 'Blog', href: '/blog' },
   { name: 'About', href: '/about' },
 ]
 

@@ -1,5 +1,45 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FileText, Calendar, BookHeart, Shield, Download, Users } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Free Mental Health Resources - Worksheets, Trackers & Tools | Lennox Fields',
+  description: '50+ free mental health resources including therapy worksheets, habit trackers, journal prompts, and screening tools. Evidence-based materials by a licensed therapist.',
+  keywords: [
+    'free mental health resources',
+    'mental health worksheets',
+    'free therapy resources',
+    'mental health tools',
+    'therapy worksheets free',
+    'mental health trackers',
+    'free counseling resources',
+    'printable mental health worksheets',
+    'therapy homework',
+    'mental wellness resources',
+    'CBT worksheets free',
+    'DBT resources',
+    'free therapy tools',
+    'mental health education'
+  ],
+  openGraph: {
+    title: 'Free Mental Health Resources - Worksheets, Trackers & Tools',
+    description: '50+ free mental health resources including therapy worksheets, habit trackers, journal prompts, and screening tools by a licensed therapist.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-resources.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Free Mental Health Resources'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Mental Health Resources - Worksheets, Trackers & Tools',
+    description: '50+ free mental health resources including therapy worksheets, habit trackers, and tools by a licensed therapist.'
+  }
+}
 
 const resourceCategories = [
   {

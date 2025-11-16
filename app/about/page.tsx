@@ -1,5 +1,43 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Award, BookOpen, Heart, Users, Brain, Lightbulb, Target, Calendar } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'About Tamara Walls, M.Ed, LPCA - Licensed Mental Health Counselor | Lennox Fields',
+  description: 'Meet Tamara Walls, licensed mental health counselor (LPCA) in NC & IN. Specialized in CBT, EMDR, trauma therapy, and couples counseling with evidence-based approaches.',
+  keywords: [
+    'Tamara Walls therapist',
+    'LPCA North Carolina',
+    'LPCA Indiana',
+    'licensed mental health counselor',
+    'CBT therapist',
+    'EMDR therapist',
+    'trauma therapist',
+    'couples therapist',
+    'career counselor',
+    'mental health counselor credentials',
+    'evidence-based therapy',
+    'clinical mental health counseling'
+  ],
+  openGraph: {
+    title: 'About Tamara Walls, M.Ed, LPCA - Licensed Mental Health Counselor',
+    description: 'Meet Tamara Walls, licensed mental health counselor specializing in CBT, EMDR, trauma therapy, and couples counseling.',
+    type: 'profile',
+    images: [
+      {
+        url: '/images/og-about.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Tamara Walls, M.Ed, LPCA'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Tamara Walls, M.Ed, LPCA - Licensed Mental Health Counselor',
+    description: 'Licensed mental health counselor specializing in CBT, EMDR, trauma therapy, and couples counseling in NC & IN.'
+  }
+}
 
 export default function AboutPage() {
   return (

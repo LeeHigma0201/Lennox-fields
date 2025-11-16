@@ -1,5 +1,43 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen, Heart, Users, ShoppingCart, Download } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Children\'s Mental Health Books - Therapeutic Books for Kids | Tamara Walls',
+  description: 'Therapeutic children\'s books about emotions, anxiety, family changes, and coping skills. Written by a licensed therapist for kids ages 4-12. Perfect for parents and educators.',
+  keywords: [
+    'children\'s mental health books',
+    'therapeutic books for kids',
+    'children\'s books about emotions',
+    'kids anxiety books',
+    'books about feelings for children',
+    'mental health books for kids',
+    'children\'s therapy books',
+    'books about divorce for kids',
+    'emotional wellness books',
+    'kids coping skills books',
+    'children\'s self-help books',
+    'therapeutic children\'s literature'
+  ],
+  openGraph: {
+    title: 'Children\'s Mental Health Books - Therapeutic Books for Kids',
+    description: 'Therapeutic children\'s books about emotions, anxiety, and coping skills written by a licensed therapist for kids ages 4-12.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-books.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Children\'s Mental Health Books'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Children\'s Mental Health Books - Therapeutic Books for Kids',
+    description: 'Therapeutic children\'s books about emotions, anxiety, and coping skills by a licensed therapist.'
+  }
+}
 
 // Placeholder for books - can be expanded or pulled from database
 const books = [

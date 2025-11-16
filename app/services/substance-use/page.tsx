@@ -1,5 +1,45 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Brain, Heart, Shield, Users, Calendar } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Substance Use Disorder Treatment - ASAM Criteria & Addiction Counseling | NC & IN',
+  description: 'Evidence-based substance use disorder treatment using ASAM criteria. Compassionate addiction counseling with harm reduction approach in North Carolina and Indiana.',
+  keywords: [
+    'substance use treatment',
+    'addiction counseling',
+    'substance abuse therapy',
+    'ASAM criteria',
+    'addiction treatment',
+    'drug addiction counseling',
+    'alcohol addiction treatment',
+    'substance use disorder',
+    'harm reduction therapy',
+    'relapse prevention',
+    'addiction recovery',
+    'substance abuse counselor',
+    'addiction therapist',
+    'recovery support'
+  ],
+  openGraph: {
+    title: 'Substance Use Disorder Treatment - ASAM Criteria & Addiction Counseling',
+    description: 'Evidence-based substance use disorder treatment using ASAM criteria with compassionate, harm reduction approach.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-substance-use.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Substance Use Disorder Treatment'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Substance Use Disorder Treatment - ASAM Criteria & Addiction Counseling',
+    description: 'Evidence-based substance use disorder treatment with ASAM criteria and harm reduction approach.'
+  }
+}
 
 export default function SubstanceUsePage() {
   return (

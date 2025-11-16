@@ -1,5 +1,45 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Heart, Users, Home, Sprout, Briefcase, Brain, ArrowRight } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Mental Health Services - Therapy, Counseling & Treatment | Lennox Fields NC & IN',
+  description: 'Comprehensive mental health services: individual therapy, couples counseling, family therapy, teen counseling, career guidance, and substance use treatment in NC and Indiana.',
+  keywords: [
+    'mental health services',
+    'therapy services',
+    'counseling services',
+    'individual therapy',
+    'couples therapy',
+    'family therapy',
+    'teen therapy',
+    'career counseling',
+    'substance use treatment',
+    'therapy North Carolina',
+    'therapy Indiana',
+    'telehealth therapy',
+    'online counseling',
+    'mental health treatment'
+  ],
+  openGraph: {
+    title: 'Mental Health Services - Therapy, Counseling & Treatment',
+    description: 'Comprehensive mental health services including individual therapy, couples counseling, family therapy, and more in NC and Indiana.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-services.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Mental Health Services'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mental Health Services - Therapy, Counseling & Treatment',
+    description: 'Individual therapy, couples counseling, family therapy, teen counseling, and more in NC and Indiana.'
+  }
+}
 
 const services = [
   {

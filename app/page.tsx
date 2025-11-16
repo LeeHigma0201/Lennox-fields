@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Heart, Brain, Users, BookOpen, Stethoscope, Shield } from 'lucide-react'
 import HeroSection from '@/components/home/HeroSection'
@@ -5,6 +6,45 @@ import ServicesOverview from '@/components/home/ServicesOverview'
 import AboutPreview from '@/components/home/AboutPreview'
 import ResourcesHighlight from '@/components/home/ResourcesHighlight'
 import CTASection from '@/components/home/CTASection'
+
+export const metadata: Metadata = {
+  title: 'Lennox Fields - Licensed Therapist NC & IN | Mental Health Counseling Services',
+  description: 'Professional mental health counseling in North Carolina and Indiana. Individual therapy, couples counseling, teen therapy, and free mental health resources by licensed LPCA.',
+  keywords: [
+    'therapist North Carolina',
+    'therapist Indiana',
+    'mental health counseling',
+    'LPCA therapist',
+    'individual therapy',
+    'couples therapy',
+    'teen therapy',
+    'online therapy',
+    'telehealth counseling',
+    'anxiety therapy',
+    'depression counseling',
+    'trauma therapy',
+    'EMDR therapy',
+    'free mental health resources'
+  ],
+  openGraph: {
+    title: 'Lennox Fields - Licensed Therapist NC & IN | Mental Health Counseling',
+    description: 'Professional mental health counseling in North Carolina and Indiana. Individual therapy, couples counseling, and free mental health resources.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-home.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Lennox Fields Clinical Mental Health Services'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lennox Fields - Licensed Therapist NC & IN | Mental Health Counseling',
+    description: 'Professional mental health counseling in North Carolina and Indiana. Individual therapy, couples counseling, and free resources.'
+  }
+}
 
 export default function HomePage() {
   return (

@@ -1,5 +1,45 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Briefcase, Target, TrendingUp, Users, FileText, Calendar } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Career Counseling & Coaching - Job Search, Career Change Support | NC & Indiana',
+  description: 'Professional career counseling with Strong Interest Inventory, MBTI assessments, resume help, and interview prep. Career transition support in North Carolina and Indiana.',
+  keywords: [
+    'career counseling',
+    'career coaching',
+    'job search help',
+    'career change',
+    'career transition',
+    'resume help',
+    'interview coaching',
+    'career assessment',
+    'Strong Interest Inventory',
+    'MBTI assessment',
+    'professional development',
+    'career guidance',
+    'job interview preparation',
+    'salary negotiation coaching'
+  ],
+  openGraph: {
+    title: 'Career Counseling & Coaching - Job Search, Career Change Support',
+    description: 'Professional career counseling with assessments, resume help, interview prep, and career transition support.',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-career-counseling.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Career Counseling Services'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Career Counseling & Coaching - Job Search, Career Change Support',
+    description: 'Professional career counseling with assessments, resume help, and interview prep for career transitions.'
+  }
+}
 
 export default function CareerCounselingPage() {
   return (
