@@ -17,19 +17,19 @@ export default function HomePage() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="flex flex-col items-center">
-              <Shield className="w-10 h-10 text-primary-sage mb-2" />
+              <Shield className="w-10 h-10 text-primary-sage mb-2" aria-hidden="true" />
               <p className="text-sm font-medium text-text-dark">HIPAA Compliant</p>
             </div>
             <div className="flex flex-col items-center">
-              <Stethoscope className="w-10 h-10 text-primary-sage mb-2" />
+              <Stethoscope className="w-10 h-10 text-primary-sage mb-2" aria-hidden="true" />
               <p className="text-sm font-medium text-text-dark">Licensed LPCA</p>
             </div>
             <div className="flex flex-col items-center">
-              <Heart className="w-10 h-10 text-primary-sage mb-2" />
+              <Heart className="w-10 h-10 text-primary-sage mb-2" aria-hidden="true" />
               <p className="text-sm font-medium text-text-dark">Evidence-Based</p>
             </div>
             <div className="flex flex-col items-center">
-              <Users className="w-10 h-10 text-primary-sage mb-2" />
+              <Users className="w-10 h-10 text-primary-sage mb-2" aria-hidden="true" />
               <p className="text-sm font-medium text-text-dark">Client-Centered</p>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function HomePage() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <BookOpen className="w-16 h-16 text-soft-rose mx-auto mb-6" />
+            <BookOpen className="w-16 h-16 text-soft-rose mx-auto mb-6" aria-hidden="true" />
             <h2 className="text-4xl font-bold text-text-dark mb-6">Children's Mental Health Books</h2>
             <p className="text-xl text-text-dark mb-8">
               Engaging, therapeutic books that help children understand and cope with tough topics.
@@ -54,7 +54,7 @@ export default function HomePage() {
             </p>
             <Link href="/books" className="btn btn-secondary inline-flex items-center">
               Browse Book Collection
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
       <section className="section-padding bg-gradient-sage-bg text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <Brain className="w-16 h-16 mx-auto mb-6 opacity-90" />
+            <Brain className="w-16 h-16 mx-auto mb-6 opacity-90" aria-hidden="true" />
             <h2 className="text-4xl font-bold mb-6">For Mental Health Professionals</h2>
             <p className="text-xl mb-8 opacity-90">
               Access comprehensive professional tools including supervision tracking, billing management,
@@ -102,7 +102,7 @@ export default function HomePage() {
             <div className="mt-10">
               <Link href="/professional/supervision" className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center">
                 Explore Professional Tools
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Link>
             </div>
           </div>

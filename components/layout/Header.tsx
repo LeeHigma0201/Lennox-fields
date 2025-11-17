@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, ChevronDown } from 'lucide-react'
 
@@ -46,6 +46,23 @@ const navigation = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileMenuOpen])
+
+  // Close mobile menu handler
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false)
+  }
 
   return (
     <header className="bg-white shadow-soft sticky top-0 z-50">
@@ -115,20 +132,27 @@ export default function Header() {
             type="button"
             className="lg:hidden p-2 text-text-dark"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-warm-gray/20 pt-4">
+          <div
+            id="mobile-navigation"
+            className="lg:hidden mt-4 pb-4 border-t border-warm-gray/20 pt-4"
+          >
             <div className="flex flex-col space-y-4">
               {navigation.map((item) => (
                 <div key={item.name}>
                   <Link
                     href={item.href}
                     className="text-text-dark hover:text-primary-sage font-medium block"
+                    onClick={closeMobileMenu}
                   >
                     {item.name}
                   </Link>
@@ -139,6 +163,7 @@ export default function Header() {
                           key={subitem.name}
                           href={subitem.href}
                           className="text-sm text-warm-gray hover:text-primary-sage block"
+                          onClick={closeMobileMenu}
                         >
                           {subitem.name}
                         </Link>
@@ -147,10 +172,18 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <Link href="/portal/login" className="text-primary-sage font-medium">
+              <Link
+                href="/portal/login"
+                className="text-primary-sage font-medium"
+                onClick={closeMobileMenu}
+              >
                 Client Portal
               </Link>
-              <Link href="/contact" className="btn btn-primary w-full text-center">
+              <Link
+                href="/contact"
+                className="btn btn-primary w-full text-center"
+                onClick={closeMobileMenu}
+              >
                 Schedule Consultation
               </Link>
             </div>

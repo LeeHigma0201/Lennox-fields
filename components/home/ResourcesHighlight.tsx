@@ -66,7 +66,7 @@ export default function ResourcesHighlight() {
             return (
               <div key={resource.title} className="card group hover:scale-105 transition-transform duration-200">
                 <div className={`w-14 h-14 ${resource.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-8 h-8 text-white" />
+                  <Icon className="w-8 h-8 text-white" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-bold text-text-dark mb-3">
                   {resource.title}
@@ -79,7 +79,7 @@ export default function ResourcesHighlight() {
                   className="text-primary-sage hover:text-earth-green font-medium inline-flex items-center"
                 >
                   Explore
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
                 </Link>
               </div>
             )

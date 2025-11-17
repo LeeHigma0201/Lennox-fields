@@ -27,21 +27,21 @@ export default function AboutPreview() {
             {/* Credentials */}
             <div className="grid sm:grid-cols-3 gap-6 mb-8">
               <div className="flex items-start space-x-3">
-                <Award className="w-6 h-6 text-primary-sage flex-shrink-0 mt-1" />
+                <Award className="w-6 h-6 text-primary-sage flex-shrink-0 mt-1" aria-hidden="true" />
                 <div>
                   <p className="font-semibold text-text-dark">M.Ed</p>
                   <p className="text-sm text-warm-gray">Clinical Mental Health Counseling</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <BookOpen className="w-6 h-6 text-primary-sage flex-shrink-0 mt-1" />
+                <BookOpen className="w-6 h-6 text-primary-sage flex-shrink-0 mt-1" aria-hidden="true" />
                 <div>
                   <p className="font-semibold text-text-dark">LPCA</p>
                   <p className="text-sm text-warm-gray">Licensed in NC & IN</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <Heart className="w-6 h-6 text-primary-sage flex-shrink-0 mt-1" />
+                <Heart className="w-6 h-6 text-primary-sage flex-shrink-0 mt-1" aria-hidden="true" />
                 <div>
                   <p className="font-semibold text-text-dark">Specialized</p>
                   <p className="text-sm text-warm-gray">CBT, EMDR, Career</p>
@@ -51,7 +51,7 @@ export default function AboutPreview() {
 
             <Link href="/about" className="btn btn-primary inline-flex items-center">
               Read My Full Story
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
             </Link>
           </div>
 
