@@ -4,6 +4,7 @@ import HeroSection from '@/components/home/HeroSection'
 import ServicesOverview from '@/components/home/ServicesOverview'
 import AboutPreview from '@/components/home/AboutPreview'
 import ResourcesHighlight from '@/components/home/ResourcesHighlight'
+import JournalingPrompts from '@/components/home/JournalingPrompts'
 import CTASection from '@/components/home/CTASection'
 
 export default function HomePage() {
@@ -38,6 +39,9 @@ export default function HomePage() {
 
       {/* About Preview */}
       <AboutPreview />
+
+      {/* Journaling Prompts */}
+      <JournalingPrompts />
 
       {/* Services Overview */}
       <ServicesOverview />

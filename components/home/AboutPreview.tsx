@@ -3,11 +3,12 @@ import { Award, BookOpen, Heart, ArrowRight } from 'lucide-react'
 
 export default function AboutPreview() {
   return (
-    <section className="section-padding bg-cream">
+    <section className="section-padding bg-warm-cream">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div>
+            <div className="w-20 h-1 bg-gradient-sand rounded mb-6"></div>
             <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-6">
               Meet Tamara Walls, M.Ed, LPCA
             </h2>
@@ -57,36 +58,38 @@ export default function AboutPreview() {
 
           {/* Right Column - Highlights */}
           <div className="space-y-6">
-            <div className="card bg-gradient-sage-bg text-white">
-              <h3 className="text-2xl font-bold mb-3">My Approach</h3>
-              <p className="leading-relaxed">
+            <div className="card bg-white border-l-4 border-primary-sage">
+              <div className="w-16 h-1 bg-gradient-sand rounded mb-3"></div>
+              <h3 className="text-2xl font-bold mb-3 text-primary-sage">My Approach</h3>
+              <p className="leading-relaxed text-text-dark">
                 I believe therapy should be a collaborative partnership. Together, we'll identify your
                 goals, build on your strengths, and develop practical strategies for lasting change.
                 You're the expert on your life—I'm here to provide guidance, support, and evidence-based tools.
               </p>
             </div>
 
-            <div className="card">
+            <div className="card bg-white">
+              <div className="w-16 h-1 bg-gradient-sand rounded mb-3"></div>
               <h3 className="text-2xl font-bold text-text-dark mb-3">Specialized Training</h3>
               <ul className="space-y-2 text-text-dark">
                 <li className="flex items-start">
-                  <span className="text-primary-sage mr-2">•</span>
+                  <span className="text-primary-sage mr-2 text-lg">•</span>
                   Cognitive Behavioral Therapy (CBT)
                 </li>
                 <li className="flex items-start">
-                  <span className="text-primary-sage mr-2">•</span>
+                  <span className="text-primary-sage mr-2 text-lg">•</span>
                   Eye Movement Desensitization and Reprocessing (EMDR)
                 </li>
                 <li className="flex items-start">
-                  <span className="text-primary-sage mr-2">•</span>
+                  <span className="text-primary-sage mr-2 text-lg">•</span>
                   Couples and Family Systems Therapy
                 </li>
                 <li className="flex items-start">
-                  <span className="text-primary-sage mr-2">•</span>
+                  <span className="text-primary-sage mr-2 text-lg">•</span>
                   Career Development and Counseling
                 </li>
                 <li className="flex items-start">
-                  <span className="text-primary-sage mr-2">•</span>
+                  <span className="text-primary-sage mr-2 text-lg">•</span>
                   Trauma-Informed Care
                 </li>
               </ul>

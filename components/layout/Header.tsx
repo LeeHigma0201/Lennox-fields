@@ -53,9 +53,11 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-sage-bg rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">LF</span>
-            </div>
+            <img
+              src="/images/LFLogo.jpeg"
+              alt="Lennox Fields Logo"
+              className="w-12 h-12 object-contain"
+            />
             <div className="hidden md:block">
               <span className="font-heading text-xl font-bold text-text-dark">
                 Lennox Fields

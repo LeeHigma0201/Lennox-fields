@@ -3,11 +3,11 @@ import { ArrowRight, Calendar } from 'lucide-react'
 
 export default function HeroSection() {
   return (
-    <section className="relative gradient-warm-bg section-padding overflow-hidden">
+    <section className="relative bg-gradient-to-br from-warm-cream to-primary-sage/10 section-padding overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
+      <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
         <div className="absolute top-20 right-20 w-64 h-64 bg-primary-sage rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-40 w-96 h-96 bg-earth-green rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-40 w-96 h-96 bg-warm-sand rounded-full blur-3xl"></div>
       </div>
 
       <div className="container-custom relative z-10">
@@ -17,20 +17,21 @@ export default function HeroSection() {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-text-dark mb-6 leading-tight">
               Welcome to Your Journey of{' '}
               <span className="text-primary-sage">Growth</span> and{' '}
-              <span className="text-earth-green">Healing</span>
+              <span className="text-warm-sand">Healing</span>
             </h1>
             <p className="text-xl md:text-2xl text-text-dark mb-8 leading-relaxed">
               Evidence-based mental health care with compassion at its core
             </p>
 
             {/* Tamara's Personal Message */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-soft">
+            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-soft border-l-4 border-primary-sage">
+              <div className="w-20 h-1 bg-gradient-sand rounded mb-4"></div>
               <p className="text-lg text-text-dark leading-relaxed mb-4">
                 <span className="font-semibold text-primary-sage">Hi, I'm Tamara Walls, M.Ed, LPCA.</span>{' '}
                 I believe everyone deserves access to quality mental health care that honors their unique journey.
                 At Lennox Fields, we combine clinical expertise with genuine warmth to help you build the life you envision.
               </p>
-              <Link href="/about" className="text-primary-sage hover:text-earth-green font-medium inline-flex items-center">
+              <Link href="/about" className="text-warm-sand hover:text-primary-sage font-medium inline-flex items-center transition-colors">
                 Learn more about my approach
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
@@ -38,11 +39,11 @@ export default function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/contact" className="btn btn-primary inline-flex items-center justify-center">
+              <Link href="/contact" className="bg-primary-sage text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-sage/90 transition-colors inline-flex items-center justify-center shadow-soft">
                 <Calendar className="mr-2 w-5 h-5" />
                 Schedule a Free Consultation
               </Link>
-              <Link href="/resources" className="btn btn-outline inline-flex items-center justify-center">
+              <Link href="/resources" className="border-2 border-primary-sage text-primary-sage px-6 py-3 rounded-lg font-medium hover:bg-primary-sage hover:text-white transition-colors inline-flex items-center justify-center">
                 Explore Free Resources
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>

@@ -11,9 +11,11 @@ export default function Footer() {
           {/* About */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-sage-bg rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">LF</span>
-              </div>
+              <img
+                src="/images/LFLogo.jpeg"
+                alt="Lennox Fields Logo"
+                className="w-10 h-10 object-contain bg-white rounded p-1"
+              />
               <span className="font-heading text-lg font-bold text-white">Lennox Fields</span>
             </div>
             <p className="text-sm text-gray-300 mb-4">

@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://lennoxfields.org'),
   title: 'Lennox Fields Clinical Mental Health Services',
   description: 'Evidence-based mental health care with compassion at its core. Individual therapy, couples counseling, career guidance, and professional resources.',
   keywords: [
@@ -24,6 +25,20 @@ export const metadata: Metadata = {
     description: 'Evidence-based mental health care with compassion at its core',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: '/images/LFLogo.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Lennox Fields Clinical Mental Health Services',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lennox Fields Clinical Mental Health Services',
+    description: 'Evidence-based mental health care with compassion at its core',
+    images: ['/images/LFLogo.jpeg'],
   },
   robots: {
     index: true,

@@ -9,14 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Lennox Fields Brand Colors - Warm, Approachable Professional
-        'primary-sage': '#8B9F8B',
+        // Lennox Fields Brand Colors - Inspired by Journaling Template
+        'primary-sage': '#75856f', // Muted sage from template
+        'warm-sand': '#b49a83', // Warm sand accent
         'soft-rose': '#C09191',
         'warm-gray': '#A39690',
-        'cream': '#F5F0E8',
+        'warm-cream': '#faf9f7', // Background from template
         'accent-gold': '#9B8C5A',
         'earth-green': '#6B8E4E',
-        'text-dark': '#3A3A3A',
+        'text-dark': '#3f3f3f', // Dark gray from template
         'text-light': '#F5F5F5',
 
         // Clinical UI Colors
@@ -27,12 +28,13 @@ const config: Config = {
       },
       fontFamily: {
         heading: ['var(--font-playfair)', 'serif'],
-        body: ['var(--font-inter)', 'sans-serif'],
+        body: ['Calibri', 'var(--font-inter)', 'sans-serif'],
         accent: ['var(--font-quicksand)', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-warm': 'linear-gradient(135deg, #F5F0E8 0%, #E8DED0 100%)',
-        'gradient-sage': 'linear-gradient(135deg, #8B9F8B 0%, #6B8E4E 100%)',
+        'gradient-warm': 'linear-gradient(135deg, #faf9f7 0%, #e8e8e8 100%)',
+        'gradient-sage': 'linear-gradient(135deg, #75856f 0%, #6B8E4E 100%)',
+        'gradient-sand': 'linear-gradient(90deg, #b49a83 0%, #d8c5b0 100%)',
       },
       boxShadow: {
         'soft': '0 2px 15px rgba(0, 0, 0, 0.08)',
