@@ -22,11 +22,11 @@ export default function Footer() {
               Evidence-based mental health care with compassion at its core.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-primary-sage transition-colors">
-                <Linkedin className="w-5 h-5" />
+              <a href="#" className="text-gray-300 hover:text-primary-sage transition-colors" aria-label="LinkedIn">
+                <Linkedin className="w-5 h-5" aria-hidden="true" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-primary-sage transition-colors">
-                <Facebook className="w-5 h-5" />
+              <a href="#" className="text-gray-300 hover:text-primary-sage transition-colors" aria-label="Facebook">
+                <Facebook className="w-5 h-5" aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -100,19 +100,19 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-4 text-white">Contact</h3>
             <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-start space-x-2">
-                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <a href="mailto:tamara@lennoxfields.org" className="hover:text-primary-sage transition-colors">
                   tamara@lennoxfields.org
                 </a>
               </li>
               <li className="flex items-start space-x-2">
-                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <a href="tel:+19199999999" className="hover:text-primary-sage transition-colors">
                   (919) 999-9999
                 </a>
               </li>
               <li className="flex items-start space-x-2">
-                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>
                   Licensed in North Carolina & Indiana
                 </span>

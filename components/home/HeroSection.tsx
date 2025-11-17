@@ -14,7 +14,7 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="animate-fade-in">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-text-dark mb-6 leading-tight">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-text-dark mb-6 leading-tight">
               Welcome to Your Journey of{' '}
               <span className="text-primary-sage">Growth</span> and{' '}
               <span className="text-warm-sand">Healing</span>
@@ -33,19 +33,19 @@ export default function HeroSection() {
               </p>
               <Link href="/about" className="text-warm-sand hover:text-primary-sage font-medium inline-flex items-center transition-colors">
                 Learn more about my approach
-                <ArrowRight className="ml-2 w-4 h-4" />
+                <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/contact" className="bg-primary-sage text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-sage/90 transition-colors inline-flex items-center justify-center shadow-soft">
-                <Calendar className="mr-2 w-5 h-5" />
+                <Calendar className="mr-2 w-5 h-5" aria-hidden="true" />
                 Schedule a Free Consultation
               </Link>
               <Link href="/resources" className="border-2 border-primary-sage text-primary-sage px-6 py-3 rounded-lg font-medium hover:bg-primary-sage hover:text-white transition-colors inline-flex items-center justify-center">
                 Explore Free Resources
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
               </Link>
             </div>
           </div>

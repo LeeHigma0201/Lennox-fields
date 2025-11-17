@@ -3,24 +3,37 @@ import { Brain, Heart, Focus, Users, Shield, Activity } from 'lucide-react'
 
 const screeningTools = [
   {
-    icon: Heart,
-    title: 'Beck Depression Inventory (BDI-II)',
-    slug: 'beck-depression',
-    description: 'A 21-question self-report assessment measuring the severity of depression symptoms.',
-    timeEstimate: '5-10 minutes',
-    questions: 21,
-    validated: true,
-    color: 'bg-clinical-blue',
-  },
-  {
     icon: Activity,
     title: 'GAD-7 (Generalized Anxiety Disorder)',
     slug: 'gad-7',
-    description: 'A brief 7-item screening tool for generalized anxiety disorder.',
+    description: 'A brief 7-item screening tool for generalized anxiety disorder with instant scoring.',
     timeEstimate: '2-5 minutes',
     questions: 7,
     validated: true,
+    available: true,
     color: 'bg-soft-rose',
+  },
+  {
+    icon: Heart,
+    title: 'PHQ-9 (Depression Screening)',
+    slug: 'phq-9',
+    description: 'The gold standard 9-question assessment for measuring depression severity.',
+    timeEstimate: '3-5 minutes',
+    questions: 9,
+    validated: true,
+    available: true,
+    color: 'bg-clinical-blue',
+  },
+  {
+    icon: Shield,
+    title: 'PCL-5 (PTSD Checklist)',
+    slug: 'pcl-5',
+    description: 'A 20-item self-report measure assessing PTSD symptoms based on DSM-5 criteria.',
+    timeEstimate: '5-10 minutes',
+    questions: 20,
+    validated: true,
+    available: true,
+    color: 'bg-alert-red',
   },
   {
     icon: Focus,
@@ -30,6 +43,7 @@ const screeningTools = [
     timeEstimate: '5-10 minutes',
     questions: 18,
     validated: true,
+    available: false,
     color: 'bg-accent-gold',
   },
   {
@@ -40,17 +54,8 @@ const screeningTools = [
     timeEstimate: '10-15 minutes',
     questions: 50,
     validated: true,
+    available: false,
     color: 'bg-earth-green',
-  },
-  {
-    icon: Shield,
-    title: 'PTSD Checklist (PCL-5)',
-    slug: 'ptsd-pcl5',
-    description: 'A 20-item self-report measure assessing PTSD symptoms.',
-    timeEstimate: '5-10 minutes',
-    questions: 20,
-    validated: true,
-    color: 'bg-alert-red',
   },
   {
     icon: Users,
@@ -60,6 +65,7 @@ const screeningTools = [
     timeEstimate: '15-20 minutes',
     questions: 30,
     validated: true,
+    available: false,
     color: 'bg-primary-sage',
   },
 ]
@@ -126,12 +132,18 @@ export default function ScreeningToolsPage() {
                     )}
                   </div>
 
-                  <Link
-                    href={`/tools/screening-tools/${tool.slug}`}
-                    className="btn btn-primary w-full text-center"
-                  >
-                    Start Assessment
-                  </Link>
+                  {tool.available ? (
+                    <Link
+                      href={`/tools/screening-tools/${tool.slug}`}
+                      className="btn btn-primary w-full text-center"
+                    >
+                      Start Assessment
+                    </Link>
+                  ) : (
+                    <div className="btn btn-outline w-full text-center cursor-not-allowed opacity-60">
+                      Coming Soon
+                    </div>
+                  )}
                 </div>
               )
             })}

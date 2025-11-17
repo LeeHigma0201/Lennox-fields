@@ -70,7 +70,7 @@ export default function ServicesOverview() {
                 className="card group hover:scale-105 transition-transform duration-200"
               >
                 <div className={`${service.color} mb-4`}>
-                  <Icon className="w-12 h-12" />
+                  <Icon className="w-12 h-12" aria-hidden="true" />
                 </div>
                 <h3 className="text-2xl font-bold text-text-dark mb-3 group-hover:text-primary-sage transition-colors">
                   {service.title}

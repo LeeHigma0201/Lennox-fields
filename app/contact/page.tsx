@@ -7,7 +7,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="gradient-warm-bg py-20">
         <div className="container-custom text-center">
-          <Calendar className="w-20 h-20 text-primary-sage mx-auto mb-6" />
+          <Calendar className="w-20 h-20 text-primary-sage mx-auto mb-6" aria-hidden="true" />
           <h1 className="text-5xl md:text-6xl font-bold text-text-dark mb-6">
             Schedule Your Free Consultation
           </h1>
@@ -29,7 +29,7 @@ export default function ContactPage() {
             {/* Option 1: Schedule Online */}
             <div className="card text-center group hover:scale-105 transition-all">
               <div className="bg-primary-sage/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary-sage transition-colors">
-                <Calendar className="w-10 h-10 text-primary-sage group-hover:text-white transition-colors" />
+                <Calendar className="w-10 h-10 text-primary-sage group-hover:text-white transition-colors" aria-hidden="true" />
               </div>
               <h3 className="text-2xl font-bold text-text-dark mb-4">Book Online</h3>
               <p className="text-warm-gray mb-6">
@@ -51,7 +51,7 @@ export default function ContactPage() {
             {/* Option 2: Call */}
             <div className="card text-center group hover:scale-105 transition-all">
               <div className="bg-clinical-blue/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-clinical-blue transition-colors">
-                <Phone className="w-10 h-10 text-clinical-blue group-hover:text-white transition-colors" />
+                <Phone className="w-10 h-10 text-clinical-blue group-hover:text-white transition-colors" aria-hidden="true" />
               </div>
               <h3 className="text-2xl font-bold text-text-dark mb-4">Call Us</h3>
               <p className="text-warm-gray mb-6">
@@ -71,7 +71,7 @@ export default function ContactPage() {
             {/* Option 3: Email */}
             <div className="card text-center group hover:scale-105 transition-all">
               <div className="bg-soft-rose/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-soft-rose transition-colors">
-                <Mail className="w-10 h-10 text-soft-rose group-hover:text-white transition-colors" />
+                <Mail className="w-10 h-10 text-soft-rose group-hover:text-white transition-colors" aria-hidden="true" />
               </div>
               <h3 className="text-2xl font-bold text-text-dark mb-4">Email Us</h3>
               <p className="text-warm-gray mb-6">
@@ -97,7 +97,7 @@ export default function ContactPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="flex items-start space-x-4">
                 <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5" />
+                  <Clock className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-bold text-text-dark mb-2">15-Minute Call</h4>
@@ -109,7 +109,7 @@ export default function ContactPage() {
 
               <div className="flex items-start space-x-4">
                 <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-bold text-text-dark mb-2">Share Your Story</h4>
@@ -121,7 +121,7 @@ export default function ContactPage() {
 
               <div className="flex items-start space-x-4">
                 <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-5 h-5" />
+                  <Calendar className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-bold text-text-dark mb-2">Discuss Options</h4>
@@ -133,7 +133,7 @@ export default function ContactPage() {
 
               <div className="flex items-start space-x-4">
                 <div className="bg-primary-sage text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5" />
+                  <MapPin className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
                   <h4 className="font-bold text-text-dark mb-2">Next Steps</h4>
@@ -279,14 +279,14 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center justify-center"
             >
-              <Calendar className="mr-2 w-5 h-5" />
+              <Calendar className="mr-2 w-5 h-5" aria-hidden="true" />
               Book Free Consultation
             </a>
             <a
               href="tel:+19199999999"
               className="btn border-2 border-white hover:bg-white hover:text-primary-sage inline-flex items-center justify-center"
             >
-              <Phone className="mr-2 w-5 h-5" />
+              <Phone className="mr-2 w-5 h-5" aria-hidden="true" />
               Call (919) 999-9999
             </a>
           </div>
