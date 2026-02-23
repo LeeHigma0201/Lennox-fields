@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Download, Share2 } from 'lucide-react'
 import AssessmentLayout from '@/components/assessments/AssessmentLayout'
 
-const PHQ9_QUESTIONS = [
+const PHQ9_QUESTIONS_TEXT = [
   'Little interest or pleasure in doing things',
   'Feeling down, depressed, or hopeless',
   'Trouble falling or staying asleep, or sleeping too much',
@@ -24,33 +24,28 @@ const RESPONSE_OPTIONS = [
   { value: 3, label: 'Nearly every day' },
 ]
 
+const PHQ9_QUESTIONS = PHQ9_QUESTIONS_TEXT.map((text, index) => ({
+  id: `phq9-${index}`,
+  text,
+  options: RESPONSE_OPTIONS,
+}))
+
 export default function PHQ9Page() {
-  const [responses, setResponses] = useState<number[]>(new Array(9).fill(-1))
+  const [responses, setResponses] = useState<Record<string, number>>({})
   const [showResults, setShowResults] = useState(false)
 
-  const handleResponse = (questionIndex: number, value: number) => {
-    const newResponses = [...responses]
-    newResponses[questionIndex] = value
+  const handleComplete = (newResponses: Record<string, number>) => {
     setResponses(newResponses)
-  }
-
-  const calculateScore = () => {
-    return responses.reduce((sum, response) => sum + (response >= 0 ? response : 0), 0)
-  }
-
-  const isComplete = () => {
-    return responses.every((response) => response >= 0)
-  }
-
-  const handleSubmit = () => {
-    if (isComplete()) {
-      setShowResults(true)
-    }
+    setShowResults(true)
   }
 
   const handleReset = () => {
-    setResponses(new Array(9).fill(-1))
+    setResponses({})
     setShowResults(false)
+  }
+
+  const calculateScore = () => {
+    return Object.values(responses).reduce((sum, value) => sum + value, 0)
   }
 
   const getInterpretation = (score: number) => {
@@ -132,65 +127,25 @@ export default function PHQ9Page() {
 
   const score = calculateScore()
   const interpretation = getInterpretation(score)
-  const completionPercentage = (responses.filter((r) => r >= 0).length / 9) * 100
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Header */}
-      <section className="bg-white border-b border-warm-gray/20 py-8">
-        <div className="container-custom">
-          <Link
-            href="/tools/screening-tools"
-            className="inline-flex items-center text-primary-sage hover:text-earth-green mb-4 font-medium"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
-            Back to Screening Tools
-          </Link>
-          <h1 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
-            PHQ-9: Depression Screening
-          </h1>
-          <p className="text-lg text-warm-gray max-w-3xl">
-            The Patient Health Questionnaire (PHQ-9) is a widely-used clinical tool that screens for depression
-            severity. This validated assessment helps identify symptoms and guide treatment decisions.
-          </p>
-        </div>
-      </section>
-
-      {/* Instructions */}
-      <section className="section-padding bg-gradient-warm-bg">
-        <div className="container-custom max-w-4xl">
-          <div className="card">
-            <h2 className="text-2xl font-bold text-text-dark mb-4">Instructions</h2>
-            <p className="text-warm-gray mb-4">
-              Over the <strong>last 2 weeks</strong>, how often have you been bothered by any of the following problems?
-            </p>
-            <p className="text-warm-gray mb-4">
-              Please answer all 9 questions honestly. Your responses are private and not stored anywhere.
-            </p>
-            <div className="bg-primary-sage/10 border border-primary-sage/30 rounded-lg p-4">
-              <p className="text-sm text-text-dark">
-                <strong>Important:</strong> This is a screening tool, not a diagnosis. If you're concerned about your
-                mental health, please consult with a qualified mental health professional.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Assessment */}
-      <section className="section-padding">
         <div className="container-custom max-w-4xl">
           {!showResults ? (
             <AssessmentLayout
+              title="PHQ-9: Depression Screening"
+              description="The Patient Health Questionnaire (PHQ-9) is a widely-used clinical tool that screens for depression severity. This validated assessment helps identify symptoms and guide treatment decisions."
+              instructions="Over the last 2 weeks, how often have you been bothered by any of the following problems? Please answer all 9 questions honestly. Your responses are private and not stored anywhere."
               questions={PHQ9_QUESTIONS}
-              responseOptions={RESPONSE_OPTIONS}
-              responses={responses}
-              onResponse={handleResponse}
-              onSubmit={handleSubmit}
-              onReset={handleReset}
-              isComplete={isComplete()}
-              completionPercentage={completionPercentage}
-              questionPrefix="Over the last 2 weeks, how often have you been bothered by:"
+              onComplete={handleComplete}
+              scoringInfo={
+                <div className="bg-primary-sage/10 border border-primary-sage/30 rounded-lg p-4">
+                <p className="text-sm text-text-dark">
+                  <strong>Important:</strong> This is a screening tool, not a diagnosis. If you're concerned about your
+                  mental health, please consult with a qualified mental health professional.
+                </p>
+              </div>
+              }
             />
           ) : (
             <div className="space-y-8">
@@ -317,7 +272,6 @@ export default function PHQ9Page() {
             </div>
           )}
         </div>
-      </section>
 
       {/* About PHQ-9 */}
       <section className="section-padding bg-white">

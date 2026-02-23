@@ -49,7 +49,14 @@ export default function CBTThoughtRecordPage() {
     const newRecord: ThoughtRecord = {
       id: Date.now().toString(),
       date: new Date().toLocaleString(),
-      ...currentRecord as ThoughtRecord,
+      situation: currentRecord.situation || '',
+      emotions: currentRecord.emotions || '',
+      emotionIntensity: currentRecord.emotionIntensity || 5,
+      automaticThoughts: currentRecord.automaticThoughts || '',
+      evidence: currentRecord.evidence || '',
+      alternativeThought: currentRecord.alternativeThought || '',
+      outcome: currentRecord.outcome || '',
+      outcomeIntensity: currentRecord.outcomeIntensity || 5,
     }
     setSavedRecords([newRecord, ...savedRecords])
     // Reset form

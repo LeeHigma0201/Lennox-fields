@@ -1,4 +1,4 @@
-# Lennox Fields Clinical Mental Health Services
+au# Lennox Fields Clinical Mental Health Services
 
 A comprehensive mental health platform combining clinical services, educational resources, professional tools, and publishing capabilities.
 
