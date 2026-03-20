@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { Calendar, Phone, Mail, MessageCircle, Clock, MapPin } from 'lucide-react'
+import { siteConfig } from '@/content/site-config'
+import { pricingQuickRef, paymentMethods } from '@/content/services'
 
 export default function ContactPage() {
   return (
@@ -13,7 +15,7 @@ export default function ContactPage() {
           </h1>
           <p className="text-xl text-text-dark max-w-3xl mx-auto">
             Ready to take the first step? Book a complimentary 15-minute consultation
-            to discuss your needs and see if we're a good fit.
+            to discuss your needs and see if we&apos;re a good fit.
           </p>
         </div>
       </section>
@@ -36,7 +38,7 @@ export default function ContactPage() {
                 Use our secure online scheduling system to find a time that works for you.
               </p>
               <a
-                href="https://calendly.com/tamara-lennoxfields"
+                href={siteConfig.contact.calendlyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary w-full"
@@ -44,7 +46,7 @@ export default function ContactPage() {
                 Schedule Now
               </a>
               <p className="text-xs text-warm-gray mt-3">
-                Available 24/7 • Instant confirmation
+                Available 24/7 &bull; Instant confirmation
               </p>
             </div>
 
@@ -58,13 +60,13 @@ export default function ContactPage() {
                 Speak with us directly to schedule your consultation or ask questions.
               </p>
               <a
-                href="tel:+19199999999"
+                href={siteConfig.contact.phoneLink}
                 className="btn btn-primary w-full"
               >
-                (919) 999-9999
+                {siteConfig.contact.phone}
               </a>
               <p className="text-xs text-warm-gray mt-3">
-                Mon-Fri 9am-5pm EST
+                {siteConfig.contact.officeHours}
               </p>
             </div>
 
@@ -75,10 +77,10 @@ export default function ContactPage() {
               </div>
               <h3 className="text-2xl font-bold text-text-dark mb-4">Email Us</h3>
               <p className="text-warm-gray mb-6">
-                Send us your availability and we'll coordinate a consultation time.
+                Send us your availability and we&apos;ll coordinate a consultation time.
               </p>
               <a
-                href="mailto:tamara@lennoxfields.org?subject=Free Consultation Request"
+                href={`mailto:${siteConfig.contact.email}?subject=Free Consultation Request`}
                 className="btn btn-primary w-full"
               >
                 Send Email
@@ -138,7 +140,7 @@ export default function ContactPage() {
                 <div>
                   <h4 className="font-bold text-text-dark mb-2">Next Steps</h4>
                   <p className="text-warm-gray text-sm">
-                    If we're a good fit, we'll schedule your first full session.
+                    If we&apos;re a good fit, we&apos;ll schedule your first full session.
                   </p>
                 </div>
               </div>
@@ -154,39 +156,27 @@ export default function ContactPage() {
               <div>
                 <h4 className="font-bold text-text-dark mb-3">Therapy Services</h4>
                 <ul className="space-y-2 text-text-dark">
-                  <li className="flex justify-between">
-                    <span>Individual Therapy</span>
-                    <span className="font-semibold">$150/session</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Couples Therapy</span>
-                    <span className="font-semibold">$200/session</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Career Counseling</span>
-                    <span className="font-semibold">$125/session</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Clinical Supervision</span>
-                    <span className="font-semibold">$75/hour</span>
-                  </li>
+                  {pricingQuickRef.map((item) => (
+                    <li key={item.service} className="flex justify-between">
+                      <span>{item.service}</span>
+                      <span className="font-semibold">{item.price}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               <div>
                 <h4 className="font-bold text-text-dark mb-3">Payment Options</h4>
                 <ul className="space-y-2 text-text-dark">
-                  <li>✓ Credit/Debit cards accepted</li>
-                  <li>✓ HSA/FSA eligible</li>
-                  <li>✓ Monthly packages available</li>
-                  <li>✓ Superbills for insurance reimbursement</li>
-                  <li>✓ Sliding scale for qualified clients</li>
+                  {paymentMethods.map((method) => (
+                    <li key={method}>&#10003; {method}</li>
+                  ))}
                 </ul>
               </div>
             </div>
             <div className="mt-6 text-center">
               <Link href="/services" className="text-primary-sage hover:text-earth-green font-medium">
-                View All Services & Details →
+                View All Services & Details &rarr;
               </Link>
             </div>
           </div>
@@ -206,7 +196,7 @@ export default function ContactPage() {
                 Do you accept insurance?
               </h3>
               <p className="text-warm-gray">
-                I'm currently working on insurance credentialing. In the meantime, I provide superbills
+                I&apos;m currently working on insurance credentialing. In the meantime, I provide superbills
                 for out-of-network reimbursement. Many clients receive 50-80% reimbursement from their
                 insurance companies.
               </p>
@@ -217,8 +207,8 @@ export default function ContactPage() {
                 Do you offer telehealth sessions?
               </h3>
               <p className="text-warm-gray">
-                Yes! I offer both in-person and secure telehealth sessions for clients in North Carolina
-                and Indiana. Telehealth sessions are HIPAA-compliant and work great for many clients.
+                Yes! I offer both in-person and secure telehealth sessions for clients in {siteConfig.owner.licensedStates.join(' and ')}.
+                Telehealth sessions are HIPAA-compliant and work great for many clients.
               </p>
             </div>
 
@@ -244,10 +234,10 @@ export default function ContactPage() {
 
             <div className="bg-white rounded-lg p-6">
               <h3 className="text-xl font-bold text-text-dark mb-3">
-                How do I know if we're a good fit?
+                How do I know if we&apos;re a good fit?
               </h3>
               <p className="text-warm-gray">
-                That's what the free consultation is for! We'll discuss your needs, my approach, and
+                That&apos;s what the free consultation is for! We&apos;ll discuss your needs, my approach, and
                 whether I can effectively support your goals. The therapeutic relationship is crucial
                 to successful outcomes, so fit matters.
               </p>
@@ -256,7 +246,7 @@ export default function ContactPage() {
 
           <div className="text-center mt-12">
             <Link href="/faq" className="text-primary-sage hover:text-earth-green font-medium text-lg">
-              View All FAQs →
+              View All FAQs &rarr;
             </Link>
           </div>
         </div>
@@ -269,12 +259,12 @@ export default function ContactPage() {
             Ready to Begin Your Journey?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Taking the first step is often the hardest. I'm here to make it as easy as possible.
-            Schedule your free 15-minute consultation today—no commitment required.
+            Taking the first step is often the hardest. I&apos;m here to make it as easy as possible.
+            Schedule your free 15-minute consultation today&mdash;no commitment required.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://calendly.com/tamara-lennoxfields"
+              href={siteConfig.contact.calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center justify-center"
@@ -283,15 +273,15 @@ export default function ContactPage() {
               Book Free Consultation
             </a>
             <a
-              href="tel:+19199999999"
+              href={siteConfig.contact.phoneLink}
               className="btn border-2 border-white hover:bg-white hover:text-primary-sage inline-flex items-center justify-center"
             >
               <Phone className="mr-2 w-5 h-5" aria-hidden="true" />
-              Call (919) 999-9999
+              Call {siteConfig.contact.phone}
             </a>
           </div>
           <p className="mt-6 text-sm opacity-75">
-            Serving North Carolina and Indiana • Telehealth and in-person options available
+            Serving {siteConfig.owner.licensedStates.join(' and ')} &bull; Telehealth and in-person options available
           </p>
         </div>
       </section>

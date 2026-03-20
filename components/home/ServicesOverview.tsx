@@ -1,50 +1,6 @@
 import Link from 'next/link'
-import { Heart, Users, Sprout, Briefcase, Brain, Shield } from 'lucide-react'
-
-const services = [
-  {
-    icon: Heart,
-    title: 'Individual Therapy',
-    description: 'One-on-one support for anxiety, depression, trauma, and life transitions. Evidence-based approaches tailored to your needs.',
-    href: '/services/individual-therapy',
-    color: 'text-primary-sage',
-  },
-  {
-    icon: Users,
-    title: 'Couples Therapy',
-    description: 'Strengthen your relationship through improved communication, conflict resolution, and deeper connection.',
-    href: '/services/couples-therapy',
-    color: 'text-soft-rose',
-  },
-  {
-    icon: Sprout,
-    title: 'Teen & Adolescent',
-    description: 'Specialized care for young people navigating identity, peer relationships, academic stress, and emotional challenges.',
-    href: '/services/teen-adolescent',
-    color: 'text-earth-green',
-  },
-  {
-    icon: Briefcase,
-    title: 'Career Counseling',
-    description: 'Discover your path with career assessments, transition support, and professional development guidance.',
-    href: '/services/career-counseling',
-    color: 'text-accent-gold',
-  },
-  {
-    icon: Brain,
-    title: 'Substance Use Support',
-    description: 'Compassionate, evidence-based treatment using ASAM criteria for appropriate level of care assessment.',
-    href: '/services/substance-use',
-    color: 'text-clinical-blue',
-  },
-  {
-    icon: Shield,
-    title: 'Clinical Supervision',
-    description: 'Professional supervision for associates and interns pursuing licensure in North Carolina and Indiana.',
-    href: '/professional/supervision',
-    color: 'text-warm-gray',
-  },
-]
+import { servicesOverview } from '@/content/services'
+import { iconMap, type IconName } from '@/content/icons'
 
 export default function ServicesOverview() {
   return (
@@ -55,14 +11,14 @@ export default function ServicesOverview() {
             Comprehensive Mental Health Services
           </h2>
           <p className="text-xl text-warm-gray max-w-3xl mx-auto">
-            Whether you're seeking individual support, couples counseling, or professional development,
-            we're here to support your journey.
+            Whether you&apos;re seeking individual support, couples counseling, or professional development,
+            we&apos;re here to support your journey.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service) => {
-            const Icon = service.icon
+          {servicesOverview.map((service) => {
+            const Icon = iconMap[service.icon as IconName]
             return (
               <Link
                 key={service.title}

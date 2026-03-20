@@ -1,0 +1,74 @@
+// ============================================================
+// SITE CONFIGURATION
+// Edit this file to change your business info, contact details,
+// social media links, and SEO settings.
+// ============================================================
+
+export const siteConfig = {
+  // --- Business Info ---
+  businessName: 'Lennox Fields',
+  businessFullName: 'Lennox Fields Clinical Mental Health Services',
+  legalName: 'Lennox Fields Clinical Mental Health Services LLC',
+  tagline: 'Clinical Mental Health Services',
+  description: 'Evidence-based mental health care with compassion at its core',
+  url: 'https://lennoxfields.org',
+
+  // --- Owner / Therapist Info ---
+  owner: {
+    name: 'Tamara Walls',
+    credentials: 'M.Ed, LPCA',
+    fullTitle: 'Tamara Walls, M.Ed, LPCA',
+    role: 'Licensed Professional Counselor Associate',
+    licensedStates: ['North Carolina', 'Indiana'],
+    licensedStatesShort: ['NC', 'IN'],
+  },
+
+  // --- Contact Info ---
+  // Update these with your real contact details
+  contact: {
+    email: 'tamara@lennoxfields.org',
+    phone: '(919) 999-9999',
+    phoneLink: 'tel:+19199999999', // used for click-to-call links
+    location: 'Licensed in North Carolina & Indiana',
+    officeHours: 'Mon-Fri 9am-5pm EST',
+    calendlyUrl: 'https://calendly.com/tamara-lennoxfields',
+  },
+
+  // --- Social Media Links ---
+  // Set to '' (empty string) to hide a social link
+  social: {
+    linkedin: '', // e.g. 'https://linkedin.com/in/tamara-walls'
+    facebook: '', // e.g. 'https://facebook.com/lennoxfields'
+    instagram: '', // e.g. 'https://instagram.com/lennoxfields'
+    twitter: '', // e.g. 'https://twitter.com/lennoxfields'
+  },
+
+  // --- Logo ---
+  logo: {
+    src: '/images/LFLogo.jpeg',
+    alt: 'Lennox Fields Logo',
+  },
+
+  // --- SEO Keywords ---
+  // These help people find your site on Google
+  keywords: [
+    'mental health',
+    'therapy',
+    'counseling',
+    'LPCA',
+    'clinical mental health',
+    'career counseling',
+    'couples therapy',
+    'North Carolina',
+    'Indiana',
+    'Tamara Walls',
+  ],
+
+  // --- Crisis Info ---
+  // This appears in the footer - do not remove
+  crisis: {
+    message: 'If you or someone you know is in crisis, please call the National Suicide Prevention Lifeline at',
+    phone: '988',
+    suffix: 'or visit your nearest emergency room.',
+  },
+}

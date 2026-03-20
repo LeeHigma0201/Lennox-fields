@@ -2,43 +2,33 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { siteConfig } from '@/content/site-config'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lennoxfields.org'),
-  title: 'Lennox Fields Clinical Mental Health Services',
-  description: 'Evidence-based mental health care with compassion at its core. Individual therapy, couples counseling, career guidance, and professional resources.',
-  keywords: [
-    'mental health',
-    'therapy',
-    'counseling',
-    'LPCA',
-    'clinical mental health',
-    'career counseling',
-    'couples therapy',
-    'North Carolina',
-    'Indiana',
-    'Tamara Walls'
-  ],
-  authors: [{ name: 'Tamara Walls, M.Ed, LPCA' }],
+  metadataBase: new URL(siteConfig.url),
+  title: siteConfig.businessFullName,
+  description: `${siteConfig.description}. Individual therapy, couples counseling, career guidance, and professional resources.`,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.owner.fullTitle }],
   openGraph: {
-    title: 'Lennox Fields Clinical Mental Health Services',
-    description: 'Evidence-based mental health care with compassion at its core',
+    title: siteConfig.businessFullName,
+    description: siteConfig.description,
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: '/images/LFLogo.jpeg',
+        url: siteConfig.logo.src,
         width: 1200,
         height: 630,
-        alt: 'Lennox Fields Clinical Mental Health Services',
+        alt: siteConfig.businessFullName,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lennox Fields Clinical Mental Health Services',
-    description: 'Evidence-based mental health care with compassion at its core',
-    images: ['/images/LFLogo.jpeg'],
+    title: siteConfig.businessFullName,
+    description: siteConfig.description,
+    images: [siteConfig.logo.src],
   },
   robots: {
     index: true,

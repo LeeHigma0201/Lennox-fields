@@ -1,50 +1,7 @@
 import Link from 'next/link'
-import { FileText, CheckSquare, BookOpen, Shield, Brain, ArrowRight } from 'lucide-react'
-
-const resources = [
-  {
-    icon: Brain,
-    title: 'Free Screening Tools',
-    description: 'Self-assessments for depression, anxiety, ADHD, autism, and PTSD with instant scoring and interpretation.',
-    href: '/tools/screening-tools',
-    color: 'bg-clinical-blue',
-  },
-  {
-    icon: FileText,
-    title: 'Therapeutic Worksheets',
-    description: 'Downloadable worksheets for CBT, DBT, mindfulness, and more. Perfect for clients and therapists.',
-    href: '/resources/worksheets',
-    color: 'bg-primary-sage',
-  },
-  {
-    icon: CheckSquare,
-    title: 'Habit Trackers',
-    description: 'Customizable trackers for mood, sleep, exercise, and self-care routines.',
-    href: '/resources/habit-trackers',
-    color: 'bg-earth-green',
-  },
-  {
-    icon: BookOpen,
-    title: 'Journal Prompts',
-    description: 'Guided journaling for gratitude, self-discovery, trauma processing, and personal growth.',
-    href: '/resources/journals',
-    color: 'bg-soft-rose',
-  },
-  {
-    icon: Shield,
-    title: 'Safety Planning',
-    description: 'Comprehensive crisis and safety planning tools for mental health emergencies.',
-    href: '/tools/safety-planning',
-    color: 'bg-alert-red',
-  },
-  {
-    icon: Brain,
-    title: 'Treatment Planning',
-    description: 'Professional-grade treatment plan generator with measurable goals and evidence-based interventions.',
-    href: '/tools/treatment-planning',
-    color: 'bg-accent-gold',
-  },
-]
+import { ArrowRight } from 'lucide-react'
+import { resources } from '@/content/home-page'
+import { iconMap, type IconName } from '@/content/icons'
 
 export default function ResourcesHighlight() {
   return (
@@ -62,7 +19,7 @@ export default function ResourcesHighlight() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {resources.map((resource) => {
-            const Icon = resource.icon
+            const Icon = iconMap[resource.icon as IconName]
             return (
               <div key={resource.title} className="card group hover:scale-105 transition-transform duration-200">
                 <div className={`w-14 h-14 ${resource.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>

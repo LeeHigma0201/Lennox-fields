@@ -3,45 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, ChevronDown } from 'lucide-react'
-
-const navigation = [
-  {
-    name: 'Services',
-    href: '/services',
-    submenu: [
-      { name: 'Individual Therapy', href: '/services/individual-therapy' },
-      { name: 'Couples Therapy', href: '/services/couples-therapy' },
-      { name: 'Family Therapy', href: '/services/family-therapy' },
-      { name: 'Teen & Adolescent', href: '/services/teen-adolescent' },
-      { name: 'Career Counseling', href: '/services/career-counseling' },
-      { name: 'Substance Use', href: '/services/substance-use' },
-    ],
-  },
-  {
-    name: 'Resources',
-    href: '/resources',
-    submenu: [
-      { name: 'Screening Tools', href: '/tools/screening-tools' },
-      { name: 'Worksheets', href: '/resources/worksheets' },
-      { name: 'Habit Trackers', href: '/resources/habit-trackers' },
-      { name: 'Journals', href: '/resources/journals' },
-      { name: 'Safety Planning', href: '/tools/safety-planning' },
-    ],
-  },
-  {
-    name: 'Professional Tools',
-    href: '/professional',
-    submenu: [
-      { name: 'Clinical Supervision', href: '/professional/supervision' },
-      { name: 'Treatment Planning', href: '/tools/treatment-planning' },
-      { name: 'Notes Templates', href: '/tools/notes-templates' },
-      { name: 'Billing Tracker', href: '/professional/billing-tracker' },
-      { name: 'Licensing Guides', href: '/professional/licensing-guides' },
-    ],
-  },
-  { name: 'Books', href: '/books' },
-  { name: 'About', href: '/about' },
-]
+import { navigation } from '@/content/navigation'
+import { siteConfig } from '@/content/site-config'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -59,7 +22,6 @@ export default function Header() {
     }
   }, [mobileMenuOpen])
 
-  // Close mobile menu handler
   const closeMobileMenu = () => {
     setMobileMenuOpen(false)
   }
@@ -71,15 +33,15 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <img
-              src="/images/LFLogo.jpeg"
-              alt="Lennox Fields Logo"
+              src={siteConfig.logo.src}
+              alt={siteConfig.logo.alt}
               className="w-12 h-12 object-contain"
             />
             <div className="hidden md:block">
               <span className="font-heading text-xl font-bold text-text-dark">
-                Lennox Fields
+                {siteConfig.businessName}
               </span>
-              <p className="text-xs text-warm-gray">Clinical Mental Health Services</p>
+              <p className="text-xs text-warm-gray">{siteConfig.tagline}</p>
             </div>
           </Link>
 
@@ -97,7 +59,6 @@ export default function Header() {
                   {item.submenu && <ChevronDown className="ml-1 w-4 h-4" />}
                 </Link>
 
-                {/* Dropdown Menu */}
                 {item.submenu && openSubmenu === item.name && (
                   <div
                     className="absolute top-full left-0 mt-2 w-56 bg-white shadow-medium rounded-lg py-2"

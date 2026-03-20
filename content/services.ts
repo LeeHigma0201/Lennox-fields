@@ -1,0 +1,188 @@
+// ============================================================
+// SERVICES
+// Edit this file to update your therapy services, descriptions,
+// pricing, and details shown on the Services page.
+// ============================================================
+
+export const servicesPageHeader = {
+  title: 'Our Services',
+  subtitle:
+    'Comprehensive mental health services tailored to your unique needs. All services available via telehealth or in-person in North Carolina and Indiana.',
+}
+
+// Each service needs: title, slug (URL-friendly name), description, details (bullet points), and price.
+// The "icon" field accepts: "Heart", "Users", "Home", "Sprout", "Briefcase", "Brain", "Shield"
+export const services = [
+  {
+    icon: 'Heart' as const,
+    title: 'Individual Therapy',
+    slug: 'individual-therapy',
+    description:
+      'One-on-one support for anxiety, depression, trauma, and life transitions.',
+    details: [
+      'Personalized treatment plans',
+      'Evidence-based approaches (CBT, EMDR)',
+      'Flexible scheduling options',
+      'Telehealth and in-person sessions',
+    ],
+    price: '$150 per session',
+  },
+  {
+    icon: 'Users' as const,
+    title: 'Couples Therapy',
+    slug: 'couples-therapy',
+    description:
+      'Strengthen your relationship through improved communication and connection.',
+    details: [
+      'Communication skills development',
+      'Conflict resolution strategies',
+      'Attachment-based therapy',
+      'Pre-marital counseling available',
+    ],
+    price: '$200 per session',
+  },
+  {
+    icon: 'Home' as const,
+    title: 'Family Therapy',
+    slug: 'family-therapy',
+    description:
+      'Navigate family dynamics and build healthier relationships together.',
+    details: [
+      'Systems-based approach',
+      'Parent-child relationship support',
+      'Blended family counseling',
+      'Family crisis intervention',
+    ],
+    price: '$200 per session',
+  },
+  {
+    icon: 'Sprout' as const,
+    title: 'Teen & Adolescent Therapy',
+    slug: 'teen-adolescent',
+    description:
+      'Specialized support for young people navigating the challenges of adolescence.',
+    details: [
+      'Age-appropriate interventions',
+      'School and academic support',
+      'Identity and peer relationships',
+      'Family involvement when appropriate',
+    ],
+    price: '$150 per session',
+  },
+  {
+    icon: 'Briefcase' as const,
+    title: 'Career Counseling',
+    slug: 'career-counseling',
+    description:
+      'Discover your professional path with comprehensive career guidance.',
+    details: [
+      'Career assessments (Strong, MBTI)',
+      'Job search and interview prep',
+      'Career transition support',
+      'Professional development planning',
+    ],
+    price: '$125 per session',
+  },
+  {
+    icon: 'Brain' as const,
+    title: 'Substance Use Disorder Treatment',
+    slug: 'substance-use',
+    description:
+      'Compassionate, evidence-based treatment using ASAM criteria.',
+    details: [
+      'ASAM level of care assessment',
+      'Harm reduction approach',
+      'Relapse prevention planning',
+      'Family education and support',
+    ],
+    price: 'Contact for pricing',
+  },
+]
+
+// --- Home page services overview ---
+// These are the services shown in the grid on the homepage.
+// Each entry links to a service page.
+// The "color" field accepts Tailwind text color classes.
+export const servicesOverview = [
+  {
+    icon: 'Heart' as const,
+    title: 'Individual Therapy',
+    description:
+      'One-on-one support for anxiety, depression, trauma, and life transitions. Evidence-based approaches tailored to your needs.',
+    href: '/services/individual-therapy',
+    color: 'text-primary-sage',
+  },
+  {
+    icon: 'Users' as const,
+    title: 'Couples Therapy',
+    description:
+      'Strengthen your relationship through improved communication, conflict resolution, and deeper connection.',
+    href: '/services/couples-therapy',
+    color: 'text-soft-rose',
+  },
+  {
+    icon: 'Sprout' as const,
+    title: 'Teen & Adolescent',
+    description:
+      'Specialized care for young people navigating identity, peer relationships, academic stress, and emotional challenges.',
+    href: '/services/teen-adolescent',
+    color: 'text-earth-green',
+  },
+  {
+    icon: 'Briefcase' as const,
+    title: 'Career Counseling',
+    description:
+      'Discover your path with career assessments, transition support, and professional development guidance.',
+    href: '/services/career-counseling',
+    color: 'text-accent-gold',
+  },
+  {
+    icon: 'Brain' as const,
+    title: 'Substance Use Support',
+    description:
+      'Compassionate, evidence-based treatment using ASAM criteria for appropriate level of care assessment.',
+    href: '/services/substance-use',
+    color: 'text-clinical-blue',
+  },
+  {
+    icon: 'Shield' as const,
+    title: 'Clinical Supervision',
+    description:
+      'Professional supervision for associates and interns pursuing licensure in North Carolina and Indiana.',
+    href: '/professional/supervision',
+    color: 'text-warm-gray',
+  },
+]
+
+// --- Insurance & Payment Info ---
+export const paymentInfo = {
+  paymentOptions: [
+    'Credit/debit cards accepted',
+    'HSA/FSA eligible',
+    'Payment plans available',
+    'Sliding scale for qualified clients',
+  ],
+  insuranceNote:
+    'We are currently working on insurance credentialing. In the meantime:',
+  insuranceDetails: [
+    'Superbills provided for out-of-network reimbursement',
+    'Contact your insurance to verify benefits',
+    "We'll help with paperwork",
+  ],
+}
+
+// --- Pricing quick reference (shown on Contact page) ---
+export const pricingQuickRef = [
+  { service: 'Individual Therapy', price: '$150/session' },
+  { service: 'Couples Therapy', price: '$200/session' },
+  { service: 'Career Counseling', price: '$125/session' },
+  { service: 'Clinical Supervision', price: '$75/hour' },
+]
+
+export const paymentMethods = [
+  'Credit/Debit cards accepted',
+  'HSA/FSA eligible',
+  'Monthly packages available',
+  'Superbills for insurance reimbursement',
+  'Sliding scale for qualified clients',
+]
