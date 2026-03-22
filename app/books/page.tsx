@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BookOpen, Heart, Users, ShoppingCart, Download } from 'lucide-react'
+import { BookOpen, Heart, Users, ExternalLink } from 'lucide-react'
 import { books, booksPageHeader, therapeuticTools, companionResources, howToUse } from '@/content/books'
 
 export default function BooksPage() {
@@ -34,14 +34,15 @@ export default function BooksPage() {
 
                 {/* Book Info */}
                 <div className="mb-4">
-                  <p className="text-sm text-warm-gray mb-2">Ages: {book.ageRange}</p>
+                  {book.ageRange && (
+                    <p className="text-sm text-warm-gray mb-2">Ages: {book.ageRange}</p>
+                  )}
                   <h3 className="text-xl font-bold text-text-dark mb-3">{book.title}</h3>
                   <p className="text-warm-gray mb-4 leading-relaxed">{book.description}</p>
                 </div>
 
                 {/* Topics */}
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-text-dark mb-2">Topics Covered:</p>
                   <div className="flex flex-wrap gap-2">
                     {book.topics.map((topic) => (
                       <span key={topic} className="px-3 py-1 bg-cream text-text-dark text-xs rounded-full">
@@ -63,28 +64,25 @@ export default function BooksPage() {
                   </div>
                 </div>
 
-                {/* Price & CTA */}
+                {/* CTA */}
                 <div className="mt-auto pt-6 border-t border-warm-gray/20">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-sm text-warm-gray">Starting at</p>
-                      <p className="text-2xl font-bold text-primary-sage">${book.price}</p>
-                    </div>
-                    <button className="btn btn-primary inline-flex items-center">
-                      <ShoppingCart className="mr-2 w-4 h-4" />
-                      Purchase
-                    </button>
-                  </div>
-                  <Link
-                    href={`/books/${book.id}`}
-                    className="text-primary-sage hover:text-earth-green text-sm font-medium"
+                  <a
+                    href={book.amazonUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary w-full inline-flex items-center justify-center"
                   >
-                    Preview & Learn More &rarr;
-                  </Link>
+                    <ExternalLink className="mr-2 w-4 h-4" />
+                    View on Amazon
+                  </a>
                 </div>
               </div>
             ))}
           </div>
+
+          <p className="text-center text-warm-gray mt-8 text-sm">
+            More books coming soon — stay tuned for new illustrations and stories!
+          </p>
         </div>
       </section>
 
@@ -166,7 +164,7 @@ export default function BooksPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding gradient-sage-bg text-white text-center">
+      <section className="section-padding bg-gradient-to-br from-primary-sage to-earth-green text-white text-center">
         <div className="container-custom max-w-3xl">
           <h2 className="text-4xl font-bold mb-6">
             Help a Child Understand Their World
@@ -175,16 +173,6 @@ export default function BooksPage() {
             These books are more than stories&mdash;they&apos;re tools for emotional growth,
             resilience, and healing.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center">
-              <ShoppingCart className="mr-2 w-5 h-5" />
-              Shop All Books
-            </button>
-            <button className="btn border-2 border-white hover:bg-white hover:text-primary-sage inline-flex items-center">
-              <Download className="mr-2 w-5 h-5" />
-              Download Free Sample
-            </button>
-          </div>
         </div>
       </section>
     </div>

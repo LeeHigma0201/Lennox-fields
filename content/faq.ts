@@ -18,7 +18,7 @@ export const faqs = [
     questions: [
       {
         q: 'How do I schedule my first appointment?',
-        a: "You can schedule your free 15-minute consultation through our online booking system (Calendly), by calling (919) 999-9999, or by emailing tamara@lennoxfields.org. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session.",
+        a: "You can schedule your free 15-minute consultation through our contact form or by emailing tamara@lennoxfields.org. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session. Please allow two business days for a response.",
       },
       {
         q: 'What should I expect in my first session?',
@@ -68,7 +68,7 @@ export const faqs = [
       },
       {
         q: 'Do you offer telehealth sessions?',
-        a: 'Yes! I offer secure, HIPAA-compliant telehealth sessions for clients in North Carolina and Indiana. Telehealth sessions work great for many clients and offer flexibility and convenience.',
+        a: 'Yes! I offer secure, HIPAA-compliant telehealth sessions for clients in Kentucky. Telehealth sessions work great for many clients and offer flexibility and convenience.',
       },
       {
         q: 'Can I see you in person?',
@@ -98,11 +98,11 @@ export const faqs = [
     questions: [
       {
         q: 'What issues do you specialize in?',
-        a: 'I specialize in anxiety, depression, trauma (using EMDR), relationship issues, career transitions, substance use disorders, and life transitions. I work with individuals, couples, families, teens, and adolescents.',
+        a: 'I specialize in ADHD, autism, and complex PTSD — primarily working with women. I also support clients with anxiety, depression, career transitions, substance use disorders, and relationship challenges. I work with individuals, couples, and families.',
       },
       {
         q: 'What therapy approaches do you use?',
-        a: "I primarily use Cognitive Behavioral Therapy (CBT), Eye Movement Desensitization and Reprocessing (EMDR), and family systems therapy. I tailor my approach to each client's unique needs and preferences.",
+        a: "I primarily use Dialectical Behavior Therapy (DBT), Cognitive Behavioral Therapy (CBT), Acceptance and Commitment Therapy (ACT), and the Trauma-Conscious Model (TCM). I tailor my approach to each client's unique needs and preferences.",
       },
       {
         q: 'Do you prescribe medication?',
@@ -110,7 +110,7 @@ export const faqs = [
       },
       {
         q: 'Do you offer clinical supervision?',
-        a: 'Yes! I provide clinical supervision for associates and interns pursuing licensure in North Carolina and Indiana. Supervision includes case consultation, skill development, and ethical guidance.',
+        a: 'Yes! I provide clinical supervision for associates and interns pursuing licensure in Kentucky. Supervision includes case consultation, skill development, and ethical guidance.',
       },
     ],
   },
@@ -119,7 +119,7 @@ export const faqs = [
     questions: [
       {
         q: 'What are your credentials?',
-        a: 'I hold a Master of Education (M.Ed) in Clinical Mental Health Counseling and am a Licensed Professional Counselor Associate (LPCA) in North Carolina and Indiana. I have specialized training in CBT, EMDR, couples therapy, and career counseling.',
+        a: 'I am a Licensed Professional Counselor Associate (LPCA) in Kentucky with additional certifications in Dialectical Behavior Therapy (C-DBT) and Trauma-Conscious Model (TCM). I specialize in ADHD, autism, and complex PTSD.',
       },
       {
         q: 'What does LPCA mean?',
@@ -127,7 +127,7 @@ export const faqs = [
       },
       {
         q: 'In which states are you licensed?',
-        a: "I'm licensed to practice in North Carolina and Indiana. I can only provide services (including telehealth) to clients physically located in these states.",
+        a: "I'm licensed to practice in Kentucky. I can only provide services (including telehealth) to clients physically located in Kentucky.",
       },
     ],
   },

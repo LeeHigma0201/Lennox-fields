@@ -6,7 +6,7 @@
 
 // --- Page Header ---
 export const aboutHeader = {
-  title: 'Meet Tamara Walls, M.Ed, LPCA',
+  title: 'Meet Tamara Walls, LPCA',
   subtitle: 'Founder of Lennox Fields Clinical Mental Health Services',
   intro:
     'I believe that everyone deserves access to compassionate, effective mental health care that honors their unique journey. My approach combines evidence-based practices with genuine warmth to create a safe space for healing and growth.',
@@ -27,16 +27,22 @@ export const myStory = {
 // --- Credentials ---
 export const credentials = [
   {
-    title: 'Master of Education (M.Ed)',
-    subtitle: 'Clinical Mental Health Counseling',
+    title: 'Licensed Professional Counselor Associate (LPCA)',
+    subtitle: 'Licensed in Kentucky',
     description:
-      'Comprehensive training in evidence-based therapeutic approaches, clinical assessment, diagnosis, and treatment planning.',
+      'Active licensure in good standing, providing evidence-based counseling services.',
   },
   {
-    title: 'Licensed Professional Counselor Associate (LPCA)',
-    subtitle: 'Licensed in North Carolina & Indiana',
+    title: 'Certified in Dialectical Behavior Therapy (C-DBT)',
+    subtitle: 'Specialized Training',
     description:
-      'Active licensure in good standing, working toward full Licensed Professional Counselor (LPC) status.',
+      'Advanced certification in DBT for treating complex trauma, emotional dysregulation, and interpersonal challenges.',
+  },
+  {
+    title: 'Trauma-Conscious Model (TCM)',
+    subtitle: 'Program Builder & Practitioner',
+    description:
+      'Developed and implemented TCM programs integrating trauma-informed and neurodiversity-affirming approaches.',
   },
 ]
 
@@ -45,33 +51,33 @@ export const credentials = [
 export const specializedTraining = [
   {
     icon: 'Brain' as const,
-    title: 'Cognitive Behavioral Therapy (CBT)',
-    description: 'Evidence-based treatment for anxiety, depression, and trauma',
+    title: 'Dialectical Behavior Therapy (DBT)',
+    description: 'Certified DBT practitioner — emotional regulation, distress tolerance, and interpersonal effectiveness',
   },
   {
     icon: 'Heart' as const,
-    title: 'EMDR Therapy',
-    description: 'Eye Movement Desensitization and Reprocessing for trauma',
+    title: 'Trauma-Conscious Model (TCM)',
+    description: 'Built and implemented TCM programs for complex trauma processing',
+  },
+  {
+    icon: 'Lightbulb' as const,
+    title: 'ADHD & Autism Support',
+    description: 'Neurodiversity-affirming assessment and support for women',
+  },
+  {
+    icon: 'Target' as const,
+    title: 'Complex PTSD',
+    description: 'Specialized approaches for developmental and complex trauma',
   },
   {
     icon: 'Users' as const,
     title: 'Couples & Family Systems',
-    description: 'Systemic approaches to relationship and family therapy',
+    description: 'Systemic approaches to relationship and family counseling',
   },
   {
-    icon: 'Target' as const,
+    icon: 'Brain' as const,
     title: 'Career Counseling',
     description: 'Career development, assessment, and transition support',
-  },
-  {
-    icon: 'Lightbulb' as const,
-    title: 'Trauma-Informed Care',
-    description: 'Understanding and addressing the impact of trauma',
-  },
-  {
-    icon: 'Heart' as const,
-    title: 'Substance Use Treatment',
-    description: 'ASAM criteria and evidence-based addiction treatment',
   },
 ]
 
@@ -122,24 +128,24 @@ export const beyondClinical = [
 
 // --- About Preview on Home Page ---
 export const aboutPreview = {
-  title: 'Meet Tamara Walls, M.Ed, LPCA',
+  title: 'Meet Tamara Walls, LPCA',
   paragraphs: [
-    'My journey into mental health counseling began with a deep belief that everyone deserves compassionate, effective support during life\'s challenges. With a Master of Education in Clinical Mental Health Counseling and licensure as a Professional Counselor Associate, I bring both expertise and heart to every session.',
-    "I specialize in helping individuals, couples, and families navigate anxiety, depression, relationship challenges, career transitions, and trauma. Beyond traditional therapy, I'm passionate about making mental health resources accessible to everyone—which is why Lennox Fields offers a comprehensive library of tools, assessments, and educational materials.",
+    "I'm a Licensed Professional Counselor Associate, Certified DBT practitioner, children's bibliotherapy author, and an avid advocate for vulnerable populations. My work is deep, and it's personal.",
+    "I specialize in ADHD, autism, and complex PTSD — primarily working with women. I built TCM programs, I write therapeutic books for kids, and I've been creating clinical tools and resources for over a decade. Lennox Fields is where all of that lives.",
   ],
   credentials: [
-    { label: 'M.Ed', detail: 'Clinical Mental Health Counseling' },
-    { label: 'LPCA', detail: 'Licensed in NC & IN' },
-    { label: 'Specialized', detail: 'CBT, EMDR, Career' },
+    { label: 'LPCA', detail: 'Licensed in Kentucky' },
+    { label: 'C-DBT', detail: 'Certified DBT Practitioner' },
+    { label: 'TCM', detail: 'Program Builder' },
   ],
   approachTitle: 'My Approach',
   approachText:
-    "I believe therapy should be a collaborative partnership. Together, we'll identify your goals, build on your strengths, and develop practical strategies for lasting change. You're the expert on your life—I'm here to provide guidance, support, and evidence-based tools.",
+    "I believe therapy should be a collaborative partnership. Together, we'll identify your goals, build on your strengths, and develop practical strategies for lasting change. You're the expert on your life — I'm here to provide guidance, support, and evidence-based tools.",
   trainingList: [
-    'Cognitive Behavioral Therapy (CBT)',
-    'Eye Movement Desensitization and Reprocessing (EMDR)',
-    'Couples and Family Systems Therapy',
+    'Dialectical Behavior Therapy (DBT)',
+    'Trauma-Conscious Model (TCM)',
+    'ADHD & Autism Assessment and Support',
+    'Complex PTSD and Trauma Processing',
     'Career Development and Counseling',
-    'Trauma-Informed Care',
   ],
 }

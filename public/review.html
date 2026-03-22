@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lennox Fields — Site Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --sage: #75856f;
+    --sage-light: #e8ede6;
+    --sand: #b49a83;
+    --sand-light: #f5efe9;
+    --rose: #C09191;
+    --rose-light: #f5e8e8;
+    --cream: #faf8f5;
+    --dark: #2d3a2e;
+    --text: #3a3a3a;
+    --text-light: #6b6b6b;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Welcome Screen */
+  .welcome-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--sage-light) 0%, var(--cream) 40%, var(--rose-light) 100%);
+  }
+
+  .welcome-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(117,133,111,0.3);
+  }
+
+  .welcome-logo svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+  }
+
+  .welcome-screen h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .welcome-screen .subtitle {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    max-width: 320px;
+  }
+
+  .site-link-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .site-link-card .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .site-link-card a {
+    color: var(--sage);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1rem;
+    word-break: break-all;
+  }
+
+  .site-link-card .hint {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+  }
+
+  .btn-primary {
+    background: var(--sage);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(117,133,111,0.3);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(117,133,111,0.3);
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--white);
+    padding: 0.75rem 1.25rem 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+
+  .progress-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--sage);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .progress-count {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--sage-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage), var(--sand));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+
+  /* Review Container */
+  .review-container {
+    display: none;
+    padding-top: 4.5rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Section Cards */
+  .section-card {
+    display: none;
+    margin: 0 1rem;
+    animation: fadeUp 0.35s ease;
+  }
+
+  .section-card.active {
+    display: block;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    text-align: center;
+    padding: 1.5rem 0 1rem;
+  }
+
+  .section-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .section-header .page-url {
+    font-size: 0.8rem;
+    color: var(--sage);
+    font-weight: 500;
+  }
+
+  /* What's Here Card */
+  .whats-here {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .whats-here .card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .whats-here ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .whats-here li {
+    padding: 0.4rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .whats-here li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--sage);
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  /* Feedback Section */
+  .feedback-section {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .feedback-section .card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rose);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .rating-group {
+    margin-bottom: 1rem;
+  }
+
+  .rating-group .question {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .rating-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .rating-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--sage-light);
+    border-radius: 50px;
+    background: var(--white);
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .rating-btn.selected {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: white;
+    font-weight: 500;
+  }
+
+  .rating-btn:active {
+    transform: scale(0.95);
+  }
+
+  .notes-input {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.85rem 1rem;
+    border: 2px solid var(--sage-light);
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--cream);
+    resize: vertical;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .notes-input:focus {
+    outline: none;
+    border-color: var(--sage);
+    background: var(--white);
+  }
+
+  .notes-input::placeholder {
+    color: #aaa;
+  }
+
+  /* Navigation Buttons */
+  .nav-buttons {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem 0 1.5rem;
+  }
+
+  .btn-back {
+    flex: 0 0 auto;
+    padding: 0.85rem 1.25rem;
+    border: 2px solid var(--sage-light);
+    border-radius: 50px;
+    background: var(--white);
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-next {
+    flex: 1;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    background: var(--sage);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(117,133,111,0.25);
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.15s;
+  }
+
+  .btn-next:active { transform: scale(0.97); }
+
+  /* Summary Screen */
+  .summary-screen {
+    display: none;
+    padding: 5rem 1.25rem 2rem;
+  }
+
+  .summary-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .summary-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .summary-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--dark);
+    margin-bottom: 0.3rem;
+  }
+
+  .summary-card .summary-rating {
+    display: inline-block;
+    padding: 0.2rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .summary-card .summary-rating.love { background: var(--sage-light); color: var(--sage); }
+  .summary-card .summary-rating.tweak { background: #fff3e0; color: #e67e22; }
+  .summary-card .summary-rating.redo { background: var(--rose-light); color: #c0392b; }
+  .summary-card .summary-rating.skip { background: #f0f0f0; color: #999; }
+
+  .summary-card .summary-notes {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .btn-send-summary {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--sage), var(--sand));
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 4px 16px rgba(117,133,111,0.3);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-copy-summary {
+    width: 100%;
+    padding: 0.85rem;
+    border: 2px solid var(--sage-light);
+    border-radius: 50px;
+    background: var(--white);
+    color: var(--sage);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .copied-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--dark);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 200;
+  }
+
+  .copied-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* Priority Markers */
+  .priority-row {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .priority-btn {
+    padding: 0.35rem 0.75rem;
+    border: 1.5px solid var(--sage-light);
+    border-radius: 50px;
+    background: var(--white);
+    font-size: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.15s;
+  }
+
+  .priority-btn.selected {
+    border-color: var(--sand);
+    background: var(--sand-light);
+    color: var(--sand);
+    font-weight: 600;
+  }
+
+  /* Global Feedback */
+  .global-section {
+    background: linear-gradient(135deg, var(--sage-light), var(--sand-light));
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .global-section .card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- WELCOME SCREEN -->
+<div class="welcome-screen" id="welcomeScreen">
+  <div class="welcome-logo">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+  </div>
+  <h1>Hey Tam! 👋</h1>
+  <p class="subtitle">Your Lennox Fields website is live. Let's walk through it together so you can tell me exactly what you want changed.</p>
+
+  <div class="site-link-card">
+    <div class="label">🌿 Your live site</div>
+    <a href="https://lennox-fields.vercel.app" target="_blank">lennox-fields.vercel.app</a>
+    <div class="hint">Tap to open in a new tab — explore it first, then come back here to review</div>
+  </div>
+
+  <button class="btn-primary" onclick="startReview()">Start Review →</button>
+</div>
+
+<!-- REVIEW CONTAINER -->
+<div class="review-container" id="reviewContainer">
+  <div class="progress-container">
+    <div class="progress-header">
+      <span class="progress-label" id="progressLabel">Section 1 of 9</span>
+      <span class="progress-count" id="progressPercent">11%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 11%"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: HOMEPAGE -->
+  <div class="section-card active" data-section="0">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--sage-light);">🏠</div>
+      <h2>Homepage</h2>
+      <div class="page-url">lennox-fields.vercel.app</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li>Hero banner with your tagline & photo area</li>
+        <li>"About Tamara" preview section</li>
+        <li>Services overview cards (therapy, career, substance use)</li>
+        <li>Resources highlight section</li>
+        <li>Daily journaling prompts (rotating)</li>
+        <li>Trust indicators & credentials</li>
+        <li>Call-to-action buttons for booking</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">How does this page feel overall?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(0, 'feel', this)" data-value="Love it">Love it 💚</button>
+          <button class="rating-btn" onclick="setRating(0, 'feel', this)" data-value="Needs tweaks">Needs tweaks</button>
+          <button class="rating-btn" onclick="setRating(0, 'feel', this)" data-value="Start over">Start over</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">What would you change? (colors, text, layout, photos…)</div>
+        <textarea class="notes-input" placeholder="E.g. 'I want a different hero image' or 'The colors feel too muted'…" onchange="setNotes(0, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(0, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(0, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(0, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(0, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-next" onclick="nextSection()">Next: About Page →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ABOUT -->
+  <div class="section-card" data-section="1">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--sand-light);">👩‍⚕️</div>
+      <h2>About Tamara</h2>
+      <div class="page-url">lennox-fields.vercel.app/about</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li>Your professional bio and story</li>
+        <li>Credentials: M.Ed, LPCA details</li>
+        <li>Your therapeutic approach & philosophy</li>
+        <li>Professional photo placeholder</li>
+        <li>Warm, welcoming tone throughout</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">Does the bio capture who you are?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(1, 'feel', this)" data-value="Love it">Love it 💚</button>
+          <button class="rating-btn" onclick="setRating(1, 'feel', this)" data-value="Needs tweaks">Needs tweaks</button>
+          <button class="rating-btn" onclick="setRating(1, 'feel', this)" data-value="Start over">Start over</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">What needs to change? (wording, tone, photos, credentials…)</div>
+        <textarea class="notes-input" placeholder="E.g. 'Add my NCC certification' or 'The tone feels too formal'…" onchange="setNotes(1, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(1, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(1, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(1, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(1, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Services →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SERVICES -->
+  <div class="section-card" data-section="2">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--rose-light);">🧠</div>
+      <h2>Services</h2>
+      <div class="page-url">lennox-fields.vercel.app/services</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li><strong>Individual Therapy</strong> — detailed page with approach & what to expect</li>
+        <li><strong>Career Counseling</strong> — career transition & professional development</li>
+        <li><strong>Substance Use Treatment</strong> — recovery support & harm reduction</li>
+        <li>Each service has its own dedicated page</li>
+        <li>Booking CTAs on each service page</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">Are these the right services to feature?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(2, 'feel', this)" data-value="Perfect">Perfect ✅</button>
+          <button class="rating-btn" onclick="setRating(2, 'feel', this)" data-value="Add more">Add more</button>
+          <button class="rating-btn" onclick="setRating(2, 'feel', this)" data-value="Remove some">Remove some</button>
+          <button class="rating-btn" onclick="setRating(2, 'feel', this)" data-value="Rewrite">Rewrite</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">What services to add, remove, or change?</div>
+        <textarea class="notes-input" placeholder="E.g. 'Add couples therapy' or 'Remove career counseling' or 'Change the description for substance use'…" onchange="setNotes(2, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(2, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(2, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(2, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(2, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Books →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: BOOKS -->
+  <div class="section-card" data-section="3">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--sage-light);">📚</div>
+      <h2>Books</h2>
+      <div class="page-url">lennox-fields.vercel.app/books</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li>Children's therapeutic books catalog</li>
+        <li>Book cover images & descriptions</li>
+        <li>Links for purchasing</li>
+        <li>Author info tied to your profile</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">How does the books page look?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(3, 'feel', this)" data-value="Love it">Love it 💚</button>
+          <button class="rating-btn" onclick="setRating(3, 'feel', this)" data-value="Needs tweaks">Needs tweaks</button>
+          <button class="rating-btn" onclick="setRating(3, 'feel', this)" data-value="Remove it">Remove page</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">Any changes? (books to add/remove, descriptions, links…)</div>
+        <textarea class="notes-input" placeholder="E.g. 'Add my new book' or 'Update the purchase links'…" onchange="setNotes(3, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(3, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(3, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(3, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(3, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Screening Tools →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5: SCREENING TOOLS -->
+  <div class="section-card" data-section="4">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--sand-light);">📋</div>
+      <h2>Screening Tools</h2>
+      <div class="page-url">lennox-fields.vercel.app/tools/screening-tools</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li><strong>GAD-7</strong> — Generalized Anxiety Disorder assessment (7 questions, auto-scored)</li>
+        <li><strong>PHQ-9</strong> — Depression screening (9 questions, auto-scored)</li>
+        <li><strong>PCL-5</strong> — PTSD Checklist (20 questions, auto-scored)</li>
+        <li>All tools are interactive — clients answer questions and get instant results</li>
+        <li>Clinical disclaimers included on each tool</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">Are these the right screening tools?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(4, 'feel', this)" data-value="Perfect">Perfect ✅</button>
+          <button class="rating-btn" onclick="setRating(4, 'feel', this)" data-value="Add more">Add more</button>
+          <button class="rating-btn" onclick="setRating(4, 'feel', this)" data-value="Remove some">Remove some</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">Any tools to add, remove, or adjust?</div>
+        <textarea class="notes-input" placeholder="E.g. 'Add the AUDIT-C for alcohol screening' or 'Remove the PCL-5' or 'Change the results wording'…" onchange="setNotes(4, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(4, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(4, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(4, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(4, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Wellness Tools →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6: WELLNESS TOOLS -->
+  <div class="section-card" data-section="5">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--rose-light);">🧘</div>
+      <h2>Wellness Tools</h2>
+      <div class="page-url">lennox-fields.vercel.app/tools/</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li><strong>Breathing Exercises</strong> — guided interactive breathing patterns</li>
+        <li><strong>CBT Thought Record</strong> — step-by-step cognitive restructuring tool</li>
+        <li><strong>Safety Planning</strong> — crisis safety plan builder</li>
+        <li><strong>Journaling Prompts</strong> — daily rotating reflection prompts</li>
+        <li>All tools are interactive and client-facing</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">How do you feel about these tools?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(5, 'feel', this)" data-value="Love them">Love them 💚</button>
+          <button class="rating-btn" onclick="setRating(5, 'feel', this)" data-value="Needs changes">Needs changes</button>
+          <button class="rating-btn" onclick="setRating(5, 'feel', this)" data-value="Remove tools">Remove tools</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">Any tools to add, remove, or change?</div>
+        <textarea class="notes-input" placeholder="E.g. 'Add a grounding exercise' or 'The breathing one needs different patterns'…" onchange="setNotes(5, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(5, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(5, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(5, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(5, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Contact & FAQ →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 7: CONTACT & FAQ -->
+  <div class="section-card" data-section="6">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--sage-light);">📬</div>
+      <h2>Contact & FAQ</h2>
+      <div class="page-url">lennox-fields.vercel.app/contact</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ What's here now</div>
+      <ul>
+        <li>Contact form for new client inquiries</li>
+        <li>Your email & phone info</li>
+        <li>FAQ page with common questions & answers</li>
+        <li>Office location / telehealth details</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">Are the contact details correct?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(6, 'feel', this)" data-value="All correct">All correct ✅</button>
+          <button class="rating-btn" onclick="setRating(6, 'feel', this)" data-value="Needs updates">Needs updates</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">What needs to be fixed or added?</div>
+        <textarea class="notes-input" placeholder="E.g. 'Wrong phone number' or 'Add my CarePatron booking link' or 'Update FAQ about insurance'…" onchange="setNotes(6, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(6, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(6, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(6, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(6, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Look & Feel →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 8: BRANDING & DESIGN -->
+  <div class="section-card" data-section="7">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--sand-light);">🎨</div>
+      <h2>Look & Feel</h2>
+      <div class="page-url">Overall branding & design</div>
+    </div>
+    <div class="whats-here">
+      <div class="card-label">✨ Current design system</div>
+      <ul>
+        <li><strong>Colors:</strong> Sage green, warm sand, soft rose, cream background</li>
+        <li><strong>Fonts:</strong> Playfair Display (headings) + Inter (body)</li>
+        <li><strong>Vibe:</strong> Warm, professional, calming, nature-inspired</li>
+        <li><strong>Logo:</strong> LFLogo.jpeg (your current logo)</li>
+        <li>Mobile-responsive on all devices</li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your feedback</div>
+      <div class="rating-group">
+        <div class="question">How does the overall design feel?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(7, 'feel', this)" data-value="Love it">Love it 💚</button>
+          <button class="rating-btn" onclick="setRating(7, 'feel', this)" data-value="Tweak colors">Tweak colors</button>
+          <button class="rating-btn" onclick="setRating(7, 'feel', this)" data-value="New look">New look</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">What would make it feel more "you"?</div>
+        <textarea class="notes-input" placeholder="E.g. 'More purple tones' or 'Use a different font' or 'I want it to feel more modern' or 'Add my headshot photo'…" onchange="setNotes(7, this.value)"></textarea>
+      </div>
+      <div class="rating-group">
+        <div class="question">Priority level?</div>
+        <div class="priority-row">
+          <button class="priority-btn" onclick="setPriority(7, this)" data-value="High">🔴 High</button>
+          <button class="priority-btn" onclick="setPriority(7, this)" data-value="Medium">🟡 Medium</button>
+          <button class="priority-btn" onclick="setPriority(7, this)" data-value="Low">🟢 Low</button>
+          <button class="priority-btn" onclick="setPriority(7, this)" data-value="Skip">⏭ Skip</button>
+        </div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" onclick="nextSection()">Next: Big Picture →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 9: BIG PICTURE -->
+  <div class="section-card" data-section="8">
+    <div class="section-header">
+      <div class="section-icon" style="background: var(--rose-light);">🌟</div>
+      <h2>Big Picture</h2>
+      <div class="page-url">Overall site direction</div>
+    </div>
+    <div class="global-section">
+      <div class="card-label">🔮 Future features (not live yet, but ready to build)</div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 0.4rem 0; padding-left: 1.25rem; position: relative; font-size: 0.9rem;">
+          <span style="position: absolute; left: 0;">⬜</span> Client login portal
+        </li>
+        <li style="padding: 0.4rem 0; padding-left: 1.25rem; position: relative; font-size: 0.9rem;">
+          <span style="position: absolute; left: 0;">⬜</span> Online booking / CarePatron integration
+        </li>
+        <li style="padding: 0.4rem 0; padding-left: 1.25rem; position: relative; font-size: 0.9rem;">
+          <span style="position: absolute; left: 0;">⬜</span> Payment processing (Stripe)
+        </li>
+        <li style="padding: 0.4rem 0; padding-left: 1.25rem; position: relative; font-size: 0.9rem;">
+          <span style="position: absolute; left: 0;">⬜</span> Secure messaging with clients
+        </li>
+        <li style="padding: 0.4rem 0; padding-left: 1.25rem; position: relative; font-size: 0.9rem;">
+          <span style="position: absolute; left: 0;">⬜</span> Telehealth video sessions
+        </li>
+        <li style="padding: 0.4rem 0; padding-left: 1.25rem; position: relative; font-size: 0.9rem;">
+          <span style="position: absolute; left: 0;">⬜</span> Custom domain (lennoxfields.org)
+        </li>
+      </ul>
+    </div>
+    <div class="feedback-section">
+      <div class="card-label">💬 Your vision</div>
+      <div class="rating-group">
+        <div class="question">What's most important to add next?</div>
+        <div class="rating-options">
+          <button class="rating-btn" onclick="setRating(8, 'feel', this)" data-value="Booking">Booking 📅</button>
+          <button class="rating-btn" onclick="setRating(8, 'feel', this)" data-value="Client portal">Client portal 🔐</button>
+          <button class="rating-btn" onclick="setRating(8, 'feel', this)" data-value="Domain">Custom domain 🌐</button>
+          <button class="rating-btn" onclick="setRating(8, 'feel', this)" data-value="Payments">Payments 💳</button>
+        </div>
+      </div>
+      <div class="rating-group">
+        <div class="question">Anything else on your mind? Dreams, ideas, must-haves?</div>
+        <textarea class="notes-input" style="min-height: 100px;" placeholder="Pour your heart out here — what's the dream version of this site? What would make your clients say WOW?" onchange="setNotes(8, this.value)"></textarea>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="prevSection()">← Back</button>
+      <button class="btn-next" style="background: linear-gradient(135deg, var(--sage), var(--sand));" onclick="showSummary()">See Summary ✨</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY SCREEN -->
+<div class="summary-screen" id="summaryScreen">
+  <h2>Your Review Summary 📝</h2>
+  <p class="summary-subtitle">Here's everything you said — copy and send to Jason</p>
+  <div id="summaryCards"></div>
+  <button class="btn-copy-summary" onclick="copySummary()">📋 Copy Feedback to Clipboard</button>
+  <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-light);">
+    Copy the feedback above and text it to Jason, or just tell him what's on your mind! 💚
+  </p>
+</div>
+
+<div class="copied-toast" id="copiedToast">✅ Copied to clipboard!</div>
+
+<script>
+const SECTIONS = [
+  'Homepage', 'About Tamara', 'Services', 'Books',
+  'Screening Tools', 'Wellness Tools', 'Contact & FAQ',
+  'Look & Feel', 'Big Picture'
+];
+
+let currentSection = 0;
+const totalSections = SECTIONS.length;
+
+const feedback = {};
+SECTIONS.forEach((s, i) => {
+  feedback[i] = { name: s, feel: '', notes: '', priority: '' };
+});
+
+function startReview() {
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('reviewContainer').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function setRating(section, key, btn) {
+  feedback[section][key] = btn.dataset.value;
+  const siblings = btn.parentElement.querySelectorAll('.rating-btn');
+  siblings.forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function setNotes(section, value) {
+  feedback[section].notes = value;
+}
+
+function setPriority(section, btn) {
+  feedback[section].priority = btn.dataset.value;
+  const siblings = btn.parentElement.querySelectorAll('.priority-btn');
+  siblings.forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function updateProgress() {
+  const pct = Math.round(((currentSection + 1) / totalSections) * 100);
+  document.getElementById('progressLabel').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+  document.getElementById('progressPercent').textContent = `${pct}%`;
+  document.getElementById('progressFill').style.width = `${pct}%`;
+}
+
+function showSection(index) {
+  document.querySelectorAll('.section-card').forEach(c => c.classList.remove('active'));
+  document.querySelector(`[data-section="${index}"]`).classList.add('active');
+  currentSection = index;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextSection() {
+  if (currentSection < totalSections - 1) {
+    showSection(currentSection + 1);
+  }
+}
+
+function prevSection() {
+  if (currentSection > 0) {
+    showSection(currentSection - 1);
+  }
+}
+
+function showSummary() {
+  document.getElementById('reviewContainer').style.display = 'none';
+  document.getElementById('summaryScreen').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  const container = document.getElementById('summaryCards');
+  container.innerHTML = '';
+
+  SECTIONS.forEach((name, i) => {
+    const f = feedback[i];
+    if (!f.feel && !f.notes && !f.priority) return;
+
+    const card = document.createElement('div');
+    card.className = 'summary-card';
+
+    let ratingClass = 'skip';
+    if (f.feel && (f.feel.includes('Love') || f.feel === 'Perfect' || f.feel === 'All correct')) ratingClass = 'love';
+    else if (f.feel && (f.feel.includes('tweak') || f.feel.includes('Tweak') || f.feel.includes('changes') || f.feel.includes('updates') || f.feel.includes('Add'))) ratingClass = 'tweak';
+    else if (f.feel && (f.feel.includes('over') || f.feel.includes('Remove') || f.feel.includes('New') || f.feel.includes('Rewrite'))) ratingClass = 'redo';
+
+    card.innerHTML = `
+      <h3>${name}</h3>
+      ${f.feel ? `<span class="summary-rating ${ratingClass}">${f.feel}</span>` : ''}
+      ${f.priority ? `<span class="summary-rating" style="background:#f0f0f0;color:#666;margin-left:0.25rem;">${f.priority} priority</span>` : ''}
+      ${f.notes ? `<p class="summary-notes">"${f.notes}"</p>` : ''}
+    `;
+    container.appendChild(card);
+  });
+
+  if (container.innerHTML === '') {
+    container.innerHTML = '<div class="summary-card"><p class="summary-notes">No feedback given yet — go back and add some!</p></div>';
+  }
+}
+
+function copySummary() {
+  let text = "🌿 LENNOX FIELDS — SITE REVIEW FEEDBACK\n";
+  text += "Site: https://lennox-fields.vercel.app\n";
+  text += "━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  SECTIONS.forEach((name, i) => {
+    const f = feedback[i];
+    if (!f.feel && !f.notes && !f.priority) return;
+    text += `📌 ${name.toUpperCase()}\n`;
+    if (f.feel) text += `   Verdict: ${f.feel}\n`;
+    if (f.priority) text += `   Priority: ${f.priority}\n`;
+    if (f.notes) text += `   Notes: ${f.notes}\n`;
+    text += '\n';
+  });
+
+  text += "━━━━━━━━━━━━━━━━━━━━━━━\n";
+  text += "Generated from Lennox Fields Site Review";
+
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('copiedToast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }).catch(() => {
+    // Fallback for mobile
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const toast = document.getElementById('copiedToast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  });
+}
+</script>
+</body>
+</html>

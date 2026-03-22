@@ -16,20 +16,21 @@ export const siteConfig = {
   // --- Owner / Therapist Info ---
   owner: {
     name: 'Tamara Walls',
-    credentials: 'M.Ed, LPCA',
-    fullTitle: 'Tamara Walls, M.Ed, LPCA',
+    credentials: 'LPCA',
+    fullTitle: 'Tamara Walls, LPCA',
     role: 'Licensed Professional Counselor Associate',
-    licensedStates: ['North Carolina', 'Indiana'],
-    licensedStatesShort: ['NC', 'IN'],
+    specializations: 'LPCA, C-DBT, TCM',
+    licensedStates: ['Kentucky'],
+    licensedStatesShort: ['KY'],
   },
 
   // --- Contact Info ---
   // Update these with your real contact details
   contact: {
     email: 'tamara@lennoxfields.org',
-    phone: '(919) 999-9999',
-    phoneLink: 'tel:+19199999999', // used for click-to-call links
-    location: 'Licensed in North Carolina & Indiana',
+    phone: '(502) 627-0781',
+    phoneLink: 'tel:+15026270781', // used for click-to-call links
+    location: 'Licensed in Kentucky',
     officeHours: 'Mon-Fri 9am-5pm EST',
     calendlyUrl: 'https://calendly.com/tamara-lennoxfields',
   },
@@ -59,8 +60,11 @@ export const siteConfig = {
     'clinical mental health',
     'career counseling',
     'couples therapy',
-    'North Carolina',
-    'Indiana',
+    'ADHD',
+    'autism',
+    'CPTSD',
+    'DBT',
+    'Kentucky',
     'Tamara Walls',
   ],
 

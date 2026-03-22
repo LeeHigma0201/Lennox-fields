@@ -13,12 +13,12 @@ export default function IndividualTherapyPage() {
                 <Heart className="w-12 h-12 text-white" />
               </div>
               <h1 className="text-5xl md:text-6xl font-bold text-text-dark">
-                Individual Therapy
+                Individual Counseling
               </h1>
             </div>
             <p className="text-xl text-text-dark">
-              Personalized one-on-one support to help you navigate life's challenges,
-              build resilience, and create lasting positive change.
+              Personalized one-on-one support specializing in ADHD, autism, and complex PTSD.
+              Neurodiversity-affirming, trauma-conscious care for women.
             </p>
           </div>
         </div>
@@ -28,19 +28,19 @@ export default function IndividualTherapyPage() {
       <section className="section-padding bg-white">
         <div className="container-custom max-w-5xl">
           <h2 className="text-4xl font-bold text-text-dark mb-12 text-center">
-            What We Address in Individual Therapy
+            What We Address in Individual Counseling
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
+              { title: 'ADHD', description: 'Assessment support, executive functioning, and neurodiversity-affirming strategies' },
+              { title: 'Autism', description: 'Affirming support for autistic women including masking, burnout, and identity' },
+              { title: 'Complex PTSD', description: 'Processing developmental trauma and building safety and regulation' },
               { title: 'Anxiety & Worry', description: 'Generalized anxiety, panic attacks, social anxiety, and phobias' },
               { title: 'Depression', description: 'Persistent sadness, loss of interest, and mood disturbances' },
-              { title: 'Trauma & PTSD', description: 'Processing past traumatic experiences and reducing symptoms' },
               { title: 'Life Transitions', description: 'Major changes like moving, divorce, job loss, or life milestones' },
-              { title: 'Relationship Issues', description: 'Patterns in relationships, boundaries, and communication' },
-              { title: 'Self-Esteem', description: 'Building confidence, self-worth, and positive self-image' },
-              { title: 'Stress Management', description: 'Coping with overwhelming stress and developing resilience' },
+              { title: 'Relationship Patterns', description: 'Boundaries, attachment, communication, and relational dynamics' },
+              { title: 'Self-Worth & Identity', description: 'Building confidence and exploring who you are beyond the masks' },
               { title: 'Grief & Loss', description: 'Processing loss of loved ones, relationships, or significant life changes' },
-              { title: 'Identity & Purpose', description: 'Exploring who you are and what brings meaning to your life' },
             ].map((item) => (
               <div key={item.title} className="card-clinical">
                 <h3 className="text-xl font-bold text-text-dark mb-2">{item.title}</h3>
@@ -224,7 +224,7 @@ export default function IndividualTherapyPage() {
 
           <p className="text-lg mb-8 opacity-90">
             Sliding scale available for qualified clients. HSA/FSA accepted.
-            Superbills provided for insurance reimbursement.
+            Superbills provided for insurance reimbursement. Kentucky clients only.
           </p>
 
           <Link href="/contact" className="btn bg-white text-primary-sage hover:bg-cream inline-flex items-center">

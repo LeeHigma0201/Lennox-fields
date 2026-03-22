@@ -12,23 +12,15 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.owner.fullTitle }],
   openGraph: {
     title: siteConfig.businessFullName,
-    description: siteConfig.description,
+    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Individual therapy, couples counseling, family therapy, and career guidance in Kentucky.`,
     type: 'website',
     locale: 'en_US',
-    images: [
-      {
-        url: siteConfig.logo.src,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.businessFullName,
-      },
-    ],
+    siteName: siteConfig.businessFullName,
   },
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.businessFullName,
-    description: siteConfig.description,
-    images: [siteConfig.logo.src],
+    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Individual therapy, couples counseling, family therapy, and career guidance in Kentucky.`,
   },
   robots: {
     index: true,

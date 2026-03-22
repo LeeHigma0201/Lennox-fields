@@ -96,7 +96,7 @@
   }
 
   .gradient-warm-bg {
-    @apply bg-gradient-to-br from-warm-cream to-warm-gray;
+    @apply bg-gradient-to-br from-warm-cream to-soft-rose/10;
   }
 
   .gradient-sage-bg {

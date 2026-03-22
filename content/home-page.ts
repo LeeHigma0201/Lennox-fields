@@ -25,8 +25,8 @@ export const hero = {
 // --- Trust Indicators ---
 // These are the 4 badges shown below the hero.
 export const trustIndicators = [
-  { label: 'HIPAA Compliant', icon: 'Shield' as const },
-  { label: 'Licensed LPCA', icon: 'Stethoscope' as const },
+  { label: 'Licensed in Kentucky', icon: 'Shield' as const },
+  { label: 'LPCA, C-DBT, TCM', icon: 'Stethoscope' as const },
   { label: 'Evidence-Based', icon: 'Heart' as const },
   { label: 'Client-Centered', icon: 'Users' as const },
 ]
@@ -69,7 +69,7 @@ export const professionalSection = {
     {
       title: 'Development',
       items: [
-        'Licensing guides (NC, IN)',
+        'Licensing guides (KY)',
         'Theoretical orientation tools',
         'Community resources',
         'Continuing education',
@@ -140,5 +140,5 @@ export const ctaSection = {
   primaryButton: { text: 'Schedule Free Consultation', href: '/contact' },
   secondaryButton: { text: 'Access Client Portal', href: '/portal/login' },
   footnote:
-    'Currently accepting new clients in North Carolina and Indiana. Telehealth and in-person options available.',
+    'Currently accepting new clients in Kentucky. Telehealth and in-person options available.',
 }

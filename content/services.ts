@@ -7,7 +7,7 @@
 export const servicesPageHeader = {
   title: 'Our Services',
   subtitle:
-    'Comprehensive mental health services tailored to your unique needs. All services available via telehealth or in-person in North Carolina and Indiana.',
+    'Comprehensive mental health services tailored to your unique needs. All services available via telehealth for clients in Kentucky.',
 }
 
 // Each service needs: title, slug (URL-friendly name), description, details (bullet points), and price.
@@ -15,21 +15,21 @@ export const servicesPageHeader = {
 export const services = [
   {
     icon: 'Heart' as const,
-    title: 'Individual Therapy',
+    title: 'Individual Counseling',
     slug: 'individual-therapy',
     description:
-      'One-on-one support for anxiety, depression, trauma, and life transitions.',
+      'One-on-one support for ADHD, autism, complex PTSD, anxiety, depression, and life transitions.',
     details: [
       'Personalized treatment plans',
-      'Evidence-based approaches (CBT, EMDR)',
-      'Flexible scheduling options',
-      'Telehealth and in-person sessions',
+      'Evidence-based approaches (DBT, CBT, TCM)',
+      'ADHD, autism, and CPTSD specialization',
+      'Telehealth sessions for Kentucky clients',
     ],
     price: '$150 per session',
   },
   {
     icon: 'Users' as const,
-    title: 'Couples Therapy',
+    title: 'Couples Counseling',
     slug: 'couples-therapy',
     description:
       'Strengthen your relationship through improved communication and connection.',
@@ -43,7 +43,7 @@ export const services = [
   },
   {
     icon: 'Home' as const,
-    title: 'Family Therapy',
+    title: 'Family Counseling',
     slug: 'family-therapy',
     description:
       'Navigate family dynamics and build healthier relationships together.',
@@ -54,20 +54,6 @@ export const services = [
       'Family crisis intervention',
     ],
     price: '$200 per session',
-  },
-  {
-    icon: 'Sprout' as const,
-    title: 'Teen & Adolescent Therapy',
-    slug: 'teen-adolescent',
-    description:
-      'Specialized support for young people navigating the challenges of adolescence.',
-    details: [
-      'Age-appropriate interventions',
-      'School and academic support',
-      'Identity and peer relationships',
-      'Family involvement when appropriate',
-    ],
-    price: '$150 per session',
   },
   {
     icon: 'Briefcase' as const,
@@ -85,7 +71,7 @@ export const services = [
   },
   {
     icon: 'Brain' as const,
-    title: 'Substance Use Disorder Treatment',
+    title: 'Substance Use Disorder Counseling',
     slug: 'substance-use',
     description:
       'Compassionate, evidence-based treatment using ASAM criteria.',
@@ -106,26 +92,26 @@ export const services = [
 export const servicesOverview = [
   {
     icon: 'Heart' as const,
-    title: 'Individual Therapy',
+    title: 'Individual Counseling',
     description:
-      'One-on-one support for anxiety, depression, trauma, and life transitions. Evidence-based approaches tailored to your needs.',
+      'One-on-one support for ADHD, autism, CPTSD, anxiety, depression, and life transitions. Evidence-based approaches tailored to your needs.',
     href: '/services/individual-therapy',
     color: 'text-primary-sage',
   },
   {
     icon: 'Users' as const,
-    title: 'Couples Therapy',
+    title: 'Couples Counseling',
     description:
       'Strengthen your relationship through improved communication, conflict resolution, and deeper connection.',
     href: '/services/couples-therapy',
     color: 'text-soft-rose',
   },
   {
-    icon: 'Sprout' as const,
-    title: 'Teen & Adolescent',
+    icon: 'Home' as const,
+    title: 'Family Counseling',
     description:
-      'Specialized care for young people navigating identity, peer relationships, academic stress, and emotional challenges.',
-    href: '/services/teen-adolescent',
+      'Navigate family dynamics with a systems-based approach. Support for blended families, parent-child relationships, and family transitions.',
+    href: '/services/family-therapy',
     color: 'text-earth-green',
   },
   {
@@ -138,19 +124,11 @@ export const servicesOverview = [
   },
   {
     icon: 'Brain' as const,
-    title: 'Substance Use Support',
+    title: 'Substance Use Counseling',
     description:
       'Compassionate, evidence-based treatment using ASAM criteria for appropriate level of care assessment.',
     href: '/services/substance-use',
     color: 'text-clinical-blue',
-  },
-  {
-    icon: 'Shield' as const,
-    title: 'Clinical Supervision',
-    description:
-      'Professional supervision for associates and interns pursuing licensure in North Carolina and Indiana.',
-    href: '/professional/supervision',
-    color: 'text-warm-gray',
   },
 ]
 

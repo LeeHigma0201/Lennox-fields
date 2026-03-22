@@ -10,12 +10,11 @@ export const navigation = [
     name: 'Services',
     href: '/services',
     submenu: [
-      { name: 'Individual Therapy', href: '/services/individual-therapy' },
-      { name: 'Couples Therapy', href: '/services/couples-therapy' },
-      { name: 'Family Therapy', href: '/services/family-therapy' },
-      { name: 'Teen & Adolescent', href: '/services/teen-adolescent' },
+      { name: 'Individual Counseling', href: '/services/individual-therapy' },
+      { name: 'Couples Counseling', href: '/services/couples-therapy' },
+      { name: 'Family Counseling', href: '/services/family-therapy' },
       { name: 'Career Counseling', href: '/services/career-counseling' },
-      { name: 'Substance Use', href: '/services/substance-use' },
+      { name: 'Substance Use Counseling', href: '/services/substance-use' },
     ],
   },
   {

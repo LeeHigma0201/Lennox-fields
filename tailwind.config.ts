@@ -32,7 +32,7 @@ const config: Config = {
         accent: ['var(--font-quicksand)', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-warm': 'linear-gradient(135deg, #faf9f7 0%, #e8e8e8 100%)',
+        'gradient-warm': 'linear-gradient(135deg, #faf9f7 0%, #f5e8e8 100%)',
         'gradient-sage': 'linear-gradient(135deg, #75856f 0%, #6B8E4E 100%)',
         'gradient-sand': 'linear-gradient(90deg, #b49a83 0%, #d8c5b0 100%)',
       },
