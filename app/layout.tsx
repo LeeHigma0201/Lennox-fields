@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -7,12 +8,12 @@ import { siteConfig } from '@/content/site-config'
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: siteConfig.businessFullName,
-  description: `${siteConfig.description}. Individual therapy, couples counseling, career guidance, and professional resources.`,
+  description: `Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma. ${siteConfig.owner.fullTitle} — individual, couples, and family counseling in Kentucky.`,
   keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.owner.fullTitle }],
   openGraph: {
     title: siteConfig.businessFullName,
-    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Individual therapy, couples counseling, family therapy, and career guidance in Kentucky.`,
+    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky.`,
     type: 'website',
     locale: 'en_US',
     siteName: siteConfig.businessFullName,
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.businessFullName,
-    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Individual therapy, couples counseling, family therapy, and career guidance in Kentucky.`,
+    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky.`,
   },
   robots: {
     index: true,
@@ -34,12 +35,39 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'MedicalBusiness',
+              name: siteConfig.businessFullName,
+              description: siteConfig.description,
+              url: siteConfig.url,
+              telephone: siteConfig.contact.phone,
+              email: siteConfig.contact.email,
+              areaServed: { '@type': 'State', name: 'Kentucky' },
+              founder: {
+                '@type': 'Person',
+                name: siteConfig.owner.name,
+                jobTitle: siteConfig.owner.role,
+              },
+              medicalSpecialty: ['Psychiatry', 'ClinicalPsychology'],
+              availableService: [
+                { '@type': 'MedicalTherapy', name: 'Individual Counseling' },
+                { '@type': 'MedicalTherapy', name: 'Couples Counseling' },
+                { '@type': 'MedicalTherapy', name: 'Family Counseling' },
+                { '@type': 'MedicalTherapy', name: 'Career Counseling' },
+              ],
+            }),
+          }}
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         {/* Skip Navigation for Accessibility */}
@@ -50,10 +78,11 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Header />
-        <main id="main-content" className="flex-grow" role="main">
+        <main id="main-content" className="flex-grow">
           {children}
         </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )

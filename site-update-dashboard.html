@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lennox Fields - Site Update Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #faf8f5 0%, #f0ebe4 50%, #e8e0d5 100%);
+    min-height: 100vh;
+    color: #2d2926;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #2d2926 0%, #4a3f35 100%);
+    color: #faf8f5;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(193,154,107,0.15) 0%, transparent 70%);
+    animation: shimmer 8s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(5%, 5%); }
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header .date {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 0.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+
+  .stat-card:hover { transform: translateY(-2px); }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #c19a6b;
+  }
+
+  .stat-label { font-size: 0.75rem; color: #8a7e74; margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Progress Ring */
+  .progress-section {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .ring-container { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
+
+  .progress-ring { transform: rotate(-90deg); }
+
+  .progress-ring-bg { fill: none; stroke: #f0ebe4; stroke-width: 10; }
+  .progress-ring-fill {
+    fill: none;
+    stroke: #c19a6b;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 377;
+    stroke-dashoffset: 377;
+    transition: stroke-dashoffset 1.5s ease-out;
+  }
+
+  .ring-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .ring-percent { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #2d2926; }
+  .ring-label { font-size: 0.7rem; color: #8a7e74; }
+
+  .progress-details h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .progress-details p { font-size: 0.9rem; color: #5a524a; line-height: 1.6; }
+
+  /* Tab System */
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    background: white;
+    color: #5a524a;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .tab:hover { background: #f0ebe4; }
+  .tab.active { background: #2d2926; color: #faf8f5; }
+
+  .tab-count {
+    display: inline-block;
+    background: rgba(193,154,107,0.2);
+    border-radius: 10px;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    margin-left: 0.35rem;
+  }
+
+  .tab.active .tab-count { background: rgba(255,255,255,0.2); }
+
+  /* Content Panels */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .card-grid { display: grid; gap: 0.75rem; }
+
+  .item-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .item-card:hover { transform: translateX(4px); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+
+  .item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .icon-done { background: #e8f5e9; }
+  .icon-new { background: #e3f2fd; }
+  .icon-updated { background: #fff3e0; }
+  .icon-todo { background: #fce4ec; }
+
+  .item-info { flex: 1; }
+  .item-title { font-weight: 500; font-size: 0.9rem; }
+  .item-desc { font-size: 0.78rem; color: #8a7e74; margin-top: 0.15rem; }
+
+  .item-status {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .status-live { background: #e8f5e9; color: #2e7d32; }
+  .status-new { background: #e3f2fd; color: #1565c0; }
+  .status-updated { background: #fff3e0; color: #e65100; }
+  .status-needed { background: #fce4ec; color: #c62828; }
+
+  /* Feedback Section */
+  .feedback-section {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+
+  .feedback-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feedback-section p { color: #8a7e74; font-size: 0.85rem; margin-bottom: 1.25rem; }
+
+  .priority-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .priority-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 2px solid #e0d8cf;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .priority-btn:hover { border-color: #c19a6b; background: #faf8f5; }
+  .priority-btn.selected { border-color: #c19a6b; background: #c19a6b; color: white; }
+
+  .feedback-textarea {
+    width: 100%;
+    min-height: 100px;
+    border: 2px solid #e0d8cf;
+    border-radius: 10px;
+    padding: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+
+  .feedback-textarea:focus { outline: none; border-color: #c19a6b; }
+
+  .feedback-textarea::placeholder { color: #bbb5ab; }
+
+  .send-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    background: #2d2926;
+    color: #faf8f5;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .send-btn:hover { background: #4a3f35; transform: translateY(-1px); }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #2d2926;
+    color: #faf8f5;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 100;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .progress-section { flex-direction: column; text-align: center; }
+    .header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Lennox Fields</h1>
+  <div class="subtitle">Site Update Dashboard</div>
+  <div class="date">March 22, 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number" id="pagesCount">29</div>
+      <div class="stat-label">Total Pages</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="newCount">12</div>
+      <div class="stat-label">New Today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="updatedCount">10</div>
+      <div class="stat-label">Updated</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="todoCount">5</div>
+      <div class="stat-label">Need Input</div>
+    </div>
+  </div>
+
+  <!-- Progress Ring -->
+  <div class="progress-section">
+    <div class="ring-container">
+      <svg class="progress-ring" width="140" height="140">
+        <circle class="progress-ring-bg" cx="70" cy="70" r="60"/>
+        <circle class="progress-ring-fill" id="progressRing" cx="70" cy="70" r="60"/>
+      </svg>
+      <div class="ring-text">
+        <div class="ring-percent" id="ringPercent">0%</div>
+        <div class="ring-label">Complete</div>
+      </div>
+    </div>
+    <div class="progress-details">
+      <h2>Big Progress Today!</h2>
+      <p>We added Tam's real photos, fixed the book covers and titles from Amazon, built the OG share image (cat ears photo!), created 12 new pages including legal pages, professional tools, and resources. The site is really coming together.</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('done')">Completed Today <span class="tab-count">7</span></button>
+    <button class="tab" onclick="switchTab('new')">New Pages <span class="tab-count">12</span></button>
+    <button class="tab" onclick="switchTab('updated')">Updated <span class="tab-count">10</span></button>
+    <button class="tab" onclick="switchTab('input')">Need Your Input <span class="tab-count">5</span></button>
+  </div>
+
+  <!-- Completed Today -->
+  <div class="panel active" id="panel-done">
+    <div class="card-grid">
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">Tamara's Photos Added</div>
+          <div class="item-desc">Real photos across hero, about, and books pages</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">Book Covers & Titles Fixed</div>
+          <div class="item-desc">Pulled real data from Amazon listings</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">OG Share Image</div>
+          <div class="item-desc">Cat ears B&W photo - shows when link shared on social</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">Credentials Updated</div>
+          <div class="item-desc">LPCA title, specializations, and bio corrected</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">Footer Redesigned</div>
+          <div class="item-desc">New layout with proper links and info</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">Broken Links Fixed</div>
+          <div class="item-desc">17+ previously broken routes now have pages</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-done">&#10003;</div>
+        <div class="item-info">
+          <div class="item-title">bg-cream Bug Fixed</div>
+          <div class="item-desc">Tailwind class was broken in 19+ files, now working</div>
+        </div>
+        <span class="item-status status-live">Live</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Pages -->
+  <div class="panel" id="panel-new">
+    <div class="card-grid">
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Couples Therapy</div>
+          <div class="item-desc">/services/couples-therapy</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Family Therapy</div>
+          <div class="item-desc">/services/family-therapy</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Resources Hub</div>
+          <div class="item-desc">/resources - central page linking all resources</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Worksheets</div>
+          <div class="item-desc">/resources/worksheets</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Habit Trackers</div>
+          <div class="item-desc">/resources/habit-trackers</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Professional Portal</div>
+          <div class="item-desc">/professional + /professional/supervision</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Treatment Planning Tool</div>
+          <div class="item-desc">/tools/treatment-planning</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Notes Templates</div>
+          <div class="item-desc">/tools/notes-templates</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Privacy Policy</div>
+          <div class="item-desc">/privacy</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Terms of Service</div>
+          <div class="item-desc">/terms</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">HIPAA Notice</div>
+          <div class="item-desc">/hipaa</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-new">+</div>
+        <div class="item-info">
+          <div class="item-title">Error/Loading/404 Pages</div>
+          <div class="item-desc">Proper error handling + sitemap + robots.txt</div>
+        </div>
+        <span class="item-status status-new">New</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Updated -->
+  <div class="panel" id="panel-updated">
+    <div class="card-grid">
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">About Page</div>
+          <div class="item-desc">Updated with real photos, corrected credentials</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Books Page</div>
+          <div class="item-desc">Real Amazon covers, correct titles and descriptions</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Contact Page</div>
+          <div class="item-desc">Layout and styling improvements</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">FAQ Page</div>
+          <div class="item-desc">Content updates and new questions</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Home Page Hero</div>
+          <div class="item-desc">New hero photo, updated copy and CTA</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Navigation</div>
+          <div class="item-desc">Header + footer links now match all new pages</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Global Styles</div>
+          <div class="item-desc">Tailwind config fixed, new color system</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Substance Use Page</div>
+          <div class="item-desc">Content and layout refreshed</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Breathing Exercises</div>
+          <div class="item-desc">Tool updates and improvements</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-updated">&#8635;</div>
+        <div class="item-info">
+          <div class="item-title">Journaling Prompts</div>
+          <div class="item-desc">New prompts and layout refresh</div>
+        </div>
+        <span class="item-status status-updated">Updated</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Need Input -->
+  <div class="panel" id="panel-input">
+    <div class="card-grid">
+      <div class="item-card">
+        <div class="item-icon icon-todo">?</div>
+        <div class="item-info">
+          <div class="item-title">Contact Form</div>
+          <div class="item-desc">Where should form submissions go? Email? CRM? We need to connect this.</div>
+        </div>
+        <span class="item-status status-needed">Needs Decision</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-todo">?</div>
+        <div class="item-info">
+          <div class="item-title">Couples & Family Therapy Content</div>
+          <div class="item-desc">Do you offer these? Need to verify or remove from services.</div>
+        </div>
+        <span class="item-status status-needed">Needs Review</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-todo">?</div>
+        <div class="item-info">
+          <div class="item-title">Clinical Supervision Page</div>
+          <div class="item-desc">Are you offering supervision? Need your input on this section.</div>
+        </div>
+        <span class="item-status status-needed">Needs Review</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-todo">?</div>
+        <div class="item-info">
+          <div class="item-title">Legal Pages Review</div>
+          <div class="item-desc">Privacy, Terms, HIPAA notice created - need your review before going live.</div>
+        </div>
+        <span class="item-status status-needed">Needs Review</span>
+      </div>
+      <div class="item-card">
+        <div class="item-icon icon-todo">?</div>
+        <div class="item-info">
+          <div class="item-title">Anything Else?</div>
+          <div class="item-desc">What changes, new pages, or fixes would you like to see next?</div>
+        </div>
+        <span class="item-status status-needed">Your Call</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Section -->
+  <div class="feedback-section">
+    <h2>What Should We Focus On Next?</h2>
+    <p>Tap what matters most to you, or write a note below</p>
+
+    <div class="priority-picker">
+      <button class="priority-btn" onclick="togglePriority(this)">Fix contact form</button>
+      <button class="priority-btn" onclick="togglePriority(this)">More photos</button>
+      <button class="priority-btn" onclick="togglePriority(this)">Update services list</button>
+      <button class="priority-btn" onclick="togglePriority(this)">Change colors/fonts</button>
+      <button class="priority-btn" onclick="togglePriority(this)">Add testimonials</button>
+      <button class="priority-btn" onclick="togglePriority(this)">Add scheduling/booking</button>
+      <button class="priority-btn" onclick="togglePriority(this)">Review legal pages</button>
+      <button class="priority-btn" onclick="togglePriority(this)">Something else</button>
+    </div>
+
+    <textarea class="feedback-textarea" placeholder="Any other thoughts, changes, or ideas? Just type here..."></textarea>
+    <br>
+    <button class="send-btn" onclick="sendFeedback()">Save My Notes</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Notes saved! Jason will see your feedback.</div>
+
+<script>
+  // Tab switching
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    event.target.closest('.tab').classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+
+  // Priority picker
+  function togglePriority(btn) {
+    btn.classList.toggle('selected');
+  }
+
+  // Feedback
+  function sendFeedback() {
+    const selected = [...document.querySelectorAll('.priority-btn.selected')].map(b => b.textContent);
+    const notes = document.querySelector('.feedback-textarea').value;
+
+    // Save to localStorage
+    const feedback = {
+      priorities: selected,
+      notes: notes,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('lennox-feedback', JSON.stringify(feedback));
+
+    // Show toast
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Animate progress ring on load
+  window.addEventListener('load', () => {
+    const percent = 83;
+    const ring = document.getElementById('progressRing');
+    const circumference = 2 * Math.PI * 60; // r=60
+    const offset = circumference - (percent / 100) * circumference;
+
+    setTimeout(() => {
+      ring.style.strokeDashoffset = offset;
+      // Animate counter
+      let current = 0;
+      const interval = setInterval(() => {
+        current += 1;
+        document.getElementById('ringPercent').textContent = current + '%';
+        if (current >= percent) clearInterval(interval);
+      }, 20);
+    }, 300);
+  });
+
+  // Animate stat numbers
+  window.addEventListener('load', () => {
+    const stats = [
+      { id: 'pagesCount', target: 29 },
+      { id: 'newCount', target: 12 },
+      { id: 'updatedCount', target: 10 },
+      { id: 'todoCount', target: 5 }
+    ];
+
+    stats.forEach(stat => {
+      let current = 0;
+      const el = document.getElementById(stat.id);
+      const step = Math.ceil(stat.target / 30);
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= stat.target) {
+          current = stat.target;
+          clearInterval(interval);
+        }
+        el.textContent = current;
+      }, 40);
+    });
+  });
+</script>
+
+</body>
+</html>

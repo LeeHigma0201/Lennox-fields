@@ -14,11 +14,36 @@ export default function ContactPage() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // For now, show confirmation — email integration will come later
-    setSubmitted(true)
+    setSubmitting(true)
+    setError('')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please email us directly at ' + siteConfig.contact.email
+      )
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -146,9 +171,19 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-primary w-full md:w-auto inline-flex items-center justify-center">
+                  {error && (
+                    <div className="bg-alert-red/10 border border-alert-red/30 rounded-lg p-4 text-alert-red text-sm">
+                      {error}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="btn btn-primary w-full md:w-auto inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
                     <Send className="mr-2 w-5 h-5" />
-                    Send Message
+                    {submitting ? 'Sending...' : 'Send Message'}
                   </button>
 
                   <p className="text-xs text-warm-gray mt-2">

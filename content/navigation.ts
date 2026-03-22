@@ -24,19 +24,18 @@ export const navigation = [
       { name: 'Screening Tools', href: '/tools/screening-tools' },
       { name: 'Worksheets', href: '/resources/worksheets' },
       { name: 'Habit Trackers', href: '/resources/habit-trackers' },
-      { name: 'Journals', href: '/resources/journals' },
+      { name: 'Journaling Prompts', href: '/resources/journaling-prompts' },
       { name: 'Safety Planning', href: '/tools/safety-planning' },
     ],
   },
   {
-    name: 'Professional Tools',
+    name: 'Professional',
     href: '/professional',
     submenu: [
+      { name: 'For Clinicians', href: '/professional' },
       { name: 'Clinical Supervision', href: '/professional/supervision' },
       { name: 'Treatment Planning', href: '/tools/treatment-planning' },
       { name: 'Notes Templates', href: '/tools/notes-templates' },
-      { name: 'Billing Tracker', href: '/professional/billing-tracker' },
-      { name: 'Licensing Guides', href: '/professional/licensing-guides' },
     ],
   },
   { name: 'Books', href: '/books' },
@@ -56,7 +55,7 @@ export const footerQuickLinks = [
 export const footerResourceLinks = [
   { name: 'Worksheets', href: '/resources/worksheets' },
   { name: 'Habit Trackers', href: '/resources/habit-trackers' },
-  { name: 'Journals', href: '/resources/journals' },
-  { name: 'Client Portal', href: '/portal/login' },
+  { name: 'Journaling Prompts', href: '/resources/journaling-prompts' },
   { name: 'FAQ', href: '/faq' },
+  { name: 'Contact', href: '/contact' },
 ]

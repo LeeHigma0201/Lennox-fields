@@ -1,10 +1,11 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Mail, MapPin, Linkedin, Facebook, Instagram } from 'lucide-react'
 import { siteConfig } from '@/content/site-config'
 import { footerQuickLinks, footerResourceLinks } from '@/content/navigation'
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = 2026
 
   return (
     <footer className="bg-gradient-to-br from-soft-rose/10 via-warm-cream to-primary-sage/10">
@@ -13,10 +14,12 @@ export default function Footer() {
           {/* About */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <img
+              <Image
                 src={siteConfig.logo.src}
                 alt={siteConfig.logo.alt}
-                className="w-10 h-10 object-contain rounded"
+                width={40}
+                height={40}
+                className="object-contain rounded"
               />
               <span className="font-heading text-lg font-bold text-text-dark">{siteConfig.businessName}</span>
             </div>

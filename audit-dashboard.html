@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lennox Fields - Site Audit Dashboard</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #242736;
+    --border: #2e3245;
+    --text: #e4e6ef;
+    --text-muted: #8b8fa3;
+    --red: #ff6b6b;
+    --red-bg: rgba(255,107,107,0.1);
+    --orange: #ffa94d;
+    --orange-bg: rgba(255,169,77,0.1);
+    --yellow: #ffd43b;
+    --yellow-bg: rgba(255,212,59,0.1);
+    --blue: #74c0fc;
+    --blue-bg: rgba(116,192,252,0.1);
+    --green: #69db7c;
+    --green-bg: rgba(105,219,124,0.1);
+    --purple: #b197fc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 32px; position: sticky; top: 0; z-index: 100; }
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .header p { color: var(--text-muted); font-size: 13px; margin-top: 2px; }
+
+  .stats-bar { display: flex; gap: 12px; padding: 20px 32px; flex-wrap: wrap; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; flex: 1; min-width: 140px; cursor: pointer; transition: all 0.15s; }
+  .stat-card:hover { border-color: var(--purple); transform: translateY(-1px); }
+  .stat-card.active { border-color: var(--purple); background: var(--surface2); }
+  .stat-card .num { font-size: 28px; font-weight: 800; }
+  .stat-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .stat-card.p0 .num { color: var(--red); }
+  .stat-card.p1 .num { color: var(--orange); }
+  .stat-card.p2 .num { color: var(--yellow); }
+  .stat-card.p3 .num { color: var(--blue); }
+  .stat-card.all .num { color: var(--purple); }
+  .stat-card.fixed .num { color: var(--green); }
+
+  .controls { padding: 0 32px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .search { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-size: 14px; width: 300px; outline: none; }
+  .search:focus { border-color: var(--purple); }
+  .filter-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; color: var(--text-muted); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--surface2); color: var(--text); border-color: var(--purple); }
+  .progress-bar { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
+  .progress-track { width: 120px; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.3s; }
+
+  .main { padding: 0 32px 40px; }
+  .issue-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .issue { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: all 0.15s; }
+  .issue:hover { border-color: #3e4260; }
+  .issue.resolved { opacity: 0.5; }
+  .issue-header { padding: 16px 20px; cursor: pointer; display: flex; align-items: flex-start; gap: 14px; }
+  .issue-checkbox { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 5px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 2px; transition: all 0.15s; }
+  .issue-checkbox:hover { border-color: var(--green); }
+  .issue-checkbox.checked { background: var(--green); border-color: var(--green); }
+  .issue-checkbox.checked::after { content: '✓'; color: var(--bg); font-size: 13px; font-weight: 700; }
+  .issue-body { flex: 1; }
+  .issue-title { font-size: 15px; font-weight: 600; }
+  .issue-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .tag.p0 { background: var(--red-bg); color: var(--red); }
+  .tag.p1 { background: var(--orange-bg); color: var(--orange); }
+  .tag.p2 { background: var(--yellow-bg); color: var(--yellow); }
+  .tag.p3 { background: var(--blue-bg); color: var(--blue); }
+  .tag.category { background: rgba(177,151,252,0.1); color: var(--purple); }
+  .chevron { color: var(--text-muted); flex-shrink: 0; margin-top: 2px; transition: transform 0.2s; font-size: 18px; }
+  .issue.open .chevron { transform: rotate(90deg); }
+
+  .issue-details { display: none; padding: 0 20px 20px 54px; }
+  .issue.open .issue-details { display: block; }
+  .detail-section { margin-bottom: 14px; }
+  .detail-section h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 6px; }
+  .detail-section p, .detail-section li { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .detail-section ul { padding-left: 18px; }
+  .detail-section code { background: var(--surface2); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: var(--yellow); }
+  .file-ref { color: var(--blue); font-family: monospace; font-size: 13px; }
+
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+
+  @media (max-width: 768px) {
+    .stats-bar { gap: 8px; padding: 12px 16px; }
+    .stat-card { padding: 12px; min-width: 100px; }
+    .stat-card .num { font-size: 22px; }
+    .controls { padding: 0 16px 12px; }
+    .search { width: 100%; }
+    .main { padding: 0 16px 40px; }
+    .header { padding: 16px; }
+    .issue-header { padding: 14px 16px; }
+    .issue-details { padding: 0 16px 16px 50px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Lennox Fields - Site Audit</h1>
+  <p>Exhaustive audit completed March 22, 2026 &mdash; 45 issues found across content, links, design, accessibility, and business readiness</p>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="controls">
+  <input type="text" class="search" id="search" placeholder="Search issues..." />
+  <button class="filter-btn" data-cat="all" onclick="filterCategory('all')">All Categories</button>
+  <button class="filter-btn" data-cat="broken-link" onclick="filterCategory('broken-link')">Broken Links</button>
+  <button class="filter-btn" data-cat="content" onclick="filterCategory('content')">Content</button>
+  <button class="filter-btn" data-cat="design" onclick="filterCategory('design')">Design/UX</button>
+  <button class="filter-btn" data-cat="accessibility" onclick="filterCategory('accessibility')">Accessibility</button>
+  <button class="filter-btn" data-cat="business" onclick="filterCategory('business')">Business</button>
+  <button class="filter-btn" data-cat="seo" onclick="filterCategory('seo')">SEO</button>
+  <button class="filter-btn" data-cat="performance" onclick="filterCategory('performance')">Performance</button>
+  <div class="progress-bar">
+    <span id="progressText">0/45 resolved</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="issue-list" id="issueList"></div>
+</div>
+
+<script>
+const issues = [
+  // P0 - CRITICAL
+  {
+    id: 1, priority: "p0", category: "design",
+    title: "bg-cream color class not defined in Tailwind config",
+    description: "The Tailwind config defines `warm-cream` but NOT `cream`. Classes `bg-cream` and `hover:bg-cream` are used in 19+ files but produce no output.",
+    impact: "Every section using bg-cream renders transparent (no background). Every hover:bg-cream button has no visible hover state. Breaks the intended alternating white/cream section pattern across the entire site.",
+    files: ["tailwind.config.ts (missing 'cream' key)", "app/about/page.tsx:61,120", "app/books/page.tsx:100", "app/faq/page.tsx:40,61", "app/contact/page.tsx:165,207,254", "app/services/page.tsx:69", "components/layout/Header.tsx:72", "components/home/CTASection.tsx:37", "+ 10 more files"],
+    fix: "Add `cream: '#faf9f7'` (or alias to warm-cream) in tailwind.config.ts under theme.extend.colors, OR find-replace bg-cream with bg-warm-cream across all files."
+  },
+  {
+    id: 2, priority: "p0", category: "broken-link",
+    title: "/services/couples-therapy - page does not exist (404)",
+    description: "Linked from main navigation dropdown and services overview page. No page.tsx exists at this route.",
+    impact: "Users clicking 'Couples Counseling' in the main nav header get a 404 error.",
+    files: ["content/navigation.ts:14", "content/services.ts:106", "components/layout/Header.tsx (nav dropdown)"],
+    fix: "Create app/services/couples-therapy/page.tsx OR remove from navigation and services config."
+  },
+  {
+    id: 3, priority: "p0", category: "broken-link",
+    title: "/services/family-therapy - page does not exist (404)",
+    description: "Linked from main navigation dropdown and services overview page. No page.tsx exists at this route.",
+    impact: "Users clicking 'Family Therapy' in the main nav get a 404.",
+    files: ["content/navigation.ts:15", "content/services.ts:114"],
+    fix: "Create app/services/family-therapy/page.tsx OR remove from navigation."
+  },
+  {
+    id: 4, priority: "p0", category: "broken-link",
+    title: "/resources - no index page exists (404)",
+    description: "Hero secondary button, ResourcesHighlight, breathing exercises, safety planning, and screening tools all link to /resources. Only /resources/journaling-prompts exists.",
+    impact: "Multiple CTAs and back-links across the site lead to 404.",
+    files: ["content/home-page.ts:22", "components/home/ResourcesHighlight.tsx", "app/tools/breathing-exercises/page.tsx", "app/tools/safety-planning/page.tsx", "app/tools/screening-tools/page.tsx"],
+    fix: "Create app/resources/page.tsx as a resource hub/index page."
+  },
+  {
+    id: 5, priority: "p0", category: "broken-link",
+    title: "/resources/worksheets - page does not exist (404)",
+    description: "Linked from navigation, footer, and 4+ tool pages (CBT, breathing, PHQ-9, PCL-5 results). No page exists.",
+    impact: "Users completing assessments and clicking 'View Worksheets' get 404.",
+    files: ["content/navigation.ts:25,57", "content/home-page.ts:98", "app/tools/cbt-thought-record/page.tsx:112", "app/tools/breathing-exercises/page.tsx", "app/tools/screening-tools/pcl-5/page.tsx", "app/tools/screening-tools/phq-9/page.tsx"],
+    fix: "Create app/resources/worksheets/page.tsx OR update all links."
+  },
+  {
+    id: 6, priority: "p0", category: "broken-link",
+    title: "/resources/habit-trackers and /resources/journals - pages don't exist",
+    description: "Both linked from navigation dropdown, footer, and homepage resources section.",
+    impact: "Nav dropdown and footer links lead to 404.",
+    files: ["content/navigation.ts:26-27,58-59", "content/home-page.ts:114"],
+    fix: "Create these pages or remove from navigation config."
+  },
+  {
+    id: 7, priority: "p0", category: "broken-link",
+    title: "/professional/* - entire section doesn't exist (5 broken routes)",
+    description: "/professional, /professional/supervision, /professional/billing-tracker, /professional/licensing-guides are all linked from navigation but no pages exist.",
+    impact: "The entire 'Professional Tools' nav section leads to 404s. Main nav top-level link is broken.",
+    files: ["content/navigation.ts:33-39,52", "content/about.ts:125", "content/home-page.ts:49"],
+    fix: "Create professional section pages OR remove 'Professional Tools' from navigation entirely."
+  },
+  {
+    id: 8, priority: "p0", category: "broken-link",
+    title: "/tools/treatment-planning and /tools/notes-templates - don't exist",
+    description: "Linked from navigation dropdown and homepage resources section.",
+    impact: "Nav dropdown links lead to 404.",
+    files: ["content/navigation.ts:36-37", "content/home-page.ts:131"],
+    fix: "Create pages or remove from navigation."
+  },
+  {
+    id: 9, priority: "p0", category: "broken-link",
+    title: "/portal/login - Client Portal page doesn't exist (404)",
+    description: "Linked from Header CTA button (visible on every page), homepage CTA section, and footer. The 'Client Portal' button is prominently displayed in the site header.",
+    impact: "Every visitor sees a 'Client Portal' button that leads to a 404. Looks unprofessional and misleading.",
+    files: ["components/layout/Header.tsx:85,139", "content/navigation.ts:60", "content/home-page.ts:141"],
+    fix: "Remove Client Portal button from Header until a portal exists, or redirect to a CarePatron/SimplePractice portal."
+  },
+  {
+    id: 10, priority: "p0", category: "business",
+    title: "/privacy, /terms, /hipaa - legal pages all 404",
+    description: "Footer links to Privacy Policy, Terms of Service, and HIPAA Notice. None of these pages exist.",
+    impact: "Legally required pages missing for a mental health practice. Broken links to legal pages signals negligence to potential clients.",
+    files: ["components/layout/Footer.tsx:94,97,100"],
+    fix: "Create app/privacy/page.tsx, app/terms/page.tsx, and app/hipaa/page.tsx with appropriate legal content."
+  },
+  {
+    id: 11, priority: "p0", category: "broken-link",
+    title: "/tools/screening-tools/asam-criteria - linked but doesn't exist",
+    description: "Substance-use service page links to 'Take the ASAM Assessment' and 'Complete ASAM Assessment' but no page exists. The screening tools page correctly marks it 'Coming Soon'.",
+    impact: "Two prominent CTA buttons on the substance-use page lead to 404.",
+    files: ["app/services/substance-use/page.tsx:35,135"],
+    fix: "Remove active links from substance-use page, or change to non-link 'Coming Soon' treatment."
+  },
+  {
+    id: 12, priority: "p0", category: "business",
+    title: "Contact form doesn't send data anywhere",
+    description: "The handleSubmit function calls e.preventDefault() then setSubmitted(true). Shows 'Message Received!' but the form data is silently discarded. No API call, no email, no database write.",
+    impact: "Potential clients fill out the contact form, see a success message, and Tamara never receives their inquiry. This is the #1 revenue blocker.",
+    files: ["app/contact/page.tsx:21-24"],
+    fix: "Integrate with Formspree, Formspark, or Resend. Minimum: create an API route that sends an email notification."
+  },
+  // P1 - HIGH
+  {
+    id: 13, priority: "p1", category: "design",
+    title: "All images use raw <img> instead of next/image",
+    description: "Every image in the codebase uses <img> tags without width/height attributes. The next.config.js configures image formats (AVIF, WebP) but next/image is never imported or used.",
+    impact: "No lazy loading, no responsive srcsets, no format optimization, Cumulative Layout Shift (CLS) issues. Images served unoptimized.",
+    files: ["components/layout/Header.tsx:35-39", "components/layout/Footer.tsx:16-20", "components/home/HeroSection.tsx:74-78", "components/home/AboutPreview.tsx:50-54", "app/about/page.tsx:18-22,131-135", "app/books/page.tsx:30-34", "app/resources/journaling-prompts/page.tsx:56-59"],
+    fix: "Replace all <img> tags with Next.js <Image> component. Add width/height or fill prop to each."
+  },
+  {
+    id: 14, priority: "p1", category: "design",
+    title: "No loading.tsx, error.tsx, or not-found.tsx files",
+    description: "Zero loading states, error boundaries, or custom 404 pages exist anywhere in the app directory.",
+    impact: "Blank screen during page loads on slow connections. Default Next.js error page with no branding on errors. Generic 404 for broken links.",
+    files: ["app/ (missing loading.tsx, error.tsx, not-found.tsx, global-error.tsx)"],
+    fix: "Create app/not-found.tsx (custom 404), app/loading.tsx (loading skeleton), and app/error.tsx (error boundary with recovery)."
+  },
+  {
+    id: 15, priority: "p1", category: "accessibility",
+    title: "WCAG AA color contrast failures across site",
+    description: "warm-gray (#A39690) on warm-cream (#faf9f7) has ~2.5:1 contrast ratio. warm-sand (#b49a83) on white has ~3.0:1. accent-gold (#9B8C5A) on white has ~3.5:1. WCAG AA requires 4.5:1 for normal text.",
+    impact: "Secondary text across the entire site is hard to read, especially for users with low vision. Fails accessibility compliance.",
+    files: ["tailwind.config.ts (color definitions)", "globals.css", "Used site-wide for secondary/muted text"],
+    fix: "Darken warm-gray to at least #6B6560 for 4.5:1 contrast on warm-cream. Similarly adjust warm-sand and accent-gold."
+  },
+  {
+    id: 16, priority: "p1", category: "accessibility",
+    title: "Keyboard-inaccessible dropdown navigation menus",
+    description: "Header dropdown submenus open only on onMouseEnter/onMouseLeave. No onFocus/onBlur handlers, no aria-haspopup, no aria-expanded attributes.",
+    impact: "Keyboard-only users and screen reader users cannot access any submenu navigation items (Services, Resources, Professional Tools).",
+    files: ["components/layout/Header.tsx:55-57,65-66"],
+    fix: "Add onFocus/onBlur handlers, aria-haspopup='true', aria-expanded state, and keyboard Enter/Space/Escape handling to dropdown triggers."
+  },
+  {
+    id: 17, priority: "p1", category: "business",
+    title: "No analytics tracking installed",
+    description: "No Google Analytics, Vercel Analytics, Plausible, or any other analytics service. No tracking scripts in layout.tsx.",
+    impact: "Zero visibility into site traffic, user behavior, or conversion tracking. Cannot measure marketing effectiveness.",
+    files: ["app/layout.tsx (no analytics scripts)"],
+    fix: "Add Vercel Analytics (one line: import { Analytics } from '@vercel/analytics/react') or Google Analytics."
+  },
+  {
+    id: 18, priority: "p1", category: "seo",
+    title: "No sitemap.xml or robots.txt",
+    description: "Neither file exists. No Next.js sitemap/robots generation configured.",
+    impact: "Google and other search engines can't efficiently crawl and index the site. Major SEO gap for local therapy searches.",
+    files: ["app/ (missing sitemap.ts and robots.ts)"],
+    fix: "Create app/sitemap.ts and app/robots.ts using Next.js metadata API."
+  },
+  {
+    id: 19, priority: "p1", category: "content",
+    title: "EMDR therapy claimed but no certification listed",
+    description: "Individual therapy page lists 'EMDR' as a treatment approach. PCL-5 results page says 'we offer EMDR therapy for trauma processing.' But EMDR is NOT in Tamara's credentials/certifications anywhere on the about page.",
+    impact: "If Tamara isn't EMDR-certified, claiming to offer it is a professional and ethical concern. EMDR requires specific training and certification.",
+    files: ["app/services/individual-therapy/page.tsx:94-99", "app/tools/screening-tools/pcl-5/page.tsx:221", "content/about.ts (no EMDR in credentials)"],
+    fix: "VERIFY with Tamara: If EMDR-certified, add to credentials. If not, remove EMDR claims from service pages."
+  },
+  {
+    id: 20, priority: "p1", category: "content",
+    title: "LPCA clinical supervision claim may be inaccurate",
+    description: "FAQ states 'I provide clinical supervision for associates and interns pursuing licensure in Kentucky.' As an LPCA (Licensed Professional Clinical Counselor Associate), Tamara is herself under supervision.",
+    impact: "LPCAs generally cannot supervise others. This claim could be professionally inaccurate and raise red flags with licensing boards.",
+    files: ["content/faq.ts:113"],
+    fix: "VERIFY with Tamara: Clarify supervision status. If future offering, label as 'Coming Soon'. If peer consultation, reword."
+  },
+  {
+    id: 21, priority: "p1", category: "content",
+    title: "Email response time inconsistency: '24 hours' vs '2 business days'",
+    description: "FAQ page's 'Email Us' card says 'we'll respond within 24 hours' but the FAQ answer and contact page both say 'two business days'.",
+    impact: "Conflicting expectations for potential clients. If they expect 24 hours and wait 2 days, it damages trust.",
+    files: ["app/faq/page.tsx:101 ('24 hours')", "app/contact/page.tsx:32 ('two business days')", "content/faq.ts:21 ('two business days')"],
+    fix: "Standardize to one timeframe across all pages. Recommend '1-2 business days' as a middle ground."
+  },
+  {
+    id: 22, priority: "p1", category: "content",
+    title: "'We/us' vs 'I/me' voice inconsistency throughout site",
+    description: "Site is for a sole practitioner but mixes first-person singular ('I', 'my') with plural ('we', 'us', 'our'). FAQ page uses 'Contact us', 'Call Us', 'Email Us'. CTA section uses 'Speak with us'. Most service pages use first-person singular.",
+    impact: "Confusing for visitors - is this a group practice or solo? Undermines personal brand.",
+    files: ["app/faq/page.tsx:21,23,85,99", "content/home-page.ts (CTA section)", "components/layout/Footer.tsx:80", "Various CTA buttons"],
+    fix: "Standardize to first-person singular ('I/me/my') since Tamara is a sole practitioner. Or decide to brand as 'Lennox Fields' the practice (we/us)."
+  },
+  // P2 - MEDIUM
+  {
+    id: 23, priority: "p2", category: "performance",
+    title: "Fonts loaded via <link> tags instead of next/font",
+    description: "Google Fonts (Playfair Display, Inter, Quicksand) loaded via external <link> tags in layout.tsx. Next.js recommends next/font/google for self-hosting.",
+    impact: "Render-blocking font requests, Flash of Unstyled Text (FOUT), performance penalty on Lighthouse.",
+    files: ["app/layout.tsx:40-42"],
+    fix: "Replace <link> tags with next/font/google imports for automatic self-hosting and zero layout shift."
+  },
+  {
+    id: 24, priority: "p2", category: "performance",
+    title: "Quicksand font loaded but never used anywhere",
+    description: "Quicksand font is loaded via Google Fonts and configured as font-accent in Tailwind. Zero usage of 'font-accent' class anywhere in the codebase.",
+    impact: "Wasted bandwidth (~15-30KB) loading an unused font on every page.",
+    files: ["app/layout.tsx:42", "tailwind.config.ts:32", "No usage found in any component"],
+    fix: "Remove Quicksand from the Google Fonts link tag and from tailwind.config.ts."
+  },
+  {
+    id: 25, priority: "p2", category: "performance",
+    title: "framer-motion dependency installed but never imported",
+    description: "framer-motion v11.3.19 is in package.json dependencies. Zero files import from it.",
+    impact: "Potential bundle size increase if tree-shaking doesn't fully eliminate it. Unnecessary dependency.",
+    files: ["package.json:26"],
+    fix: "Run: npm uninstall framer-motion"
+  },
+  {
+    id: 26, priority: "p2", category: "design",
+    title: "No favicon - browser tab shows generic icon",
+    description: "No favicon.ico, favicon.png, or icon file exists in /public or /app directories.",
+    impact: "Unprofessional browser tab appearance. Bookmarks show no icon.",
+    files: ["public/ (no favicon)", "app/ (no icon.tsx/favicon.ico)"],
+    fix: "Generate a favicon from the LFLogo.jpeg and place in app/favicon.ico or create app/icon.tsx."
+  },
+  {
+    id: 27, priority: "p2", category: "business",
+    title: "Calendly barely integrated - only linked from one page",
+    description: "Calendly URL (calendly.com/tamara-lennoxfields) is configured in siteConfig but only used as a raw external link on the FAQ page. Not embedded anywhere. Most 'Schedule' CTAs go to /contact (the broken form).",
+    impact: "Primary scheduling mechanism is nearly invisible. Most booking CTAs lead to a dead-end form.",
+    files: ["content/site-config.ts:35", "app/faq/page.tsx:74 (only usage)"],
+    fix: "Embed Calendly on the contact page using their embed widget, or redirect 'Schedule Consultation' CTAs to the Calendly URL."
+  },
+  {
+    id: 28, priority: "p2", category: "content",
+    title: "Book age ranges are all empty strings",
+    description: "All three books in books.ts have ageRange: '' (empty). The 'Ages:' label is conditionally rendered but never shown.",
+    impact: "For children's books, age range is critical purchasing information for parents and educators.",
+    files: ["content/books.ts (all 3 books)"],
+    fix: "Add age ranges: e.g., 'Ages 4-8', 'Ages 6-12'. Verify with Tamara."
+  },
+  {
+    id: 29, priority: "p2", category: "design",
+    title: "Download buttons don't work (no onClick handlers)",
+    description: "Journaling prompts 'Download Free Workbook (PDF)' and GAD-7 'Download Results (PDF)' are plain <button> elements with no onClick handler.",
+    impact: "Users click download buttons and nothing happens. Broken promise of free downloadable resources.",
+    files: ["app/resources/journaling-prompts/page.tsx:81-84", "app/tools/screening-tools/gad-7/page.tsx:231-234"],
+    fix: "Implement PDF generation using jsPDF (already in dependencies) or link to pre-made PDF files."
+  },
+  {
+    id: 30, priority: "p2", category: "seo",
+    title: "No structured data (JSON-LD) for SEO",
+    description: "No LocalBusiness, MedicalBusiness, FAQPage, or Book schema markup exists anywhere.",
+    impact: "Missing rich snippets in Google results. For local therapy searches, structured data significantly improves visibility.",
+    files: ["app/layout.tsx (no JSON-LD script tags)", "app/faq/page.tsx (no FAQPage schema)", "app/books/page.tsx (no Book schema)"],
+    fix: "Add JSON-LD scripts: LocalBusiness/MedicalBusiness in layout.tsx, FAQPage in faq/page.tsx, Book in books/page.tsx."
+  },
+  {
+    id: 31, priority: "p2", category: "accessibility",
+    title: "Safety plan saves sensitive data to localStorage unencrypted",
+    description: "Crisis/safety plan data (warning signs, coping strategies, emergency contacts) saved to localStorage as plain JSON.",
+    impact: "Sensitive mental health crisis data accessible to any JavaScript on the same origin. Site claims HIPAA compliance.",
+    files: ["app/tools/safety-planning/page.tsx:48"],
+    fix: "Add a disclaimer that data is stored locally only, or encrypt before saving to localStorage."
+  },
+  {
+    id: 32, priority: "p2", category: "content",
+    title: "'24 business hours' is unusual phrasing in FAQ",
+    description: "FAQ says 'I'll return your call within 24 business hours'. Business hours are not typically measured in hours.",
+    impact: "Confusing phrasing. Does this mean 3 business days (8 hours each) or 1 day?",
+    files: ["content/faq.ts:139"],
+    fix: "Change to 'within one business day' or 'within 24 hours during business days'."
+  },
+  {
+    id: 33, priority: "p2", category: "content",
+    title: "Monthly therapy package pricing discount not explained",
+    description: "Monthly Package is $500 for 4 sessions. Individual session is $150. 4 x $150 = $600. The $100 savings isn't mentioned.",
+    impact: "Visitors may not realize the package offers a discount, reducing its appeal.",
+    files: ["app/services/individual-therapy/page.tsx:219-222"],
+    fix: "Add 'Save $100/month' or 'vs. $600 individual' to the package pricing."
+  },
+  {
+    id: 34, priority: "p2", category: "design",
+    title: "Hero image hidden on tablets (below lg breakpoint)",
+    description: "HeroSection right column (Tamara's portrait) uses 'hidden lg:block'. Disappears entirely on md (768-1023px) screens.",
+    impact: "Tablet users see a text-only hero with no visual element, which feels incomplete.",
+    files: ["components/home/HeroSection.tsx:71"],
+    fix: "Consider showing the image at md breakpoint, perhaps smaller or in a different layout."
+  },
+  {
+    id: 35, priority: "p2", category: "content",
+    title: "OG description doesn't highlight key differentiators",
+    description: "Layout.tsx OG description says 'Individual therapy, couples counseling, family therapy, and career guidance in Kentucky'. Doesn't mention ADHD, autism, CPTSD, trauma specializations.",
+    impact: "Social shares don't communicate the core differentiators. Generic description could be any therapist.",
+    files: ["app/layout.tsx:15"],
+    fix: "Update to something like: 'Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky'"
+  },
+  {
+    id: 36, priority: "p2", category: "design",
+    title: "useEffect missing dependency in breathing exercises (potential bug)",
+    description: "useEffect depends on isActive and timeLeft but calls advancePhase() which uses currentPhase, currentCycle, and selectedPattern - none in the dependency array.",
+    impact: "Stale closures can cause the breathing exercise timer to malfunction on phase transitions.",
+    files: ["app/tools/breathing-exercises/page.tsx:82-94"],
+    fix: "Add missing dependencies to the useEffect array, or extract to a useCallback."
+  },
+  // P3 - LOW
+  {
+    id: 37, priority: "p3", category: "design",
+    title: "Hero section padding inconsistency across pages",
+    description: "All hero sections use py-20 (fixed) while the home page hero uses section-padding (responsive: py-16 md:py-24 lg:py-32).",
+    impact: "Subtle visual inconsistency between home page and interior page heroes.",
+    files: ["app/about/page.tsx:11", "app/books/page.tsx:9", "app/contact/page.tsx:39", "app/faq/page.tsx:10", "app/services/page.tsx:10", "+ all service detail pages"],
+    fix: "Standardize to section-padding or pick a consistent hero padding value."
+  },
+  {
+    id: 38, priority: "p3", category: "design",
+    title: "Calibri font fallback not available on macOS/Linux/iOS",
+    description: "Tailwind config sets font-body: ['Calibri', ...]. Calibri is a Microsoft font not available on non-Windows platforms without Office.",
+    impact: "Most visitors will see Inter instead of Calibri, creating inconsistent rendering across platforms.",
+    files: ["tailwind.config.ts:31"],
+    fix: "Remove Calibri from the font stack or replace with a universally available font."
+  },
+  {
+    id: 39, priority: "p3", category: "content",
+    title: "'Couples Counseling' vs 'Couples Therapy' naming inconsistency",
+    description: "Navigation and services page say 'Couples Counseling' but URL slug is 'couples-therapy' and pricing references 'Couples Therapy'.",
+    impact: "Minor brand consistency issue.",
+    files: ["content/navigation.ts", "content/services.ts", "app/contact/page.tsx (dropdown)"],
+    fix: "Pick one term and use it consistently everywhere."
+  },
+  {
+    id: 40, priority: "p3", category: "content",
+    title: "DSM-IV reference on PHQ-9 page (current is DSM-5)",
+    description: "PHQ-9 About section says 'based on the nine DSM-IV criteria'. While technically accurate (PHQ-9 was developed using DSM-IV), DSM-5 is the current standard since 2013.",
+    impact: "May cause confusion or appear outdated to clinically knowledgeable visitors.",
+    files: ["app/tools/screening-tools/phq-9/page.tsx:287"],
+    fix: "Add clarifying note: 'originally developed using DSM-IV criteria, validated for current clinical use.'"
+  },
+  {
+    id: 41, priority: "p3", category: "content",
+    title: "ACT mentioned in FAQ but nowhere else on the site",
+    description: "FAQ lists 'Acceptance and Commitment Therapy (ACT)' as an approach. Not mentioned on individual therapy page, about page, or anywhere else.",
+    impact: "Inconsistent service representation. Visitors may search for ACT and only find it in FAQ.",
+    files: ["content/faq.ts:105"],
+    fix: "Add ACT to individual therapy approaches if Tamara uses it, or remove from FAQ."
+  },
+  {
+    id: 42, priority: "p3", category: "accessibility",
+    title: "Several icons missing aria-hidden='true'",
+    description: "Most decorative icons correctly have aria-hidden='true' (47 instances), but some are missing it in JournalingPrompts, about page, and books page.",
+    impact: "Screen readers may announce decorative icon names unnecessarily.",
+    files: ["components/home/JournalingPrompts.tsx:45,91", "app/about/page.tsx:72,91,162", "app/books/page.tsx:11"],
+    fix: "Add aria-hidden='true' to all decorative Lucide React icons."
+  },
+  {
+    id: 43, priority: "p3", category: "performance",
+    title: "Unused imports in screening tool pages",
+    description: "PHQ-9 imports Download and Share2 but never uses them. PCL-5 imports ArrowLeft but never uses it.",
+    impact: "Minor: tree-shaking should eliminate, but indicates incomplete code.",
+    files: ["app/tools/screening-tools/phq-9/page.tsx:4-5", "app/tools/screening-tools/pcl-5/page.tsx:5"],
+    fix: "Remove unused imports."
+  },
+  {
+    id: 44, priority: "p3", category: "accessibility",
+    title: "role='main' redundant on <main> element",
+    description: "Layout.tsx has <main role='main'> but the role is implicit for <main> per HTML spec.",
+    impact: "Minor HTML hygiene issue per WCAG guidelines.",
+    files: ["app/layout.tsx:53"],
+    fix: "Remove role='main' attribute."
+  },
+  {
+    id: 45, priority: "p3", category: "business",
+    title: "Stripe integration scaffolded but completely non-functional",
+    description: "Stripe SDK installed, lib/stripe.ts has 8 product definitions with pricing. But no API routes, no checkout flow, no payment UI exists anywhere. Books sell via Amazon links.",
+    impact: "Not blocking for launch (Amazon handles book sales, Calendly handles scheduling). But dead code adds confusion.",
+    files: ["lib/stripe.ts", "package.json (stripe, @stripe/stripe-js)"],
+    fix: "For launch: no action needed (payments via external services). Long-term: build checkout flow or remove Stripe deps to reduce confusion."
+  }
+];
+
+// State
+let resolvedIds = JSON.parse(localStorage.getItem('lf-audit-resolved') || '[]');
+let activeFilter = 'all';
+let activePriority = null;
+let searchQuery = '';
+
+// Render stats
+function renderStats() {
+  const counts = { p0: 0, p1: 0, p2: 0, p3: 0, total: 0 };
+  issues.forEach(i => { counts[i.priority]++; counts.total++; });
+  const resolved = resolvedIds.length;
+
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card all ${activePriority === null ? 'active' : ''}" onclick="filterPriority(null)">
+      <div class="num">${counts.total}</div><div class="label">Total Issues</div>
+    </div>
+    <div class="stat-card p0 ${activePriority === 'p0' ? 'active' : ''}" onclick="filterPriority('p0')">
+      <div class="num">${counts.p0}</div><div class="label">P0 Critical</div>
+    </div>
+    <div class="stat-card p1 ${activePriority === 'p1' ? 'active' : ''}" onclick="filterPriority('p1')">
+      <div class="num">${counts.p1}</div><div class="label">P1 High</div>
+    </div>
+    <div class="stat-card p2 ${activePriority === 'p2' ? 'active' : ''}" onclick="filterPriority('p2')">
+      <div class="num">${counts.p2}</div><div class="label">P2 Medium</div>
+    </div>
+    <div class="stat-card p3 ${activePriority === 'p3' ? 'active' : ''}" onclick="filterPriority('p3')">
+      <div class="num">${counts.p3}</div><div class="label">P3 Low</div>
+    </div>
+    <div class="stat-card fixed">
+      <div class="num">${resolved}</div><div class="label">Resolved</div>
+    </div>
+  `;
+
+  const pct = counts.total ? Math.round((resolved / counts.total) * 100) : 0;
+  document.getElementById('progressText').textContent = `${resolved}/${counts.total} resolved`;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// Render issues
+function renderIssues() {
+  const list = document.getElementById('issueList');
+  const filtered = issues.filter(i => {
+    if (activePriority && i.priority !== activePriority) return false;
+    if (activeFilter !== 'all' && i.category !== activeFilter) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      return i.title.toLowerCase().includes(q) || i.description.toLowerCase().includes(q) ||
+             i.files.some(f => f.toLowerCase().includes(q)) || i.category.toLowerCase().includes(q);
+    }
+    return true;
+  });
+
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty-state"><div class="icon">&#x1F50D;</div><p>No issues match your filters</p></div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(i => {
+    const isResolved = resolvedIds.includes(i.id);
+    const priorityLabels = { p0: 'P0 Critical', p1: 'P1 High', p2: 'P2 Medium', p3: 'P3 Low' };
+    const categoryLabels = {
+      'broken-link': 'Broken Link', content: 'Content', design: 'Design/UX',
+      accessibility: 'Accessibility', business: 'Business', seo: 'SEO', performance: 'Performance'
+    };
+    return `
+      <div class="issue ${isResolved ? 'resolved' : ''}" id="issue-${i.id}">
+        <div class="issue-header" onclick="toggleIssue(${i.id})">
+          <div class="issue-checkbox ${isResolved ? 'checked' : ''}" onclick="event.stopPropagation(); toggleResolved(${i.id})"></div>
+          <div class="issue-body">
+            <div class="issue-title">${i.title}</div>
+            <div class="issue-meta">
+              <span class="tag ${i.priority}">${priorityLabels[i.priority]}</span>
+              <span class="tag category">${categoryLabels[i.category]}</span>
+            </div>
+          </div>
+          <span class="chevron">&#x276F;</span>
+        </div>
+        <div class="issue-details">
+          <div class="detail-section">
+            <h4>Description</h4>
+            <p>${i.description}</p>
+          </div>
+          <div class="detail-section">
+            <h4>Impact</h4>
+            <p>${i.impact}</p>
+          </div>
+          <div class="detail-section">
+            <h4>Files</h4>
+            <ul>${i.files.map(f => `<li><span class="file-ref">${f}</span></li>`).join('')}</ul>
+          </div>
+          <div class="detail-section">
+            <h4>Recommended Fix</h4>
+            <p>${i.fix}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleIssue(id) {
+  const el = document.getElementById('issue-' + id);
+  el.classList.toggle('open');
+}
+
+function toggleResolved(id) {
+  if (resolvedIds.includes(id)) {
+    resolvedIds = resolvedIds.filter(x => x !== id);
+  } else {
+    resolvedIds.push(id);
+  }
+  localStorage.setItem('lf-audit-resolved', JSON.stringify(resolvedIds));
+  renderStats();
+  renderIssues();
+}
+
+function filterPriority(p) {
+  activePriority = p;
+  renderStats();
+  renderIssues();
+}
+
+function filterCategory(cat) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderIssues();
+}
+
+document.getElementById('search').addEventListener('input', (e) => {
+  searchQuery = e.target.value;
+  renderIssues();
+});
+
+// Init
+renderStats();
+renderIssues();
+</script>
+</body>
+</html>

@@ -91,7 +91,8 @@ export default function BreathingExercisesPage() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [isActive, timeLeft])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive, timeLeft, currentPhase, currentCycle, selectedPattern])
 
   const advancePhase = () => {
     let nextPhase: Phase = 'ready'

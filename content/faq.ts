@@ -136,7 +136,7 @@ export const faqs = [
     questions: [
       {
         q: "What if I'm in crisis?",
-        a: 'If you\'re experiencing a mental health emergency, please call 988 (Suicide & Crisis Lifeline), text "HELLO" to 741741 (Crisis Text Line), or go to your nearest emergency room. For non-emergency urgent matters between sessions, you can leave a voicemail and I\'ll return your call within 24 business hours.',
+        a: 'If you\'re experiencing a mental health emergency, please call 988 (Suicide & Crisis Lifeline), text "HELLO" to 741741 (Crisis Text Line), or go to your nearest emergency room. For non-emergency urgent matters between sessions, you can leave a voicemail and I\'ll return your call within one business day.',
       },
       {
         q: 'Do you offer emergency sessions?',

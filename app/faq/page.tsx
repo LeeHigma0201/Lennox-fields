@@ -18,9 +18,9 @@ export default function FAQPage() {
           <p className="text-text-dark">
             Don&apos;t see your question?{' '}
             <Link href="/contact" className="text-primary-sage hover:text-earth-green font-medium underline">
-              Contact us
+              Reach out
             </Link>
-            {' '}and we&apos;ll be happy to help.
+            {' '}and I&apos;ll be happy to help.
           </p>
         </div>
       </section>
@@ -82,9 +82,9 @@ export default function FAQPage() {
 
             <div className="card text-center">
               <Phone className="w-12 h-12 text-clinical-blue mx-auto mb-4" aria-hidden="true" />
-              <h3 className="text-xl font-bold text-text-dark mb-3">Call Us</h3>
+              <h3 className="text-xl font-bold text-text-dark mb-3">Call</h3>
               <p className="text-warm-gray mb-4 text-sm">
-                Speak with us directly {siteConfig.contact.officeHours}
+                Reach me directly {siteConfig.contact.officeHours}
               </p>
               <a
                 href={siteConfig.contact.phoneLink}
@@ -96,9 +96,9 @@ export default function FAQPage() {
 
             <div className="card text-center">
               <Mail className="w-12 h-12 text-soft-rose mx-auto mb-4" aria-hidden="true" />
-              <h3 className="text-xl font-bold text-text-dark mb-3">Email Us</h3>
+              <h3 className="text-xl font-bold text-text-dark mb-3">Email</h3>
               <p className="text-warm-gray mb-4 text-sm">
-                Send your questions and we&apos;ll respond within 24 hours
+                Send your questions and I&apos;ll respond within two business days
               </p>
               <a
                 href={`mailto:${siteConfig.contact.email}?subject=FAQ Question`}

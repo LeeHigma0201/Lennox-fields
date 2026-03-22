@@ -46,7 +46,7 @@ export const professionalSection = {
   description:
     'Access comprehensive professional tools including supervision tracking, billing management, treatment plan generators, and state-specific licensing guides.',
   buttonText: 'Explore Professional Tools',
-  buttonHref: '/professional/supervision',
+  buttonHref: '/professional',
   columns: [
     {
       title: 'Clinical Tools',
@@ -111,7 +111,7 @@ export const resources = [
     title: 'Journal Prompts',
     description:
       'Guided journaling for gratitude, self-discovery, trauma processing, and personal growth.',
-    href: '/resources/journals',
+    href: '/resources/journaling-prompts',
     color: 'bg-soft-rose',
   },
   {
@@ -138,7 +138,7 @@ export const ctaSection = {
   description:
     "Starting therapy can feel overwhelming, but you don't have to do it alone. I offer free 15-minute consultations to answer your questions and ensure we're a good fit.",
   primaryButton: { text: 'Schedule Free Consultation', href: '/contact' },
-  secondaryButton: { text: 'Access Client Portal', href: '/portal/login' },
+  secondaryButton: { text: 'Explore Free Resources', href: '/resources' },
   footnote:
     'Currently accepting new clients in Kentucky. Telehealth and in-person options available.',
 }

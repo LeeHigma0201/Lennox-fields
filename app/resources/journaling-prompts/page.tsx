@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { BookOpen, Download, ArrowLeft, Heart } from 'lucide-react'
 
 const allPrompts = [
@@ -53,10 +54,12 @@ export default function JournalingPromptsPage() {
               </Link>
             </div>
             <div className="flex items-center space-x-2">
-              <img
+              <Image
                 src="/images/LFLogo.jpeg"
                 alt="Lennox Fields Logo"
-                className="w-8 h-8 object-contain"
+                width={32}
+                height={32}
+                className="object-contain"
               />
               <span className="font-heading font-bold text-text-dark">Lennox Fields</span>
             </div>

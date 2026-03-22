@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { BookOpen, Heart, Users, ExternalLink } from 'lucide-react'
 import { books, booksPageHeader, therapeuticTools, companionResources, howToUse } from '@/content/books'
 
@@ -26,11 +27,13 @@ export default function BooksPage() {
               <div key={book.id} className="card group hover:scale-105 transition-all duration-200">
                 {/* Cover */}
                 {book.coverImage ? (
-                  <div className="rounded-lg mb-6 aspect-[3/4] overflow-hidden">
-                    <img
+                  <div className="rounded-lg mb-6 aspect-[3/4] overflow-hidden relative">
+                    <Image
                       src={book.coverImage}
-                      alt={book.title}
-                      className="w-full h-full object-cover"
+                      alt={`Book cover: ${book.title}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </div>
                 ) : (

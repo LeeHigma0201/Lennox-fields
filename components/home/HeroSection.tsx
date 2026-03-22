@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Calendar } from 'lucide-react'
 import { hero } from '@/content/home-page'
 import { siteConfig } from '@/content/site-config'
@@ -68,13 +69,16 @@ export default function HeroSection() {
           </div>
 
           {/* Right Column - Image/Visual */}
-          <div className="relative animate-slide-up hidden lg:block">
+          <div className="relative animate-slide-up hidden md:block">
             <div className="relative rounded-2xl overflow-hidden shadow-strong">
-              <div className="aspect-[4/5]">
-                <img
+              <div className="aspect-[4/5] relative">
+                <Image
                   src="/images/tamara/field-portrait-bw.jpg"
-                  alt={siteConfig.owner.fullTitle}
-                  className="w-full h-full object-cover object-top"
+                  alt={`${siteConfig.owner.name}, Licensed Professional Counselor Associate, smiling outdoors`}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 50vw, 40vw"
+                  priority
                 />
               </div>
 

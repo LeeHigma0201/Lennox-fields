@@ -32,9 +32,9 @@ export default function SubstanceUsePage() {
               evidence-based approach to determining the appropriate level of care for individuals
               with substance use disorders.
             </p>
-            <Link href="/tools/screening-tools/asam-criteria" className="text-clinical-blue hover:text-primary-sage font-medium">
-              Take the ASAM Assessment →
-            </Link>
+            <span className="inline-flex items-center text-warm-gray font-medium">
+              ASAM Assessment — Coming Soon
+            </span>
           </div>
 
           <h2 className="text-4xl font-bold text-text-dark mb-12 text-center">
@@ -132,8 +132,8 @@ export default function SubstanceUsePage() {
             that supports your journey to wellness.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/tools/screening-tools/asam-criteria" className="btn bg-white text-primary-sage hover:bg-cream">
-              Complete ASAM Assessment
+            <Link href="/contact" className="btn bg-white text-primary-sage hover:bg-cream">
+              Request Assessment
             </Link>
             <Link href="/contact" className="btn border-2 border-white hover:bg-white hover:text-primary-sage inline-flex items-center">
               <Calendar className="mr-2 w-5 h-5" />

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Award, BookOpen, Calendar } from 'lucide-react'
 import { aboutHeader, myStory, credentials, specializedTraining, clinicalApproach, beyondClinical } from '@/content/about'
 import { siteConfig } from '@/content/site-config'
@@ -13,14 +14,15 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
-              <div className="relative rounded-2xl overflow-hidden shadow-strong">
-                <div className="aspect-[3/4]">
-                  <img
-                    src="/images/tamara/christmas-portrait.jpg"
-                    alt={`${siteConfig.owner.name} — ${siteConfig.owner.credentials}`}
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
+              <div className="rounded-2xl overflow-hidden shadow-strong">
+                <Image
+                  src="/images/tamara/christmas-portrait.jpg"
+                  alt={`${siteConfig.owner.name}, Licensed Professional Counselor Associate`}
+                  width={600}
+                  height={800}
+                  className="w-full h-auto object-cover object-top"
+                  priority
+                />
               </div>
             </div>
 
@@ -128,9 +130,11 @@ export default function AboutPage() {
               <div key={item.title} className="card">
                 {i === 0 && (
                   <div className="rounded-lg overflow-hidden mb-4">
-                    <img
+                    <Image
                       src="/images/tamara/book-launch.jpg"
                       alt="Tamara Walls at book launch with Brave Hearts and Helping Hands"
+                      width={600}
+                      height={192}
                       className="w-full h-48 object-cover object-top"
                     />
                   </div>

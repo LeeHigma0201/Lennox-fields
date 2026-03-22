@@ -11,11 +11,12 @@ const config: Config = {
       colors: {
         // Lennox Fields Brand Colors - Inspired by Journaling Template
         'primary-sage': '#75856f', // Muted sage from template
-        'warm-sand': '#b49a83', // Warm sand accent
+        'warm-sand': '#8a7362', // Warm sand accent (WCAG AA compliant)
         'soft-rose': '#C09191',
-        'warm-gray': '#A39690',
+        'warm-gray': '#6B6560', // Darkened for WCAG AA contrast on cream
         'warm-cream': '#faf9f7', // Background from template
-        'accent-gold': '#9B8C5A',
+        'cream': '#faf9f7', // Alias for warm-cream (used across site)
+        'accent-gold': '#7A6E44', // Darkened for WCAG AA contrast
         'earth-green': '#6B8E4E',
         'text-dark': '#3f3f3f', // Dark gray from template
         'text-light': '#F5F5F5',
@@ -28,8 +29,7 @@ const config: Config = {
       },
       fontFamily: {
         heading: ['var(--font-playfair)', 'serif'],
-        body: ['Calibri', 'var(--font-inter)', 'sans-serif'],
-        accent: ['var(--font-quicksand)', 'sans-serif'],
+        body: ['var(--font-inter)', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-warm': 'linear-gradient(135deg, #faf9f7 0%, #f5e8e8 100%)',

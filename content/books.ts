@@ -17,7 +17,7 @@ export const books = [
   {
     id: 'what-is-a-divorce',
     title: 'What Is a Divorce',
-    ageRange: '',
+    ageRange: 'Ages 4-8',
     series: 'Tough Topics for Kids',
     topics: ['Children', 'Bibliotherapy', 'Divorce', 'Family Changes'],
     description:
@@ -30,7 +30,7 @@ export const books = [
   {
     id: 'brave-hearts',
     title: 'Brave Hearts & Helping Hands',
-    ageRange: '',
+    ageRange: 'Ages 5-10',
     series: 'Tough Topics for Kids',
     topics: ['Children', 'Bibliotherapy', 'Addiction', 'Family Support'],
     description:
@@ -43,7 +43,7 @@ export const books = [
   {
     id: 'when-a-pet-is-sick',
     title: 'When a Pet Is Sick',
-    ageRange: '',
+    ageRange: 'Ages 4-8',
     series: 'Tough Topics for Kids',
     topics: ['Children', 'Bibliotherapy', 'Pet Illness', 'Grief', 'Coping'],
     description:

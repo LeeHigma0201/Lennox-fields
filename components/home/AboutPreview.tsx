@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Award, BookOpen, Heart, ArrowRight } from 'lucide-react'
 import { aboutPreview } from '@/content/about'
 
@@ -47,9 +48,11 @@ export default function AboutPreview() {
           <div className="space-y-6">
             {/* Tamara's Photo */}
             <div className="rounded-2xl overflow-hidden shadow-soft">
-              <img
+              <Image
                 src="/images/tamara/casual-sunglasses.jpg"
-                alt="Tamara Walls"
+                alt="Tamara Walls wearing sunglasses outdoors"
+                width={600}
+                height={256}
                 className="w-full h-64 object-cover object-top"
               />
             </div>
