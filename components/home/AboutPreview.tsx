@@ -45,6 +45,15 @@ export default function AboutPreview() {
 
           {/* Right Column - Highlights */}
           <div className="space-y-6">
+            {/* Tamara's Photo */}
+            <div className="rounded-2xl overflow-hidden shadow-soft">
+              <img
+                src="/images/tamara/casual-sunglasses.jpg"
+                alt="Tamara Walls"
+                className="w-full h-64 object-cover object-top"
+              />
+            </div>
+
             <div className="card bg-white border-l-4 border-primary-sage">
               <div className="w-16 h-1 bg-gradient-sand rounded mb-3"></div>
               <h3 className="text-2xl font-bold mb-3 text-primary-sage">{aboutPreview.approachTitle}</h3>

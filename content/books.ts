@@ -15,15 +15,16 @@ export const booksPageHeader = {
 // coverColor options: 'bg-soft-rose', 'bg-clinical-blue', 'bg-accent-gold', 'bg-primary-sage', 'bg-earth-green'
 export const books = [
   {
-    id: 'book-1',
-    title: 'Book 1',
+    id: 'brave-hearts',
+    title: 'Brave Hearts and Helping Hands',
     ageRange: '',
-    topics: ['Children', 'Bibliotherapy'],
+    topics: ['Children', 'Bibliotherapy', 'Resilience', 'Empathy'],
     description:
-      'A therapeutic children\'s book by Tamara Walls — helping young people understand and cope with tough topics through storytelling.',
+      'A heartfelt story about courage and kindness — helping children learn that brave hearts and helping hands can make a real difference in the world around them.',
     amazonUrl: 'https://a.co/d/0fnWatag',
     format: ['Kindle', 'Paperback'],
     coverColor: 'bg-soft-rose',
+    coverImage: '/images/tamara/brave-hearts-cover.jpg',
   },
   {
     id: 'book-2',
@@ -35,6 +36,7 @@ export const books = [
     amazonUrl: 'https://a.co/d/00QUHTXT',
     format: ['Kindle', 'Paperback'],
     coverColor: 'bg-primary-sage',
+    coverImage: '',
   },
   {
     id: 'when-a-pet-is-sick',
@@ -46,6 +48,7 @@ export const books = [
     amazonUrl: 'https://a.co/d/0iBxath4',
     format: ['Kindle', 'Paperback'],
     coverColor: 'bg-accent-gold',
+    coverImage: '',
   },
 ]
 

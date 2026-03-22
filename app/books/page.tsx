@@ -24,13 +24,23 @@ export default function BooksPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             {books.map((book) => (
               <div key={book.id} className="card group hover:scale-105 transition-all duration-200">
-                {/* Cover Placeholder */}
-                <div className={`${book.coverColor} rounded-lg p-8 mb-6 aspect-[3/4] flex items-center justify-center`}>
-                  <div className="text-center text-white">
-                    <BookOpen className="w-20 h-20 mx-auto mb-4 opacity-80" />
-                    <p className="font-bold text-lg">{book.title}</p>
+                {/* Cover */}
+                {book.coverImage ? (
+                  <div className="rounded-lg mb-6 aspect-[3/4] overflow-hidden">
+                    <img
+                      src={book.coverImage}
+                      alt={book.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
+                ) : (
+                  <div className={`${book.coverColor} rounded-lg p-8 mb-6 aspect-[3/4] flex items-center justify-center`}>
+                    <div className="text-center text-white">
+                      <BookOpen className="w-20 h-20 mx-auto mb-4 opacity-80" />
+                      <p className="font-bold text-lg">{book.title}</p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Book Info */}
                 <div className="mb-4">

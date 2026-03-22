@@ -14,14 +14,12 @@ export default function AboutPage() {
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
               <div className="relative rounded-2xl overflow-hidden shadow-strong">
-                <div className="aspect-[3/4] bg-gradient-to-br from-primary-sage to-earth-green flex items-center justify-center">
-                  <div className="text-center text-white p-8">
-                    <div className="w-40 h-40 bg-white/20 rounded-full mx-auto mb-6 flex items-center justify-center">
-                      <span className="text-8xl">👋</span>
-                    </div>
-                    <p className="text-2xl font-bold">{siteConfig.owner.name}</p>
-                    <p className="text-lg opacity-90 mt-2">{siteConfig.owner.credentials}</p>
-                  </div>
+                <div className="aspect-[3/4]">
+                  <img
+                    src="/images/tamara/field-portrait-bw.jpg"
+                    alt={`${siteConfig.owner.name} — ${siteConfig.owner.credentials}`}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -80,6 +78,17 @@ export default function AboutPage() {
             })}
           </div>
 
+          {/* Graduation Photo */}
+          <div className="mb-12 flex justify-center">
+            <div className="rounded-2xl overflow-hidden shadow-soft max-w-lg">
+              <img
+                src="/images/tamara/graduation.jpg"
+                alt="Tamara Walls at graduation"
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+
           <h3 className="text-3xl font-bold text-text-dark mb-8 text-center">
             Specialized Training
           </h3>
@@ -125,9 +134,18 @@ export default function AboutPage() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {beyondClinical.map((item) => (
+            {beyondClinical.map((item, i) => (
               <div key={item.title} className="card">
-                <BookOpen className="w-12 h-12 text-soft-rose mb-4" />
+                {i === 0 && (
+                  <div className="rounded-lg overflow-hidden mb-4">
+                    <img
+                      src="/images/tamara/book-launch.jpg"
+                      alt="Tamara Walls at book launch with Brave Hearts and Helping Hands"
+                      className="w-full h-48 object-cover object-top"
+                    />
+                  </div>
+                )}
+                {i !== 0 && <BookOpen className="w-12 h-12 text-soft-rose mb-4" />}
                 <h3 className="text-2xl font-bold text-text-dark mb-3">{item.title}</h3>
                 <p className="text-warm-gray mb-4">{item.description}</p>
                 <Link href={item.linkHref} className="text-primary-sage hover:text-earth-green font-medium">

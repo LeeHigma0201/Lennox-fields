@@ -70,24 +70,22 @@ export default function HeroSection() {
           {/* Right Column - Image/Visual */}
           <div className="relative animate-slide-up hidden lg:block">
             <div className="relative rounded-2xl overflow-hidden shadow-strong">
-              <div className="aspect-[4/5] bg-gradient-to-br from-primary-sage to-earth-green flex items-center justify-center">
-                <div className="text-center text-white p-8">
-                  <div className="w-32 h-32 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-6xl">👋</span>
-                  </div>
-                  <p className="text-xl font-semibold">{siteConfig.owner.fullTitle}</p>
-                  <p className="text-sm opacity-90 mt-2">{siteConfig.owner.role}</p>
-                </div>
+              <div className="aspect-[4/5]">
+                <img
+                  src="/images/tamara/christmas-portrait.jpg"
+                  alt={siteConfig.owner.fullTitle}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               <div className="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-medium p-4">
-                <p className="text-2xl font-bold text-primary-sage">{siteConfig.owner.credentials.split(',')[0]?.trim()}</p>
+                <p className="text-2xl font-bold text-primary-sage">LPCA</p>
                 <p className="text-sm text-text-dark">Clinical Mental Health</p>
               </div>
 
               <div className="absolute -top-6 -right-6 bg-white rounded-lg shadow-medium p-4">
-                <p className="text-2xl font-bold text-earth-green">{siteConfig.owner.credentials.split(',')[1]?.trim()}</p>
-                <p className="text-sm text-text-dark">{siteConfig.owner.licensedStatesShort.join(' & ')} Licensed</p>
+                <p className="text-2xl font-bold text-earth-green">M.Ed.</p>
+                <p className="text-sm text-text-dark">KY Licensed</p>
               </div>
             </div>
           </div>
