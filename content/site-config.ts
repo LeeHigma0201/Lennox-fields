@@ -11,7 +11,7 @@ export const siteConfig = {
   legalName: 'Lennox Fields Clinical Mental Health Services LLC',
   tagline: 'Clinical Mental Health Services',
   description: 'Evidence-based mental health care with compassion at its core',
-  url: 'https://lennoxfields.org',
+  url: 'https://lennox-fields.vercel.app',
 
   // --- Owner / Therapist Info ---
   owner: {

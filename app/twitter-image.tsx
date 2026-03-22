@@ -1,2 +1,3 @@
 // Twitter card uses the same image as OpenGraph
-export { default, alt, size, contentType, runtime } from './opengraph-image'
+export { default, alt, size, contentType } from './opengraph-image'
+export const runtime = 'nodejs'
