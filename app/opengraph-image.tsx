@@ -12,7 +12,7 @@ export default async function Image() {
 
   const [logoData, photoData, playfairFont, interFont] = await Promise.all([
     readFile(join(cwd, 'public/images/LFLogo.jpeg')),
-    readFile(join(cwd, 'public/images/tamara/field-portrait-bw.jpg')),
+    readFile(join(cwd, 'public/images/tamara/casual-sunglasses.jpg')),
     readFile(join(cwd, 'public/fonts/PlayfairDisplay-SemiBold.ttf')),
     readFile(join(cwd, 'public/fonts/Inter-Regular.ttf')),
   ])
@@ -41,6 +41,7 @@ export default async function Image() {
             width: '480px',
             height: '100%',
             display: 'flex',
+            filter: 'grayscale(100%) contrast(1.1)',
           }}
         >
           <img
@@ -49,7 +50,7 @@ export default async function Image() {
             height={630}
             style={{
               objectFit: 'cover',
-              objectPosition: 'top center',
+              objectPosition: 'center top',
             }}
           />
         </div>
