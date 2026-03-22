@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises'
 import { join } from 'path'
 
 export const runtime = 'nodejs'
-export const alt = 'Lennox Fields Clinical Mental Health Services — Tamara Walls, LPCA'
+export const alt = 'Lennox Fields Clinical Mental Health Services — Tamara Walls, LPCA | ADHD, Autism, CPTSD, Trauma Therapy in Kentucky'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 

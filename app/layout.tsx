@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.businessFullName,
     description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky.`,
+    url: siteConfig.url,
     type: 'website',
     locale: 'en_US',
     siteName: siteConfig.businessFullName,
