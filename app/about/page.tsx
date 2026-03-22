@@ -16,9 +16,9 @@ export default function AboutPage() {
               <div className="relative rounded-2xl overflow-hidden shadow-strong">
                 <div className="aspect-[3/4]">
                   <img
-                    src="/images/tamara/field-portrait-bw.jpg"
+                    src="/images/tamara/christmas-portrait.jpg"
                     alt={`${siteConfig.owner.name} — ${siteConfig.owner.credentials}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
               </div>
@@ -78,16 +78,6 @@ export default function AboutPage() {
             })}
           </div>
 
-          {/* Graduation Photo */}
-          <div className="mb-12 flex justify-center">
-            <div className="rounded-2xl overflow-hidden shadow-soft max-w-lg">
-              <img
-                src="/images/tamara/graduation.jpg"
-                alt="Tamara Walls at graduation"
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
 
           <h3 className="text-3xl font-bold text-text-dark mb-8 text-center">
             Specialized Training

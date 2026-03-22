@@ -72,9 +72,9 @@ export default function HeroSection() {
             <div className="relative rounded-2xl overflow-hidden shadow-strong">
               <div className="aspect-[4/5]">
                 <img
-                  src="/images/tamara/christmas-portrait.jpg"
+                  src="/images/tamara/field-portrait-bw.jpg"
                   alt={siteConfig.owner.fullTitle}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
 

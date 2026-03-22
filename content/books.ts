@@ -15,40 +15,43 @@ export const booksPageHeader = {
 // coverColor options: 'bg-soft-rose', 'bg-clinical-blue', 'bg-accent-gold', 'bg-primary-sage', 'bg-earth-green'
 export const books = [
   {
-    id: 'brave-hearts',
-    title: 'Brave Hearts and Helping Hands',
+    id: 'what-is-a-divorce',
+    title: 'What Is a Divorce',
     ageRange: '',
-    topics: ['Children', 'Bibliotherapy', 'Resilience', 'Empathy'],
+    series: 'Tough Topics for Kids',
+    topics: ['Children', 'Bibliotherapy', 'Divorce', 'Family Changes'],
     description:
-      'A heartfelt story about courage and kindness — helping children learn that brave hearts and helping hands can make a real difference in the world around them.',
+      'A gentle story that helps children navigate the difficult and often confusing topic of parental separation — reminding them that even when a family\'s shape changes, the love inside it remains just as strong.',
     amazonUrl: 'https://a.co/d/0fnWatag',
     format: ['Kindle', 'Paperback'],
     coverColor: 'bg-soft-rose',
-    coverImage: '/images/tamara/brave-hearts-cover.jpg',
+    coverImage: '/images/books/what-is-a-divorce.jpg',
   },
   {
-    id: 'book-2',
-    title: 'Book 2',
+    id: 'brave-hearts',
+    title: 'Brave Hearts & Helping Hands',
     ageRange: '',
-    topics: ['Children', 'Bibliotherapy'],
+    series: 'Tough Topics for Kids',
+    topics: ['Children', 'Bibliotherapy', 'Addiction', 'Family Support'],
     description:
-      'Another engaging therapeutic book designed to help children process emotions and build resilience through age-appropriate narratives.',
+      'A gentle story that helps children understand that family addiction is never their fault — introducing healthy coping strategies and a story of hope and healing.',
     amazonUrl: 'https://a.co/d/00QUHTXT',
     format: ['Kindle', 'Paperback'],
     coverColor: 'bg-primary-sage',
-    coverImage: '',
+    coverImage: '/images/books/brave-hearts.jpg',
   },
   {
     id: 'when-a-pet-is-sick',
     title: 'When a Pet Is Sick',
     ageRange: '',
-    topics: ['Children', 'Bibliotherapy', 'Pet Loss', 'Grief'],
+    series: 'Tough Topics for Kids',
+    topics: ['Children', 'Bibliotherapy', 'Pet Illness', 'Grief', 'Coping'],
     description:
-      'A compassionate story helping children understand and process the experience of having a sick pet — navigating worry, grief, and hope.',
+      'A gentle story that helps children understand how to hold several big feelings at once and how to cope through tough times with a pet — honoring love and building resilience.',
     amazonUrl: 'https://a.co/d/0iBxath4',
     format: ['Kindle', 'Paperback'],
     coverColor: 'bg-accent-gold',
-    coverImage: '',
+    coverImage: '/images/books/when-a-pet-is-sick.jpg',
   },
 ]
 
