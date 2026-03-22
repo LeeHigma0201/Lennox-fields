@@ -10,14 +10,15 @@ export const contentType = 'image/png'
 export default async function Image() {
   const cwd = process.cwd()
 
-  // Load assets in parallel
-  const [logoData, playfairFont, interFont] = await Promise.all([
+  const [logoData, photoData, playfairFont, interFont] = await Promise.all([
     readFile(join(cwd, 'public/images/LFLogo.jpeg')),
+    readFile(join(cwd, 'public/images/tamara/field-portrait-bw.jpg')),
     readFile(join(cwd, 'public/fonts/PlayfairDisplay-SemiBold.ttf')),
     readFile(join(cwd, 'public/fonts/Inter-Regular.ttf')),
   ])
 
   const logoSrc = `data:image/jpeg;base64,${logoData.toString('base64')}`
+  const photoSrc = `data:image/jpeg;base64,${photoData.toString('base64')}`
 
   return new ImageResponse(
     (
@@ -26,161 +27,123 @@ export default async function Image() {
           width: '100%',
           height: '100%',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'linear-gradient(145deg, #faf9f7 0%, #f5efe9 30%, #ede3da 55%, #f0e8e0 75%, #faf9f7 100%)',
           position: 'relative',
           overflow: 'hidden',
+          background: '#faf9f7',
         }}
       >
-        {/* ── Soft organic glows for depth and calm ── */}
-
-        {/* Rose glow — top right */}
+        {/* ── Left: Tam's photo ── */}
         <div
           style={{
             position: 'absolute',
-            top: '-120px',
-            right: '-60px',
-            width: '500px',
-            height: '500px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(192, 145, 145, 0.22) 0%, transparent 70%)',
+            top: 0,
+            left: 0,
+            width: '480px',
+            height: '100%',
+            display: 'flex',
+          }}
+        >
+          <img
+            src={photoSrc}
+            width={480}
+            height={630}
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'top center',
+            }}
+          />
+        </div>
+
+        {/* ── Gradient fade from photo to background ── */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: '320px',
+            width: '240px',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent 0%, #faf9f7 100%)',
           }}
         />
 
-        {/* Sage glow — bottom left */}
+        {/* ── Soft ambient glows ── */}
         <div
           style={{
             position: 'absolute',
-            bottom: '-180px',
-            left: '-80px',
-            width: '550px',
-            height: '550px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(117, 133, 111, 0.18) 0%, transparent 70%)',
-          }}
-        />
-
-        {/* Warm sand glow — center */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            top: '-100px',
+            right: '-40px',
             width: '400px',
             height: '400px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(180, 154, 131, 0.12) 0%, transparent 65%)',
+            background: 'radial-gradient(circle, rgba(192, 145, 145, 0.18) 0%, transparent 70%)',
           }}
         />
-
-        {/* Rose accent — bottom right */}
         <div
           style={{
             position: 'absolute',
-            bottom: '-60px',
-            right: '180px',
-            width: '280px',
-            height: '280px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(192, 145, 145, 0.16) 0%, transparent 70%)',
-          }}
-        />
-
-        {/* Sage accent — top left */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-60px',
-            left: '160px',
-            width: '300px',
-            height: '300px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(117, 133, 111, 0.12) 0%, transparent 70%)',
-          }}
-        />
-
-        {/* Golden glow behind logo */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '35%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            bottom: '-120px',
+            right: '200px',
             width: '350px',
             height: '350px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(155, 140, 90, 0.1) 0%, transparent 60%)',
+            background: 'radial-gradient(circle, rgba(117, 133, 111, 0.14) 0%, transparent 70%)',
           }}
         />
 
-        {/* ── Elegant border lines ── */}
+        {/* ── Top & bottom border lines ── */}
         <div
           style={{
             position: 'absolute',
-            top: '30px',
-            left: '50px',
-            right: '50px',
+            top: '24px',
+            left: '500px',
+            right: '40px',
             height: '1px',
-            background: 'linear-gradient(90deg, transparent 0%, rgba(180, 154, 131, 0.3) 20%, rgba(180, 154, 131, 0.3) 80%, transparent 100%)',
+            background: 'linear-gradient(90deg, transparent 0%, rgba(180, 154, 131, 0.35) 30%, rgba(180, 154, 131, 0.35) 70%, transparent 100%)',
           }}
         />
         <div
           style={{
             position: 'absolute',
-            bottom: '30px',
-            left: '50px',
-            right: '50px',
+            bottom: '24px',
+            left: '500px',
+            right: '40px',
             height: '1px',
-            background: 'linear-gradient(90deg, transparent 0%, rgba(180, 154, 131, 0.3) 20%, rgba(180, 154, 131, 0.3) 80%, transparent 100%)',
+            background: 'linear-gradient(90deg, transparent 0%, rgba(180, 154, 131, 0.35) 30%, rgba(180, 154, 131, 0.35) 70%, transparent 100%)',
           }}
         />
 
-        {/* ── Corner accents ── */}
-        <div style={{ position: 'absolute', top: '36px', left: '56px', width: '32px', height: '1px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', top: '36px', left: '56px', width: '1px', height: '32px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', top: '36px', right: '56px', width: '32px', height: '1px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', top: '36px', right: '56px', width: '1px', height: '32px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', bottom: '36px', left: '56px', width: '32px', height: '1px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', bottom: '36px', left: '56px', width: '1px', height: '32px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', bottom: '36px', right: '56px', width: '32px', height: '1px', background: 'rgba(180, 154, 131, 0.25)' }} />
-        <div style={{ position: 'absolute', bottom: '36px', right: '56px', width: '1px', height: '32px', background: 'rgba(180, 154, 131, 0.25)' }} />
-
-        {/* ── Floating particles for depth ── */}
-        <div style={{ position: 'absolute', top: '90px', left: '130px', width: '5px', height: '5px', borderRadius: '50%', background: 'rgba(192, 145, 145, 0.15)' }} />
-        <div style={{ position: 'absolute', top: '160px', right: '210px', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(117, 133, 111, 0.15)' }} />
-        <div style={{ position: 'absolute', bottom: '130px', left: '310px', width: '6px', height: '6px', borderRadius: '50%', background: 'rgba(180, 154, 131, 0.12)' }} />
-        <div style={{ position: 'absolute', top: '210px', left: '90px', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(192, 145, 145, 0.14)' }} />
-        <div style={{ position: 'absolute', bottom: '90px', right: '160px', width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(117, 133, 111, 0.15)' }} />
-        <div style={{ position: 'absolute', top: '110px', right: '400px', width: '5px', height: '5px', borderRadius: '50%', background: 'rgba(180, 154, 131, 0.1)' }} />
-        <div style={{ position: 'absolute', bottom: '200px', right: '100px', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(192, 145, 145, 0.12)' }} />
-        <div style={{ position: 'absolute', top: '320px', left: '180px', width: '5px', height: '5px', borderRadius: '50%', background: 'rgba(117, 133, 111, 0.1)' }} />
-
-        {/* ── Main content ── */}
+        {/* ── Right: Brand content ── */}
         <div
           style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '700px',
+            height: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            paddingLeft: '40px',
+            paddingRight: '60px',
           }}
         >
           {/* Logo */}
           <img
             src={logoSrc}
-            width={180}
-            height={180}
-            style={{ objectFit: 'contain', marginBottom: '14px' }}
+            width={140}
+            height={140}
+            style={{ objectFit: 'contain', marginBottom: '12px' }}
           />
 
           {/* Business name */}
           <div
             style={{
               fontFamily: '"Playfair Display"',
-              fontSize: '50px',
+              fontSize: '46px',
               fontWeight: 600,
               color: '#8a7a5a',
-              letterSpacing: '6px',
+              letterSpacing: '5px',
               lineHeight: 1.15,
               textAlign: 'center',
             }}
@@ -192,11 +155,11 @@ export default async function Image() {
           <div
             style={{
               fontFamily: '"Inter"',
-              fontSize: '16px',
+              fontSize: '13px',
               fontWeight: 400,
               color: '#75856f',
-              letterSpacing: '5px',
-              marginTop: '8px',
+              letterSpacing: '4.5px',
+              marginTop: '6px',
               textAlign: 'center',
             }}
           >
@@ -206,26 +169,41 @@ export default async function Image() {
           {/* Divider */}
           <div
             style={{
-              width: '60px',
+              width: '50px',
               height: '2px',
-              background: 'linear-gradient(90deg, transparent, #b49a83, transparent)',
-              marginTop: '18px',
+              background: 'linear-gradient(90deg, transparent, #C09191, transparent)',
+              marginTop: '20px',
             }}
           />
 
-          {/* Subtext */}
+          {/* Therapist name */}
           <div
             style={{
-              fontFamily: '"Inter"',
-              fontSize: '14px',
-              fontWeight: 400,
-              color: '#A39690',
-              letterSpacing: '2px',
-              marginTop: '14px',
+              fontFamily: '"Playfair Display"',
+              fontSize: '20px',
+              fontWeight: 600,
+              color: '#6b5e4f',
+              letterSpacing: '1.5px',
+              marginTop: '18px',
               textAlign: 'center',
             }}
           >
-            Evidence-Based Care with Compassion
+            Tamara Walls, LPCA
+          </div>
+
+          {/* Specialties */}
+          <div
+            style={{
+              fontFamily: '"Inter"',
+              fontSize: '12px',
+              fontWeight: 400,
+              color: '#A39690',
+              letterSpacing: '2px',
+              marginTop: '8px',
+              textAlign: 'center',
+            }}
+          >
+            ADHD  ·  AUTISM  ·  CPTSD  ·  TRAUMA
           </div>
         </div>
       </div>
