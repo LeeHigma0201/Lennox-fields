@@ -51,3 +51,4 @@ prisma/migrations
 *.swp
 *.swo
 *~
+.claude/worktrees/
