@@ -26,6 +26,7 @@ export const navigation = [
       { name: 'Habit Trackers', href: '/resources/habit-trackers' },
       { name: 'Journaling Prompts', href: '/resources/journaling-prompts' },
       { name: 'Safety Planning', href: '/tools/safety-planning' },
+      { name: 'Sound Healing', href: '/tools/sound-healing' },
     ],
   },
   {
