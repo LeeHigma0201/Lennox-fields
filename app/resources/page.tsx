@@ -13,7 +13,7 @@ const resources = [
   {
     icon: FileText,
     title: 'Therapeutic Worksheets',
-    description: 'Downloadable worksheets for CBT thought records, coping skills, and therapeutic exercises.',
+    description: '49+ free worksheets — CBT, DBT, neurodivergent-affirming tools for autism/ADHD/AuDHD, and family & parenting resources.',
     href: '/resources/worksheets',
     color: 'bg-primary-sage',
     available: true,
