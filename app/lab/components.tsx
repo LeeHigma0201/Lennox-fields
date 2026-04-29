@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   ArrowRight,
@@ -11,10 +11,13 @@ import {
   ChevronDown,
   ChevronUp,
   BookOpen,
-  Pause,
   ExternalLink,
   Sparkles,
-  Hand,
+  Copy,
+  CheckCircle2,
+  Clock,
+  Send,
+  Hourglass,
 } from 'lucide-react'
 import {
   bibliography,
@@ -134,39 +137,22 @@ export function OffRamp() {
 }
 
 // =====================================================================
-// SafetyGate — opening 5 questions
+// LandingHero — the public /lab page that creates sessions
 // =====================================================================
 
-export function SafetyGate({
-  onPass,
-  partnerNamesA,
-  partnerNamesB,
-  onNamesChange,
+export function LandingHero({
+  onStart,
+  onResume,
+  recentToken,
 }: {
-  onPass: () => void
-  partnerNamesA: string
-  partnerNamesB: string
-  onNamesChange: (names: { a: string; b: string }) => void
+  onStart: (names: { a: string; b: string }) => Promise<void>
+  onResume?: () => void
+  recentToken?: string | null
 }) {
-  const [answers, setAnswers] = useState<Record<string, 'yes' | 'no' | undefined>>({})
-  const [step, setStep] = useState<'intro' | 'names' | 'gate' | 'blocked'>('intro')
-  const [nameA, setNameA] = useState(partnerNamesA)
-  const [nameB, setNameB] = useState(partnerNamesB)
-
-  const allAnswered = safetyGate.questions.every((q) => answers[q.id] != null)
-  const blocked = safetyGate.questions.some((q) => answers[q.id] === q.blocksOn)
-
-  function answer(id: string, v: 'yes' | 'no') {
-    setAnswers((a) => ({ ...a, [id]: v }))
-  }
-
-  function submit() {
-    if (blocked) {
-      setStep('blocked')
-    } else {
-      onPass()
-    }
-  }
+  const [step, setStep] = useState<'intro' | 'names'>('intro')
+  const [nameA, setNameA] = useState('')
+  const [nameB, setNameB] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   if (step === 'intro') {
     return (
@@ -193,15 +179,15 @@ export function SafetyGate({
           <div className="space-y-2 text-sm text-warm-gray">
             <div className="flex items-start gap-2">
               <span className="text-primary-sage flex-shrink-0">·</span>
-              <span>Designed for pass-and-play on one device. Both of you take turns.</span>
+              <span>You'll start a session, then send your partner a link. Each of you uses your own device.</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-primary-sage flex-shrink-0">·</span>
-              <span>Your answers stay in this browser. We don't store them on a server.</span>
+              <span>Most stations are async — answer when you can. The reveal opens once you both finish.</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-primary-sage flex-shrink-0">·</span>
-              <span>Every station has a "this isn't right for us right now" exit.</span>
+              <span>Every station has an honest disclosure of what the research supports — and where it's weak.</span>
             </div>
           </div>
           <button
@@ -209,56 +195,199 @@ export function SafetyGate({
             onClick={() => setStep('names')}
             className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-sage text-white font-medium hover:bg-primary-sage/90 transition"
           >
-            Continue
+            Start a new Lab session
             <ArrowRight className="w-4 h-4" />
           </button>
+          {recentToken && onResume && (
+            <button
+              type="button"
+              onClick={onResume}
+              className="w-full text-sm text-primary-sage underline underline-offset-2 hover:no-underline"
+            >
+              Resume your most recent session
+            </button>
+          )}
         </div>
       </div>
     )
   }
 
-  if (step === 'names') {
-    return (
-      <div className="max-w-md mx-auto px-4 py-12 md:py-20">
-        <div className="text-center mb-8">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">What should we call you?</h2>
-          <p className="text-sm text-warm-gray">First names or whatever you want to be called.</p>
+  // names step
+  return (
+    <div className="max-w-md mx-auto px-4 py-12 md:py-20">
+      <div className="text-center mb-8">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">Names for the session</h2>
+        <p className="text-sm text-warm-gray">
+          Yours, and your partner's. They can change theirs when they open the link.
+        </p>
+      </div>
+      <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 space-y-4">
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-warm-gray mb-2">Your name</label>
+          <input
+            type="text"
+            value={nameA}
+            onChange={(e) => setNameA(e.target.value)}
+            className="w-full p-3 rounded-lg border border-warm-gray/20 bg-warm-cream focus:border-primary-sage focus:outline-none"
+            placeholder="Sam"
+            maxLength={60}
+          />
         </div>
-        <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 space-y-4">
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-warm-gray mb-2">Partner A</label>
-            <input
-              type="text"
-              value={nameA}
-              onChange={(e) => setNameA(e.target.value)}
-              className="w-full p-3 rounded-lg border border-warm-gray/20 bg-warm-cream focus:border-primary-sage focus:outline-none"
-              placeholder="Partner A"
-            />
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-warm-gray mb-2">Your partner's name</label>
+          <input
+            type="text"
+            value={nameB}
+            onChange={(e) => setNameB(e.target.value)}
+            className="w-full p-3 rounded-lg border border-warm-gray/20 bg-warm-cream focus:border-primary-sage focus:outline-none"
+            placeholder="River"
+            maxLength={60}
+          />
+        </div>
+        <button
+          type="button"
+          disabled={submitting || !nameA.trim() || !nameB.trim()}
+          onClick={async () => {
+            setSubmitting(true)
+            try {
+              await onStart({ a: nameA.trim(), b: nameB.trim() })
+            } catch (e) {
+              setSubmitting(false)
+            }
+          }}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-sage text-white font-medium hover:bg-primary-sage/90 disabled:opacity-40 disabled:cursor-not-allowed transition"
+        >
+          {submitting ? 'Creating session…' : 'Create session'}
+          {!submitting && <ArrowRight className="w-4 h-4" />}
+        </button>
+        <button
+          type="button"
+          onClick={() => setStep('intro')}
+          className="w-full text-xs text-warm-gray hover:text-text-dark transition"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// =====================================================================
+// ShareLinkScreen — partner A sees this once after session creation
+// =====================================================================
+
+export function ShareLinkScreen({
+  partnerName,
+  partnerLink,
+  onDismiss,
+}: {
+  partnerName: string
+  partnerLink: string
+  onDismiss: () => void
+}) {
+  const [copied, setCopied] = useState(false)
+  const smsBody = encodeURIComponent(
+    `Hey — I started a couples exercise thing. It's pass-and-play but on separate devices. Open this when you're ready: ${partnerLink}`
+  )
+  const smsHref = `sms:&body=${smsBody}`
+
+  return (
+    <div className="max-w-xl mx-auto px-4 py-12 md:py-20">
+      <div className="text-center mb-8">
+        <Send className="w-8 h-8 mx-auto text-primary-sage mb-4" />
+        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">
+          Send {partnerName} their link
+        </h2>
+        <p className="text-sm text-warm-gray max-w-md mx-auto">
+          They open this link on their own phone or laptop. You'll each answer on your own device. The reveal
+          becomes available when you both finish.
+        </p>
+      </div>
+
+      <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 space-y-5">
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">{partnerName}'s link</p>
+          <div className="bg-warm-cream rounded-lg p-3 border border-warm-gray/15 break-all text-xs text-text-dark font-mono">
+            {partnerLink}
           </div>
-          <div>
-            <label className="block text-xs uppercase tracking-wider text-warm-gray mb-2">Partner B</label>
-            <input
-              type="text"
-              value={nameB}
-              onChange={(e) => setNameB(e.target.value)}
-              className="w-full p-3 rounded-lg border border-warm-gray/20 bg-warm-cream focus:border-primary-sage focus:outline-none"
-              placeholder="Partner B"
-            />
-          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <button
             type="button"
-            onClick={() => {
-              onNamesChange({ a: nameA.trim() || 'Partner A', b: nameB.trim() || 'Partner B' })
-              setStep('gate')
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(partnerLink)
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000)
+              } catch {}
             }}
-            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-sage text-white font-medium hover:bg-primary-sage/90 transition"
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-primary-sage text-primary-sage hover:bg-primary-sage/10 transition text-sm font-medium"
           >
-            Continue
-            <ArrowRight className="w-4 h-4" />
+            {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? 'Copied' : 'Copy link'}
           </button>
+          <a
+            href={smsHref}
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary-sage text-white hover:bg-primary-sage/90 transition text-sm font-medium"
+          >
+            <Send className="w-4 h-4" />
+            Send via Messages
+          </a>
         </div>
+
+        <p className="text-xs text-warm-gray italic text-center pt-2 border-t border-warm-gray/15">
+          Keep this link private. Anyone with it can answer on {partnerName}'s behalf.
+        </p>
+
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-warm-cream text-text-dark hover:bg-primary-sage/10 transition"
+        >
+          Continue to my view
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
-    )
+    </div>
+  )
+}
+
+// =====================================================================
+// SafetyGate — per-partner, server-stored
+// =====================================================================
+
+export function SafetyGate({
+  selfName,
+  onPass,
+  onBlock,
+}: {
+  selfName: string
+  onPass: () => Promise<void>
+  onBlock: () => void
+}) {
+  const [answers, setAnswers] = useState<Record<string, 'yes' | 'no' | undefined>>({})
+  const [step, setStep] = useState<'gate' | 'blocked'>('gate')
+  const [submitting, setSubmitting] = useState(false)
+
+  const allAnswered = safetyGate.questions.every((q) => answers[q.id] != null)
+  const blocked = safetyGate.questions.some((q) => answers[q.id] === q.blocksOn)
+
+  function answer(id: string, v: 'yes' | 'no') {
+    setAnswers((a) => ({ ...a, [id]: v }))
+  }
+
+  async function submit() {
+    if (blocked) {
+      setStep('blocked')
+      return
+    }
+    setSubmitting(true)
+    try {
+      await onPass()
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (step === 'blocked') {
@@ -300,9 +429,11 @@ export function SafetyGate({
   return (
     <div className="max-w-2xl mx-auto px-4 py-12 md:py-20">
       <div className="text-center mb-8">
-        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">A check before we begin</h2>
+        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">
+          A check before we begin, {selfName}
+        </h2>
         <p className="text-sm text-warm-gray max-w-md mx-auto">
-          Five questions. Your answers stay here — we don't send them anywhere.
+          Five questions. Only you see your answers. Your partner answers their own version.
         </p>
       </div>
       <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 md:p-8 space-y-6">
@@ -333,11 +464,11 @@ export function SafetyGate({
         <button
           type="button"
           onClick={submit}
-          disabled={!allAnswered}
+          disabled={!allAnswered || submitting}
           className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-sage text-white font-medium hover:bg-primary-sage/90 disabled:opacity-40 disabled:cursor-not-allowed transition"
         >
-          Continue
-          <ArrowRight className="w-4 h-4" />
+          {submitting ? 'Saving…' : 'Continue'}
+          {!submitting && <ArrowRight className="w-4 h-4" />}
         </button>
       </div>
     </div>
@@ -345,10 +476,29 @@ export function SafetyGate({
 }
 
 // =====================================================================
-// JourneyGrid — 7 journeys + station cards
+// JourneyGrid — 7 journeys + 25 station cards with per-station status
 // =====================================================================
 
-export function JourneyGrid({ onPickStation }: { onPickStation: (s: Station) => void }) {
+export type StationStatusMap = Record<
+  string,
+  {
+    selfSubmittedAt: string | null
+    partnerSubmittedAt: string | null
+    revealedAt: string | null
+  }
+>
+
+export function JourneyGrid({
+  selfName,
+  partnerName,
+  onPickStation,
+  statusMap,
+}: {
+  selfName: string
+  partnerName: string
+  onPickStation: (s: Station) => void
+  statusMap: StationStatusMap
+}) {
   const [activeJourney, setActiveJourney] = useState<Journey | 'all'>('all')
 
   const visibleStations =
@@ -358,10 +508,11 @@ export function JourneyGrid({ onPickStation }: { onPickStation: (s: Station) => 
     <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
       <div className="text-center mb-10">
         <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-dark mb-3">
-          Pick where you are
+          Pick where you are, {selfName}
         </h2>
         <p className="text-sm text-warm-gray max-w-xl mx-auto">
-          Twenty-five stations, organized by what they ask of you. Browse all, or pick a journey.
+          Twenty-five stations, organized by what they ask of you. Whatever you start, {partnerName} can pick up
+          on their own device.
         </p>
       </div>
 
@@ -382,11 +533,13 @@ export function JourneyGrid({ onPickStation }: { onPickStation: (s: Station) => 
             key={key}
             type="button"
             onClick={() => setActiveJourney(key)}
-            className="px-4 py-2 rounded-full text-sm transition bg-white border text-warm-gray hover:border-text-dark"
+            className="px-4 py-2 rounded-full text-sm transition"
             style={{
               borderColor: activeJourney === key ? j.color : 'rgba(107,101,96,0.2)',
               backgroundColor: activeJourney === key ? j.color : 'white',
               color: activeJourney === key ? 'white' : '#6B6560',
+              borderWidth: 1,
+              borderStyle: 'solid',
             }}
           >
             {j.title}
@@ -403,6 +556,7 @@ export function JourneyGrid({ onPickStation }: { onPickStation: (s: Station) => 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {visibleStations.map((s) => {
           const j = journeys[s.journey]
+          const status = statusMap[s.id]
           return (
             <button
               key={s.id}
@@ -436,8 +590,9 @@ export function JourneyGrid({ onPickStation }: { onPickStation: (s: Station) => 
                 </div>
                 <span>~{s.estMinutes} min</span>
               </div>
-              {s.contraindicationKey && (
-                <p className="text-[10px] text-soft-rose mt-3 flex items-center gap-1">
+              <StationStatusBadge status={status} partnerName={partnerName} />
+              {s.contraindicationKey && !status?.selfSubmittedAt && (
+                <p className="text-[10px] text-soft-rose mt-2 flex items-center gap-1">
                   <Shield className="w-3 h-3" />
                   Has a check before entry
                 </p>
@@ -450,8 +605,44 @@ export function JourneyGrid({ onPickStation }: { onPickStation: (s: Station) => 
   )
 }
 
+function StationStatusBadge({
+  status,
+  partnerName,
+}: {
+  status?: { selfSubmittedAt: string | null; partnerSubmittedAt: string | null; revealedAt: string | null }
+  partnerName: string
+}) {
+  if (!status) return null
+  const { selfSubmittedAt, partnerSubmittedAt, revealedAt } = status
+  if (revealedAt) {
+    return (
+      <p className="text-[10px] text-earth-green mt-2 flex items-center gap-1">
+        <CheckCircle2 className="w-3 h-3" />
+        Both finished — reveal available
+      </p>
+    )
+  }
+  if (selfSubmittedAt && !partnerSubmittedAt) {
+    return (
+      <p className="text-[10px] text-warm-sand mt-2 flex items-center gap-1">
+        <Hourglass className="w-3 h-3" />
+        Waiting on {partnerName}
+      </p>
+    )
+  }
+  if (!selfSubmittedAt && partnerSubmittedAt) {
+    return (
+      <p className="text-[10px] text-soft-rose mt-2 flex items-center gap-1">
+        <Clock className="w-3 h-3" />
+        {partnerName} is waiting on you
+      </p>
+    )
+  }
+  return null
+}
+
 // =====================================================================
-// HonestyCard — first screen of every station
+// HonestyCard — first screen of every station (unchanged from v1)
 // =====================================================================
 
 export function HonestyCard({
@@ -527,7 +718,7 @@ export function HonestyCard({
 }
 
 // =====================================================================
-// ContraindicationGate — per-station check before entry
+// ContraindicationGate — per-station check (unchanged)
 // =====================================================================
 
 export function ContraindicationGate({
@@ -621,83 +812,67 @@ export function ContraindicationGate({
 }
 
 // =====================================================================
-// PartnerSwitch — full-screen "hand the device" cover
+// WaitForPartner — shown after self submits, before partner finishes
 // =====================================================================
 
-export function PartnerSwitch({
-  toName,
-  onReady,
+export function WaitForPartner({
+  partnerName,
+  onBack,
+  onResubmit,
 }: {
-  toName: string
-  onReady: () => void
+  partnerName: string
+  onBack: () => void
+  onResubmit?: () => void
 }) {
   return (
-    <div className="max-w-md mx-auto px-4 py-12 md:py-20">
-      <div
-        className="bg-gradient-to-br from-primary-sage to-earth-green text-white rounded-2xl p-8 md:p-12 text-center space-y-6 shadow-strong"
-      >
-        <Hand className="w-12 h-12 mx-auto opacity-80" />
+    <div className="max-w-md mx-auto px-4 py-12 md:py-16">
+      <div className="bg-white border border-warm-sand/30 rounded-2xl p-8 text-center space-y-6">
+        <Hourglass className="w-10 h-10 mx-auto text-warm-sand" />
         <div>
-          <h2 className="font-heading text-2xl md:text-3xl font-bold mb-3">
-            Hand the device to {toName}
-          </h2>
-          <p className="text-white/80 text-sm leading-relaxed">
-            They'll only see their own prompts — you won't see what they write until you both finish.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={onReady}
-          className="w-full px-6 py-3 rounded-full bg-white text-primary-sage font-medium hover:bg-warm-cream transition"
-        >
-          {toName.split(' ')[0]} is ready
-        </button>
-      </div>
-    </div>
-  )
-}
-
-// =====================================================================
-// ReadyCheck — pre-reveal containment check
-// =====================================================================
-
-export function ReadyCheck({ onReady }: { onReady: () => void }) {
-  return (
-    <div className="max-w-md mx-auto px-4 py-12 md:py-20">
-      <div className="bg-white border border-warm-gray/15 rounded-2xl p-8 text-center space-y-6">
-        <Pause className="w-10 h-10 mx-auto text-primary-sage" />
-        <div>
-          <h3 className="font-heading text-xl font-semibold text-text-dark mb-3">Ready to read together?</h3>
+          <h3 className="font-heading text-xl font-semibold text-text-dark mb-3">
+            Your part is in. Waiting on {partnerName}.
+          </h3>
           <p className="text-sm text-warm-gray leading-relaxed">
-            Do you both have fifteen minutes — somewhere private, no kids interrupting, phones face-down? What
-            comes next is meant to be received with attention.
+            They'll see you've finished when they open their link. The reveal opens for both of you once they're done.
+          </p>
+          <p className="text-xs text-warm-gray italic mt-3">
+            We auto-refresh every few seconds. You can come back to this page anytime.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={onReady}
-          className="w-full px-6 py-3 rounded-full bg-primary-sage text-white font-medium hover:bg-primary-sage/90 transition"
-        >
-          We're ready
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex-1 px-5 py-2.5 rounded-full bg-warm-cream text-text-dark hover:bg-primary-sage/10 transition text-sm"
+          >
+            Back to grid
+          </button>
+          {onResubmit && (
+            <button
+              type="button"
+              onClick={onResubmit}
+              className="flex-1 px-5 py-2.5 rounded-full border border-warm-gray/30 text-warm-gray hover:border-primary-sage hover:text-primary-sage transition text-sm"
+            >
+              Edit my answers
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
 // =====================================================================
-// Reveal — paired side-by-side container
+// Reveal — paired side-by-side container (unchanged from v1)
 // =====================================================================
 
 export function Reveal({
   station,
-  partnerNames,
   children,
   synthesisPrompt,
   onDone,
 }: {
   station: Station
-  partnerNames: { a: string; b: string }
   children: React.ReactNode
   synthesisPrompt?: string
   onDone: () => void
@@ -743,69 +918,72 @@ export function Reveal({
 }
 
 export function PairedColumns({
-  partnerNames,
-  left,
-  right,
+  selfName,
+  partnerName,
+  selfFirst,
+  partnerFirst,
 }: {
-  partnerNames: { a: string; b: string }
-  left: React.ReactNode
-  right: React.ReactNode
+  selfName: string
+  partnerName: string
+  selfFirst: React.ReactNode
+  partnerFirst: React.ReactNode
 }) {
   return (
     <div className="grid md:grid-cols-2 gap-6 md:gap-8">
       <div className="space-y-4">
         <div className="text-center pb-3 border-b border-warm-gray/15">
-          <p className="text-[10px] uppercase tracking-wider text-primary-sage">{partnerNames.a}</p>
+          <p className="text-[10px] uppercase tracking-wider text-primary-sage">{selfName}</p>
         </div>
-        <div className="space-y-4">{left}</div>
+        <div className="space-y-4">{selfFirst}</div>
       </div>
       <div className="space-y-4">
         <div className="text-center pb-3 border-b border-warm-gray/15">
-          <p className="text-[10px] uppercase tracking-wider text-soft-rose">{partnerNames.b}</p>
+          <p className="text-[10px] uppercase tracking-wider text-soft-rose">{partnerName}</p>
         </div>
-        <div className="space-y-4">{right}</div>
+        <div className="space-y-4">{partnerFirst}</div>
       </div>
     </div>
   )
 }
 
 // =====================================================================
-// PartnerFlow — wraps a station's per-partner input UI
+// FillFlow — wraps the per-partner input UI with a submit footer
 // =====================================================================
 
-export function PartnerFlow({
-  partnerName,
-  isFirst,
+export function FillFlow({
+  selfName,
   children,
   canSubmit,
   onSubmit,
+  saving,
   submitLabel,
+  subtitle,
 }: {
-  partnerName: string
-  isFirst: boolean
+  selfName: string
   children: React.ReactNode
   canSubmit: boolean
   onSubmit: () => void
+  saving?: boolean
   submitLabel?: string
+  subtitle?: string
 }) {
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 md:py-12">
       <div className="text-center mb-8">
-        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">
-          {isFirst ? 'Going first' : 'Now you'}
-        </p>
-        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark">{partnerName}</h2>
+        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">Your turn</p>
+        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark">{selfName}</h2>
+        {subtitle && <p className="text-sm text-warm-gray mt-2 max-w-md mx-auto">{subtitle}</p>}
       </div>
       <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 md:p-8 space-y-6">
         {children}
         <button
           type="button"
           onClick={onSubmit}
-          disabled={!canSubmit}
+          disabled={!canSubmit || saving}
           className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary-sage text-white font-medium hover:bg-primary-sage/90 disabled:opacity-40 disabled:cursor-not-allowed transition"
         >
-          {submitLabel || (isFirst ? "I'm done — hand to my partner" : 'Show us both')}
-          <ArrowRight className="w-4 h-4" />
+          {saving ? 'Saving…' : submitLabel || 'Submit my answers'}
+          {!saving && <ArrowRight className="w-4 h-4" />}
         </button>
       </div>
     </div>

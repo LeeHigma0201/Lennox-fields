@@ -1,5 +1,6 @@
 'use client'
 
+import { ComponentType } from 'react'
 import {
   AttachmentMap,
   SentenceStemsStation,
@@ -7,7 +8,6 @@ import {
   StationProps,
   StressReducing,
 } from './anchor'
-import { ComponentType } from 'react'
 
 // Phase 1A — 4 anchor stations registered.
 // Phase 1B will register the remaining 21.

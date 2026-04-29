@@ -2,149 +2,202 @@
 
 import { useCallback, useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'lf-lab-session-v1'
+// =====================================================================
+// API-backed hooks for the link-share Lab
+// =====================================================================
 
-export type StationState = {
-  a?: any
-  b?: any
-  role?: 'a' | 'b' // for asymmetric stations: who is the sender/offender/etc.
-  revealedAt?: string
+export type LabSessionView = {
+  id: string
+  role: 'a' | 'b'
+  selfName: string
+  partnerName: string
+  selfSafetyOk: boolean
+  partnerSafetyOk: boolean
+  partnerToken: string
+  selfToken: string
+  createdAt: string
+  lastActivityAt: string
+  stationStates: Array<{
+    stationId: string
+    selfSubmittedAt: string | null
+    partnerSubmittedAt: string | null
+    revealedAt: string | null
+    asymmetricRole: 'a' | 'b' | null
+  }>
 }
 
-export type LabSession = {
-  safetyGatePassed: boolean
-  partnerNames: { a: string; b: string }
-  stations: Record<string, StationState>
+export type StationStateView = {
+  stationId: string
+  selfData: any
+  partnerData: any
+  sharedMetadata: any
+  selfSubmittedAt: string | null
+  partnerSubmittedAt: string | null
+  revealedAt: string | null
+  asymmetricRole: 'a' | 'b' | null
+  revealed: boolean
 }
 
-const empty: LabSession = {
-  safetyGatePassed: false,
-  partnerNames: { a: 'Partner A', b: 'Partner B' },
-  stations: {},
+export async function createLabSession(
+  partnerAName: string,
+  partnerBName: string
+): Promise<{ id: string; partnerAToken: string; partnerBToken: string; partnerAName: string; partnerBName: string }> {
+  const res = await fetch('/api/lab/session', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ partnerAName, partnerBName }),
+  })
+  if (!res.ok) throw new Error('Failed to create session.')
+  return res.json()
 }
 
-function read(): LabSession {
-  if (typeof window === 'undefined') return empty
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return empty
-    const parsed = JSON.parse(raw)
-    return { ...empty, ...parsed, partnerNames: { ...empty.partnerNames, ...parsed.partnerNames } }
-  } catch {
-    return empty
-  }
+export function useLabSessionByToken(token: string | null) {
+  const [session, setSession] = useState<LabSessionView | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const refresh = useCallback(async () => {
+    if (!token) return
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/lab/session/${token}`, { cache: 'no-store' })
+      if (res.status === 404) {
+        setError('We could not find this Lab session. The link may be expired or wrong.')
+        setSession(null)
+      } else if (!res.ok) {
+        setError('Could not load this session.')
+      } else {
+        setSession(await res.json())
+        setError(null)
+      }
+    } catch (e: any) {
+      setError(e?.message || 'Network error.')
+    } finally {
+      setLoading(false)
+    }
+  }, [token])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
+
+  // Light auto-refresh so the partner-completion status updates without manual reload.
+  useEffect(() => {
+    if (!token) return
+    const id = setInterval(refresh, 8000)
+    return () => clearInterval(id)
+  }, [token, refresh])
+
+  const patchSession = useCallback(
+    async (patch: { selfName?: string; partnerName?: string; safetyOk?: boolean }) => {
+      if (!token) return
+      const res = await fetch(`/api/lab/session/${token}`, {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(patch),
+      })
+      if (!res.ok) throw new Error('Could not update session.')
+      await refresh()
+    },
+    [token, refresh]
+  )
+
+  return { session, loading, error, refresh, patchSession }
 }
 
-function write(s: LabSession) {
+export function useStationState(stationId: string, token: string | null) {
+  const [state, setState] = useState<StationStateView | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const refresh = useCallback(async () => {
+    if (!token) return
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/lab/station/${stationId}/${token}`, { cache: 'no-store' })
+      if (!res.ok) throw new Error('Could not load station.')
+      setState(await res.json())
+      setError(null)
+    } catch (e: any) {
+      setError(e?.message || 'Network error.')
+    } finally {
+      setLoading(false)
+    }
+  }, [stationId, token])
+
+  useEffect(() => {
+    refresh()
+  }, [refresh])
+
+  // Auto-refresh while waiting for partner
+  useEffect(() => {
+    if (!token || !state) return
+    if (state.revealed) return
+    if (!state.selfSubmittedAt) return // not yet waiting
+    const id = setInterval(refresh, 6000)
+    return () => clearInterval(id)
+  }, [token, state, refresh])
+
+  const save = useCallback(
+    async (
+      data: any,
+      options?: { submit?: boolean; asymmetricRole?: 'a' | 'b'; sharedMetadata?: any }
+    ) => {
+      if (!token) return
+      const res = await fetch(`/api/lab/station/${stationId}/${token}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          data,
+          submit: !!options?.submit,
+          asymmetricRole: options?.asymmetricRole,
+          sharedMetadata: options?.sharedMetadata,
+        }),
+      })
+      if (!res.ok) throw new Error('Could not save.')
+      const next = await res.json()
+      setState(next)
+      return next as StationStateView
+    },
+    [stationId, token]
+  )
+
+  const reset = useCallback(async () => {
+    if (!token) return
+    const res = await fetch(`/api/lab/station/${stationId}/${token}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error('Could not reset.')
+    await refresh()
+  }, [stationId, token, refresh])
+
+  return { state, loading, error, save, reset, refresh }
+}
+
+// =====================================================================
+// localStorage helpers — only for "session token cache" so a partner
+// can return to a session via /lab on a device that already opened it
+// =====================================================================
+
+const RECENT_TOKEN_KEY = 'lf-lab-recent-token'
+
+export function rememberToken(token: string) {
   if (typeof window === 'undefined') return
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(s))
+    localStorage.setItem(RECENT_TOKEN_KEY, token)
   } catch {}
 }
 
-export function useLabSession() {
-  const [session, setSession] = useState<LabSession>(empty)
-  const [hydrated, setHydrated] = useState(false)
-
-  useEffect(() => {
-    setSession(read())
-    setHydrated(true)
-  }, [])
-
-  const persist = useCallback((next: LabSession) => {
-    setSession(next)
-    write(next)
-  }, [])
-
-  const setSafetyGatePassed = useCallback(
-    (v: boolean) => {
-      const next = { ...session, safetyGatePassed: v }
-      persist(next)
-    },
-    [session, persist]
-  )
-
-  const setPartnerNames = useCallback(
-    (names: { a: string; b: string }) => {
-      const next = { ...session, partnerNames: names }
-      persist(next)
-    },
-    [session, persist]
-  )
-
-  const getStationState = useCallback(
-    (id: string): StationState => session.stations[id] || {},
-    [session]
-  )
-
-  const updateStationState = useCallback(
-    (id: string, patch: Partial<StationState>) => {
-      const current = session.stations[id] || {}
-      const next: LabSession = {
-        ...session,
-        stations: { ...session.stations, [id]: { ...current, ...patch } },
-      }
-      persist(next)
-    },
-    [session, persist]
-  )
-
-  const updatePartnerData = useCallback(
-    (id: string, partner: 'a' | 'b', data: any) => {
-      const current = session.stations[id] || {}
-      const partnerData = { ...(current[partner] || {}), ...data }
-      const next: LabSession = {
-        ...session,
-        stations: { ...session.stations, [id]: { ...current, [partner]: partnerData } },
-      }
-      persist(next)
-    },
-    [session, persist]
-  )
-
-  const replacePartnerData = useCallback(
-    (id: string, partner: 'a' | 'b', data: any) => {
-      const current = session.stations[id] || {}
-      const next: LabSession = {
-        ...session,
-        stations: { ...session.stations, [id]: { ...current, [partner]: data } },
-      }
-      persist(next)
-    },
-    [session, persist]
-  )
-
-  const markRevealed = useCallback(
-    (id: string) => {
-      updateStationState(id, { revealedAt: new Date().toISOString() })
-    },
-    [updateStationState]
-  )
-
-  const clearStation = useCallback(
-    (id: string) => {
-      const next = { ...session.stations }
-      delete next[id]
-      persist({ ...session, stations: next })
-    },
-    [session, persist]
-  )
-
-  const clearAll = useCallback(() => {
-    persist(empty)
-  }, [persist])
-
-  return {
-    session,
-    hydrated,
-    setSafetyGatePassed,
-    setPartnerNames,
-    getStationState,
-    updateStationState,
-    updatePartnerData,
-    replacePartnerData,
-    markRevealed,
-    clearStation,
-    clearAll,
+export function recallToken(): string | null {
+  if (typeof window === 'undefined') return null
+  try {
+    return localStorage.getItem(RECENT_TOKEN_KEY)
+  } catch {
+    return null
   }
+}
+
+export function forgetToken() {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.removeItem(RECENT_TOKEN_KEY)
+  } catch {}
 }

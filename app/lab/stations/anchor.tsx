@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { sentenceStems, stations } from '../data'
+import { sentenceStems, Station } from '../data'
 import {
   AttachmentPlot,
   ECRAnswers,
@@ -10,21 +10,28 @@ import {
   SentenceStem,
   scoreECR,
 } from '../primitives'
-import { PairedColumns, PartnerFlow } from '../components'
+import { FillFlow, PairedColumns } from '../components'
 
-export type StationMode = 'a' | 'b' | 'reveal'
 export type StationProps = {
-  mode: StationMode
-  stateA: any
-  stateB: any
-  onUpdate: (partial: any) => void
-  partnerNames: { a: string; b: string }
-  onAdvance: () => void
+  station: Station
+  selfName: string
+  partnerName: string
+  selfData: any | null
+  partnerData: any | null
+  sharedMetadata: any | null
+  myRole: 'a' | 'b'
+  asymmetricRole: 'a' | 'b' | null
+  selfSubmitted: boolean
+  partnerSubmitted: boolean
+  onSave: (
+    data: any,
+    options?: { submit?: boolean; asymmetricRole?: 'a' | 'b'; sharedMetadata?: any }
+  ) => Promise<void>
+  onBack: () => void
 }
 
 // =====================================================================
-// 01 — STATE OF THE UNION (Gottman)
-// 5 appreciations + 1 gentle-startup concern + 1 repair request + 1 look-forward
+// 01 — STATE OF THE UNION (Gottman) — symmetric
 // =====================================================================
 
 type SoUState = {
@@ -44,39 +51,61 @@ const soUEmpty: SoUState = {
 }
 
 export function StateOfUnion(props: StationProps) {
-  if (props.mode === 'reveal') return <StateOfUnionReveal {...props} />
-  return <StateOfUnionFlow {...props} />
+  const { selfData, partnerData, selfSubmitted, partnerSubmitted, selfName, partnerName, onSave } = props
+  const both = selfSubmitted && partnerSubmitted
+
+  if (both) {
+    const a: SoUState = (props.myRole === 'a' ? selfData : partnerData) || soUEmpty
+    const b: SoUState = (props.myRole === 'a' ? partnerData : selfData) || soUEmpty
+    const aName = props.myRole === 'a' ? selfName : partnerName
+    const bName = props.myRole === 'a' ? partnerName : selfName
+    return <StateOfUnionReveal a={a} b={b} aName={aName} bName={bName} />
+  }
+
+  return <StateOfUnionFill {...props} />
 }
 
-function StateOfUnionFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdvance }: StationProps) {
-  const partner = mode === 'a' ? 'a' : 'b'
-  const data: SoUState = (mode === 'a' ? stateA : stateB) || soUEmpty
-  const name = mode === 'a' ? partnerNames.a : partnerNames.b
-  const isFirst = mode === 'a'
+function StateOfUnionFill({ selfData, selfName, onSave }: StationProps) {
+  const [data, setData] = useState<SoUState>(selfData || soUEmpty)
+  const [saving, setSaving] = useState(false)
 
   function update(patch: Partial<SoUState>) {
-    onUpdate({ ...data, ...patch })
+    setData((d) => ({ ...d, ...patch }))
+  }
+  function setAppreciation(i: number, v: string) {
+    setData((d) => {
+      const next = [...d.appreciations]
+      next[i] = v
+      return { ...d, appreciations: next }
+    })
+  }
+  function setAppreciationFollowUp(i: number, v: string) {
+    setData((d) => {
+      const next = [...d.appreciationFollowUps]
+      next[i] = v
+      return { ...d, appreciationFollowUps: next }
+    })
   }
 
-  function setAppreciation(idx: number, value: string) {
-    const next = [...data.appreciations]
-    next[idx] = value
-    update({ appreciations: next })
-  }
+  const filled = data.appreciations.filter((a) => a.trim().length > 0).length
+  const canSubmit =
+    filled >= 3 && data.concern.trim().length > 0 && data.repair.trim().length > 0
 
-  function setAppreciationFollowUp(idx: number, value: string) {
-    const next = [...data.appreciationFollowUps]
-    next[idx] = value
-    update({ appreciationFollowUps: next })
+  async function submit() {
+    setSaving(true)
+    try {
+      await onSave(data, { submit: true })
+    } finally {
+      setSaving(false)
+    }
   }
-
-  const filledAppreciations = data.appreciations.filter((a) => a.trim().length > 0).length
-  const canSubmit = filledAppreciations >= 3 && data.concern.trim().length > 0 && data.repair.trim().length > 0
 
   return (
-    <PartnerFlow partnerName={name} isFirst={isFirst} canSubmit={canSubmit} onSubmit={onAdvance}>
+    <FillFlow selfName={selfName} canSubmit={canSubmit} onSubmit={submit} saving={saving}>
       <div>
-        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">Five appreciations from this week</p>
+        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">
+          Five appreciations from this week
+        </p>
         <p className="text-xs text-warm-gray italic mb-4">
           Specific behavior + what it meant. "When you brought me coffee Tuesday, I felt cared about because…"
         </p>
@@ -95,9 +124,11 @@ function StateOfUnionFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdva
       </div>
 
       <div className="pt-6 border-t border-warm-gray/15">
-        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">One concern — gentle startup</p>
+        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">
+          One concern — gentle startup
+        </p>
         <p className="text-xs text-warm-gray italic mb-4">
-          Format: "I feel ___ about ___ (situational, not character) and I need ___." No "you always," no character indictments.
+          "I feel ___ about ___ (situational, not character) and I need ___." No "you always," no character indictments.
         </p>
         <SentenceStem
           stem="The concern I want to raise this week is…"
@@ -118,7 +149,9 @@ function StateOfUnionFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdva
       </div>
 
       <div className="pt-6 border-t border-warm-gray/15">
-        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">One thing to look forward to</p>
+        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">
+          One thing to look forward to
+        </p>
         <SentenceStem
           stem="Something I want us to do together this week is…"
           value={data.lookForward}
@@ -126,14 +159,21 @@ function StateOfUnionFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdva
           showFollowUp={false}
         />
       </div>
-    </PartnerFlow>
+    </FillFlow>
   )
 }
 
-function StateOfUnionReveal({ stateA, stateB, partnerNames, onAdvance }: StationProps) {
-  const a: SoUState = stateA || soUEmpty
-  const b: SoUState = stateB || soUEmpty
-
+function StateOfUnionReveal({
+  a,
+  b,
+  aName,
+  bName,
+}: {
+  a: SoUState
+  b: SoUState
+  aName: string
+  bName: string
+}) {
   function renderColumn(s: SoUState) {
     return (
       <>
@@ -173,12 +213,18 @@ function StateOfUnionReveal({ stateA, stateB, partnerNames, onAdvance }: Station
     )
   }
 
-  return <PairedColumns partnerNames={partnerNames} left={renderColumn(a)} right={renderColumn(b)} />
+  return (
+    <PairedColumns
+      selfName={aName}
+      partnerName={bName}
+      selfFirst={renderColumn(a)}
+      partnerFirst={renderColumn(b)}
+    />
+  )
 }
 
 // =====================================================================
 // 02 — STRESS-REDUCING CONVERSATION (Gottman) — asymmetric
-// Sender names external stressor + need-type. Receiver follows 6 rules.
 // =====================================================================
 
 type SRSenderState = {
@@ -213,27 +259,135 @@ const needTypeOptions: Array<{ id: SRSenderState['needType']; label: string }> =
   { id: 'affection', label: 'Affection — physical closeness' },
 ]
 
-export function StressReducing(props: StationProps) {
-  if (props.mode === 'reveal') return <StressReducingReveal {...props} />
-  return <StressReducingFlow {...props} />
+function labelForNeed(t: SRSenderState['needType']) {
+  return {
+    '': '—',
+    vent: 'to vent',
+    advice: 'advice',
+    distraction: 'distraction',
+    affection: 'affection',
+  }[t]
 }
 
-function StressReducingFlow(props: StationProps) {
-  if (props.mode === 'a') return <StressReducingSender {...props} />
+export function StressReducing(props: StationProps) {
+  const {
+    asymmetricRole,
+    myRole,
+    selfData,
+    partnerData,
+    selfSubmitted,
+    partnerSubmitted,
+    selfName,
+    partnerName,
+    onSave,
+  } = props
+
+  const both = selfSubmitted && partnerSubmitted
+
+  // Reveal phase
+  if (both) {
+    const senderRole = asymmetricRole
+    const senderData: SRSenderState =
+      senderRole === myRole ? selfData : partnerData
+    const receiverData: SRReceiverState =
+      senderRole === myRole ? partnerData : selfData
+    const senderName = senderRole === myRole ? selfName : partnerName
+    const receiverName = senderRole === myRole ? partnerName : selfName
+    return (
+      <StressReducingReveal
+        sender={senderData}
+        receiver={receiverData}
+        senderName={senderName}
+        receiverName={receiverName}
+        myRole={myRole}
+        senderRole={senderRole}
+        onSave={onSave}
+      />
+    )
+  }
+
+  // Role-picker phase (only partner A picks)
+  if (asymmetricRole === null) {
+    if (myRole === 'a') {
+      return <StressReducingRolePicker {...props} />
+    }
+    return (
+      <div className="max-w-md mx-auto px-4 py-12 text-center text-warm-gray">
+        <p className="text-base">
+          Waiting for {partnerName} to set up this exercise.
+        </p>
+        <p className="text-xs italic mt-2">
+          One of you names a stressor; the other listens. {partnerName} chooses who's which.
+        </p>
+      </div>
+    )
+  }
+
+  // Sender / receiver fill phases
+  const isSender = asymmetricRole === myRole
+  if (isSender) {
+    return <StressReducingSender {...props} />
+  }
   return <StressReducingReceiver {...props} />
 }
 
-function StressReducingSender({ stateA, onUpdate, partnerNames, onAdvance }: StationProps) {
-  const name = partnerNames.a
-  const data: SRSenderState =
-    stateA && stateA.stressor !== undefined ? stateA : srSenderEmpty
+function StressReducingRolePicker({ selfName, partnerName, onSave, myRole }: StationProps) {
+  return (
+    <div className="max-w-md mx-auto px-4 py-12 md:py-16">
+      <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 md:p-8 space-y-5 text-center">
+        <h3 className="font-heading text-xl font-semibold text-text-dark">Who's having the hard day?</h3>
+        <p className="text-sm text-warm-gray">
+          One of you names something stressful from outside the relationship. The other listens.
+        </p>
+        <div className="grid grid-cols-1 gap-3">
+          <button
+            type="button"
+            onClick={() => onSave(null, { asymmetricRole: 'a' })}
+            className="p-4 rounded-lg bg-primary-sage/10 border border-primary-sage/30 hover:bg-primary-sage/20 transition text-left"
+          >
+            <p className="font-medium text-text-dark">{selfName} talks · {partnerName} listens</p>
+            <p className="text-xs text-warm-gray mt-1">You'll go first; share something stressful from outside the relationship.</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => onSave(null, { asymmetricRole: 'b' })}
+            className="p-4 rounded-lg bg-soft-rose/10 border border-soft-rose/30 hover:bg-soft-rose/20 transition text-left"
+          >
+            <p className="font-medium text-text-dark">{partnerName} talks · {selfName} listens</p>
+            <p className="text-xs text-warm-gray mt-1">{partnerName} will share first; you'll listen and respond.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function StressReducingSender({ selfData, selfName, onSave }: StationProps) {
+  const [data, setData] = useState<SRSenderState>(
+    selfData && (selfData as any).stressor !== undefined ? (selfData as SRSenderState) : srSenderEmpty
+  )
+  const [saving, setSaving] = useState(false)
+
   const canSubmit =
-    data.stressor.trim().length > 0 &&
-    data.feeling.trim().length > 0 &&
-    data.needType !== ''
+    data.stressor.trim().length > 0 && data.feeling.trim().length > 0 && data.needType !== ''
+
+  async function submit() {
+    setSaving(true)
+    try {
+      await onSave(data, { submit: true })
+    } finally {
+      setSaving(false)
+    }
+  }
 
   return (
-    <PartnerFlow partnerName={name} isFirst={true} canSubmit={canSubmit} onSubmit={onAdvance}>
+    <FillFlow
+      selfName={selfName}
+      canSubmit={canSubmit}
+      onSubmit={submit}
+      saving={saving}
+      subtitle="You're the one sharing the stressful thing today."
+    >
       <div className="bg-warm-cream/60 p-4 rounded-lg text-xs text-warm-gray italic leading-relaxed">
         This is for stress from <em>outside</em> the relationship — work, family-of-origin, the world. Not about
         something between the two of you. The Gottmans are clear: this format collapses if you use it for
@@ -242,13 +396,13 @@ function StressReducingSender({ stateA, onUpdate, partnerNames, onAdvance }: Sta
       <SentenceStem
         stem="The stressful thing I want to share is…"
         value={data.stressor}
-        onChange={(v) => onUpdate({ ...data, stressor: v })}
+        onChange={(v) => setData((d) => ({ ...d, stressor: v }))}
         showFollowUp={false}
       />
       <SentenceStem
         stem="What I'm feeling about it is…"
         value={data.feeling}
-        onChange={(v) => onUpdate({ ...data, feeling: v })}
+        onChange={(v) => setData((d) => ({ ...d, feeling: v }))}
         showFollowUp={false}
       />
       <div>
@@ -258,7 +412,7 @@ function StressReducingSender({ stateA, onUpdate, partnerNames, onAdvance }: Sta
             <button
               key={opt.id}
               type="button"
-              onClick={() => onUpdate({ ...data, needType: opt.id })}
+              onClick={() => setData((d) => ({ ...d, needType: opt.id }))}
               className={`p-3 rounded-lg border text-sm text-left transition ${
                 data.needType === opt.id
                   ? 'bg-primary-sage text-white border-primary-sage'
@@ -270,15 +424,35 @@ function StressReducingSender({ stateA, onUpdate, partnerNames, onAdvance }: Sta
           ))}
         </div>
       </div>
-    </PartnerFlow>
+    </FillFlow>
   )
 }
 
-function StressReducingReceiver({ stateA, stateB, onUpdate, partnerNames, onAdvance }: StationProps) {
-  const name = partnerNames.b
-  const senderData: SRSenderState = stateA || srSenderEmpty
-  const data: SRReceiverState =
-    stateB && stateB.interest !== undefined ? stateB : srReceiverEmpty
+function StressReducingReceiver({
+  selfData,
+  partnerData,
+  selfName,
+  partnerName,
+  partnerSubmitted,
+  onSave,
+}: StationProps) {
+  const [data, setData] = useState<SRReceiverState>(
+    selfData && (selfData as any).interest !== undefined ? (selfData as SRReceiverState) : srReceiverEmpty
+  )
+  const [saving, setSaving] = useState(false)
+
+  // Wait for sender to send if not yet
+  if (!partnerData) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-12 text-center text-warm-gray">
+        <p className="text-base">Waiting for {partnerName} to share their stressor.</p>
+        <p className="text-xs italic mt-2">When they finish, you'll see what they wrote and can respond here.</p>
+      </div>
+    )
+  }
+
+  const senderData = partnerData as SRSenderState
+
   const canSubmit =
     data.interest.trim().length > 0 &&
     data.understanding.trim().length > 0 &&
@@ -287,10 +461,25 @@ function StressReducingReceiver({ stateA, stateB, onUpdate, partnerNames, onAdva
     data.affection.trim().length > 0 &&
     data.validation.trim().length > 0
 
+  async function submit() {
+    setSaving(true)
+    try {
+      await onSave(data, { submit: true })
+    } finally {
+      setSaving(false)
+    }
+  }
+
   return (
-    <PartnerFlow partnerName={name} isFirst={false} canSubmit={canSubmit} onSubmit={onAdvance}>
+    <FillFlow
+      selfName={selfName}
+      canSubmit={canSubmit}
+      onSubmit={submit}
+      saving={saving}
+      subtitle="You're the listener today. Six rules — Gottman's structure. No advice unless they asked for it."
+    >
       <div className="bg-warm-cream rounded-xl p-4 mb-2">
-        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">{partnerNames.a} shared</p>
+        <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">{partnerName} shared</p>
         <p className="text-sm text-text-dark italic leading-relaxed mb-2">{senderData.stressor}</p>
         <p className="text-xs text-warm-gray">
           They&apos;re feeling: <strong>{senderData.feeling}</strong>
@@ -299,74 +488,79 @@ function StressReducingReceiver({ stateA, stateB, onUpdate, partnerNames, onAdva
           What they need: <strong>{labelForNeed(senderData.needType)}</strong>
         </p>
       </div>
-      <p className="text-xs text-warm-gray italic">
-        Six rules — Gottman&apos;s structure. No advice unless they asked for it.
-      </p>
       <SentenceStem
         stem="Show genuine interest. What's a question that says you want to understand?"
         value={data.interest}
-        onChange={(v) => onUpdate({ ...data, interest: v })}
+        onChange={(v) => setData((d) => ({ ...d, interest: v }))}
         showFollowUp={false}
       />
       <SentenceStem
         stem='Communicate understanding. "It makes sense that you feel ___ because ___."'
         value={data.understanding}
-        onChange={(v) => onUpdate({ ...data, understanding: v })}
+        onChange={(v) => setData((d) => ({ ...d, understanding: v }))}
         showFollowUp={false}
       />
       <SentenceStem
         stem="Take their side, even when they're partly wrong. Whose side are you on?"
         value={data.takeSide}
-        onChange={(v) => onUpdate({ ...data, takeSide: v })}
+        onChange={(v) => setData((d) => ({ ...d, takeSide: v }))}
         showFollowUp={false}
       />
       <SentenceStem
         stem='"We against the world." What does this look like as something the two of you face together?'
         value={data.weAgainst}
-        onChange={(v) => onUpdate({ ...data, weAgainst: v })}
+        onChange={(v) => setData((d) => ({ ...d, weAgainst: v }))}
         showFollowUp={false}
       />
       <SentenceStem
         stem="Express affection. What's the warmth you want them to feel from you?"
         value={data.affection}
-        onChange={(v) => onUpdate({ ...data, affection: v })}
+        onChange={(v) => setData((d) => ({ ...d, affection: v }))}
         showFollowUp={false}
       />
       <SentenceStem
         stem={'Validate the emotion. "Anyone in your shoes would feel this. You\'re not crazy for feeling this."'}
         value={data.validation}
-        onChange={(v) => onUpdate({ ...data, validation: v })}
+        onChange={(v) => setData((d) => ({ ...d, validation: v }))}
         showFollowUp={false}
       />
-    </PartnerFlow>
+    </FillFlow>
   )
 }
 
-function labelForNeed(t: SRSenderState['needType']) {
-  return {
-    '': '—',
-    vent: 'to vent',
-    advice: 'advice',
-    distraction: 'distraction',
-    affection: 'affection',
-  }[t]
-}
-
-function StressReducingReveal({ stateA, stateB, onUpdate, partnerNames }: StationProps) {
-  const sender: SRSenderState = stateA || srSenderEmpty
-  const receiver: SRReceiverState = stateB || srReceiverEmpty
+function StressReducingReveal({
+  sender,
+  receiver,
+  senderName,
+  receiverName,
+  myRole,
+  senderRole,
+  onSave,
+}: {
+  sender: SRSenderState
+  receiver: SRReceiverState
+  senderName: string
+  receiverName: string
+  myRole: 'a' | 'b'
+  senderRole: 'a' | 'b' | null
+  onSave: StationProps['onSave']
+}) {
+  const iAmSender = senderRole === myRole
   const [feltHeard, setFeltHeard] = useState<number>(sender.feltHeard ?? 5)
 
-  function persist(v: number) {
+  async function persistFeltHeard(v: number) {
     setFeltHeard(v)
-    onUpdate({ ...sender, feltHeard: v })
+    if (iAmSender) {
+      await onSave({ ...sender, feltHeard: v })
+    }
   }
 
   return (
     <div>
       <PairedColumns
-        partnerNames={partnerNames}
-        left={
+        selfName={senderName}
+        partnerName={receiverName}
+        selfFirst={
           <>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-warm-gray mb-2">Stressor</p>
@@ -382,7 +576,7 @@ function StressReducingReveal({ stateA, stateB, onUpdate, partnerNames }: Statio
             </div>
           </>
         }
-        right={
+        partnerFirst={
           <>
             {[
               ['Genuine interest', receiver.interest],
@@ -400,26 +594,27 @@ function StressReducingReveal({ stateA, stateB, onUpdate, partnerNames }: Statio
           </>
         }
       />
-      <div className="mt-8 max-w-md mx-auto bg-white border border-warm-gray/15 rounded-2xl p-6">
-        <FeltSlider
-          label={`${partnerNames.a}: how heard did you feel?`}
-          leftAnchor="Not at all"
-          rightAnchor="Completely"
-          value={feltHeard}
-          onChange={persist}
-        />
-      </div>
+      {iAmSender && (
+        <div className="mt-8 max-w-md mx-auto bg-white border border-warm-gray/15 rounded-2xl p-6">
+          <FeltSlider
+            label={`${senderName}, how heard do you feel?`}
+            leftAnchor="Not at all"
+            rightAnchor="Completely"
+            value={feltHeard}
+            onChange={persistFeltHeard}
+          />
+        </div>
+      )}
     </div>
   )
 }
 
 // =====================================================================
-// 03 — SENTENCE STEMS — theme-picker + symmetric stems
+// 25 — SENTENCE STEMS — symmetric, but with shared-metadata theme
 // =====================================================================
 
 type StemTheme = keyof typeof sentenceStems
 type StemsState = {
-  theme?: StemTheme
   answers: Record<number, string>
   followUps: Record<number, string>
 }
@@ -427,81 +622,97 @@ type StemsState = {
 const stemsEmpty: StemsState = { answers: {}, followUps: {} }
 
 export function SentenceStemsStation(props: StationProps) {
-  if (props.mode === 'reveal') return <StemsReveal {...props} />
-  return <StemsFlow {...props} />
+  const { selfData, partnerData, sharedMetadata, selfSubmitted, partnerSubmitted, selfName, partnerName, onSave } =
+    props
+  const both = selfSubmitted && partnerSubmitted
+  const theme: StemTheme | undefined = sharedMetadata?.theme
+
+  if (both && theme) {
+    const a: StemsState = (props.myRole === 'a' ? selfData : partnerData) || stemsEmpty
+    const b: StemsState = (props.myRole === 'a' ? partnerData : selfData) || stemsEmpty
+    const aName = props.myRole === 'a' ? selfName : partnerName
+    const bName = props.myRole === 'a' ? partnerName : selfName
+    return <SentenceStemsReveal a={a} b={b} aName={aName} bName={bName} theme={theme} />
+  }
+
+  // Theme picker if not yet chosen
+  if (!theme) {
+    return <SentenceStemsThemePicker {...props} />
+  }
+
+  return <SentenceStemsFill {...props} theme={theme} />
 }
 
-function StemsFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdvance }: StationProps) {
-  const data: StemsState = (mode === 'a' ? stateA : stateB) || stemsEmpty
-  const name = mode === 'a' ? partnerNames.a : partnerNames.b
-  const isFirst = mode === 'a'
+function SentenceStemsThemePicker({ selfName, partnerName, onSave, myRole }: StationProps) {
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-12">
+      <div className="text-center mb-8">
+        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">
+          Pick a theme
+        </h2>
+        <p className="text-sm text-warm-gray">
+          Whichever of you opens this first chooses. Both of you will answer the same set.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {(Object.entries(sentenceStems) as Array<[StemTheme, typeof sentenceStems[StemTheme]]>).map(
+          ([key, value]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => onSave(null, { sharedMetadata: { theme: key } })}
+              className="p-4 rounded-lg bg-warm-cream border border-warm-gray/20 hover:border-primary-sage hover:bg-primary-sage/5 text-left transition"
+            >
+              <p className="font-medium text-text-dark text-sm">{value.label}</p>
+              <p className="text-xs text-warm-gray mt-1">{value.stems.length} stems</p>
+            </button>
+          )
+        )}
+      </div>
+    </div>
+  )
+}
 
-  // First partner picks the theme; second partner uses the same theme.
-  const themeFromA: StemTheme | undefined = stateA?.theme
-  const lockedTheme = isFirst ? data.theme : themeFromA
-  const activeTheme = lockedTheme
-
-  function pickTheme(t: StemTheme) {
-    onUpdate({ ...data, theme: t, answers: {}, followUps: {} })
-  }
+function SentenceStemsFill({
+  selfData,
+  selfName,
+  onSave,
+  theme,
+}: StationProps & { theme: StemTheme }) {
+  const [data, setData] = useState<StemsState>(selfData || stemsEmpty)
+  const [saving, setSaving] = useState(false)
+  const themeData = sentenceStems[theme]
 
   function setAnswer(i: number, v: string) {
-    onUpdate({ ...data, answers: { ...data.answers, [i]: v } })
+    setData((d) => ({ ...d, answers: { ...d.answers, [i]: v } }))
   }
   function setFollowUp(i: number, v: string) {
-    onUpdate({ ...data, followUps: { ...data.followUps, [i]: v } })
+    setData((d) => ({ ...d, followUps: { ...d.followUps, [i]: v } }))
   }
 
-  if (!activeTheme) {
-    return (
-      <PartnerFlow
-        partnerName={name}
-        isFirst={isFirst}
-        canSubmit={false}
-        onSubmit={() => {}}
-        submitLabel="Pick a theme to continue"
-      >
-        <p className="text-sm text-warm-gray">
-          Pick a theme that fits where you are this week. Your partner will answer the same one.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {(Object.entries(sentenceStems) as Array<[StemTheme, typeof sentenceStems[StemTheme]]>).map(
-            ([key, value]) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => pickTheme(key)}
-                className="p-4 rounded-lg bg-warm-cream border border-warm-gray/20 hover:border-primary-sage hover:bg-primary-sage/5 text-left transition"
-              >
-                <p className="font-medium text-text-dark text-sm">{value.label}</p>
-                <p className="text-xs text-warm-gray mt-1">{value.stems.length} stems</p>
-              </button>
-            )
-          )}
-        </div>
-      </PartnerFlow>
-    )
-  }
-
-  const themeData = sentenceStems[activeTheme]
   const filled = Object.values(data.answers).filter((a) => a && a.trim().length > 0).length
   const canSubmit = filled >= 2
 
+  async function submit() {
+    setSaving(true)
+    try {
+      await onSave(data, { submit: true })
+    } finally {
+      setSaving(false)
+    }
+  }
+
   return (
-    <PartnerFlow
-      partnerName={name}
-      isFirst={isFirst}
+    <FillFlow
+      selfName={selfName}
       canSubmit={canSubmit}
-      onSubmit={onAdvance}
-      submitLabel={canSubmit ? (isFirst ? "I'm done — hand to my partner" : 'Show us both') : 'Answer at least two'}
+      onSubmit={submit}
+      saving={saving}
+      subtitle={`Theme: ${themeData.label}. Answer at least two. Skip any that don't fit.`}
     >
-      <div>
-        <p className="text-[10px] uppercase tracking-wider text-primary-sage mb-1">Theme</p>
-        <p className="font-heading text-lg text-text-dark mb-1">{themeData.label}</p>
-        <p className="text-xs text-warm-gray italic">
-          Answer at least two. Skip any that don't fit. The second answer is often deeper than the first.
-        </p>
-      </div>
+      <p className="text-xs text-warm-gray italic">
+        The second answer is often deeper than the first.
+      </p>
       <div className="space-y-5">
         {themeData.stems.map((stem, i) => (
           <SentenceStem
@@ -514,15 +725,23 @@ function StemsFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdvance }: 
           />
         ))}
       </div>
-    </PartnerFlow>
+    </FillFlow>
   )
 }
 
-function StemsReveal({ stateA, stateB, partnerNames }: StationProps) {
-  const a: StemsState = stateA || stemsEmpty
-  const b: StemsState = stateB || stemsEmpty
-  const theme = a.theme
-  if (!theme) return null
+function SentenceStemsReveal({
+  a,
+  b,
+  aName,
+  bName,
+  theme,
+}: {
+  a: StemsState
+  b: StemsState
+  aName: string
+  bName: string
+  theme: StemTheme
+}) {
   const themeData = sentenceStems[theme]
 
   return (
@@ -541,7 +760,7 @@ function StemsReveal({ stateA, stateB, partnerNames }: StationProps) {
               <p className="font-heading text-base text-text-dark mb-4 italic">{stem}</p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider text-primary-sage mb-2">{partnerNames.a}</p>
+                  <p className="text-[10px] uppercase tracking-wider text-primary-sage mb-2">{aName}</p>
                   {aAns ? (
                     <>
                       <p className="text-sm text-text-dark leading-relaxed">{aAns}</p>
@@ -554,7 +773,7 @@ function StemsReveal({ stateA, stateB, partnerNames }: StationProps) {
                   )}
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider text-soft-rose mb-2">{partnerNames.b}</p>
+                  <p className="text-[10px] uppercase tracking-wider text-soft-rose mb-2">{bName}</p>
                   {bAns ? (
                     <>
                       <p className="text-sm text-text-dark leading-relaxed">{bAns}</p>
@@ -576,46 +795,67 @@ function StemsReveal({ stateA, stateB, partnerNames }: StationProps) {
 }
 
 // =====================================================================
-// 06 — ATTACHMENT MAP (ECR-S 12-item)
+// 06 — ATTACHMENT MAP (ECR-S 12-item) — symmetric
 // =====================================================================
 
-type AttachmentState = {
-  answers: ECRAnswers
-}
-
+type AttachmentState = { answers: ECRAnswers }
 const attachmentEmpty: AttachmentState = { answers: {} }
 
 export function AttachmentMap(props: StationProps) {
-  if (props.mode === 'reveal') return <AttachmentReveal {...props} />
-  return <AttachmentFlow {...props} />
+  const { selfData, partnerData, selfSubmitted, partnerSubmitted, selfName, partnerName } = props
+  const both = selfSubmitted && partnerSubmitted
+
+  if (both) {
+    const a: AttachmentState = (props.myRole === 'a' ? selfData : partnerData) || attachmentEmpty
+    const b: AttachmentState = (props.myRole === 'a' ? partnerData : selfData) || attachmentEmpty
+    const aName = props.myRole === 'a' ? selfName : partnerName
+    const bName = props.myRole === 'a' ? partnerName : selfName
+    return <AttachmentReveal a={a} b={b} aName={aName} bName={bName} />
+  }
+
+  return <AttachmentFill {...props} />
 }
 
-function AttachmentFlow({ mode, stateA, stateB, onUpdate, partnerNames, onAdvance }: StationProps) {
-  const data: AttachmentState = (mode === 'a' ? stateA : stateB) || attachmentEmpty
-  const name = mode === 'a' ? partnerNames.a : partnerNames.b
-  const isFirst = mode === 'a'
+function AttachmentFill({ selfData, selfName, onSave }: StationProps) {
+  const [data, setData] = useState<AttachmentState>(selfData || attachmentEmpty)
+  const [saving, setSaving] = useState(false)
   const canSubmit = Object.keys(data.answers).length === 12
 
+  async function submit() {
+    setSaving(true)
+    try {
+      await onSave(data, { submit: true })
+    } finally {
+      setSaving(false)
+    }
+  }
+
   return (
-    <PartnerFlow partnerName={name} isFirst={isFirst} canSubmit={canSubmit} onSubmit={onAdvance}>
-      <p className="text-xs text-warm-gray italic">
-        Twelve items. Answer for how you generally are in close relationships, not how you're feeling today.
-      </p>
-      <ECRItems
-        answers={data.answers}
-        onChange={(a) => onUpdate({ ...data, answers: a })}
-      />
-    </PartnerFlow>
+    <FillFlow
+      selfName={selfName}
+      canSubmit={canSubmit}
+      onSubmit={submit}
+      saving={saving}
+      subtitle="Twelve items. Answer for how you generally are in close relationships, not how you're feeling today."
+    >
+      <ECRItems answers={data.answers} onChange={(a) => setData((d) => ({ ...d, answers: a }))} />
+    </FillFlow>
   )
 }
 
-function AttachmentReveal({ stateA, stateB, partnerNames }: StationProps) {
-  const a: AttachmentState = stateA || attachmentEmpty
-  const b: AttachmentState = stateB || attachmentEmpty
+function AttachmentReveal({
+  a,
+  b,
+  aName,
+  bName,
+}: {
+  a: AttachmentState
+  b: AttachmentState
+  aName: string
+  bName: string
+}) {
   const scoreA = scoreECR(a.answers)
   const scoreB = scoreECR(b.answers)
-
-  // Determine combination prompts
   const combo = getCombinationCopy(scoreA, scoreB)
 
   return (
@@ -624,14 +864,14 @@ function AttachmentReveal({ stateA, stateB, partnerNames }: StationProps) {
         <AttachmentPlot
           partnerA={scoreA}
           partnerB={scoreB}
-          partnerAName={partnerNames.a}
-          partnerBName={partnerNames.b}
+          partnerAName={aName}
+          partnerBName={bName}
         />
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div className="bg-white border border-warm-gray/15 rounded-xl p-5">
-          <p className="text-[10px] uppercase tracking-wider text-primary-sage mb-2">{partnerNames.a}</p>
+          <p className="text-[10px] uppercase tracking-wider text-primary-sage mb-2">{aName}</p>
           <div className="flex justify-between text-sm mb-2">
             <span className="text-warm-gray">Anxiety</span>
             <span className="font-medium text-text-dark">{scoreA.anxiety.toFixed(1)} / 7</span>
@@ -642,7 +882,7 @@ function AttachmentReveal({ stateA, stateB, partnerNames }: StationProps) {
           </div>
         </div>
         <div className="bg-white border border-warm-gray/15 rounded-xl p-5">
-          <p className="text-[10px] uppercase tracking-wider text-soft-rose mb-2">{partnerNames.b}</p>
+          <p className="text-[10px] uppercase tracking-wider text-soft-rose mb-2">{bName}</p>
           <div className="flex justify-between text-sm mb-2">
             <span className="text-warm-gray">Anxiety</span>
             <span className="font-medium text-text-dark">{scoreB.anxiety.toFixed(1)} / 7</span>
