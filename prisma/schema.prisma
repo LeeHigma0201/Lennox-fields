@@ -344,6 +344,114 @@ model BookPurchase {
   @@map("book_purchases")
 }
 
+// =====================================================================
+// THE LAB — couples exercises platform (link-share, async, two devices)
+// =====================================================================
+
+// A couples Lab session. One per couple. Tokens are opaque + un-guessable.
+// Partner A starts, sends partner B their token-bound link.
+model LabSession {
+  id                  String   @id @default(cuid())
+  partnerAToken       String   @unique @default(cuid())
+  partnerBToken       String   @unique @default(cuid())
+  partnerAName        String   @default("Partner A")
+  partnerBName        String   @default("Partner B")
+  partnerASafetyOk    Boolean  @default(false)
+  partnerBSafetyOk    Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  lastActivityAt      DateTime @default(now())
+
+  stationStates       LabStationState[]
+
+  @@index([partnerAToken])
+  @@index([partnerBToken])
+  @@map("lab_sessions")
+}
+
+// Per-station state. Partner data is opaque JSON — schema lives in app code.
+// Reveal becomes available when both partnerASubmittedAt and partnerBSubmittedAt are set.
+model LabStationState {
+  id                    String      @id @default(cuid())
+  sessionId             String
+  stationId             String
+  partnerAData          Json?
+  partnerBData          Json?
+  partnerASubmittedAt   DateTime?
+  partnerBSubmittedAt   DateTime?
+  // For asymmetric stations (Stress-Reducing, Mirror): which partner is in which role
+  asymmetricRole        String?
+  // Cross-partner shared metadata (e.g. Sentence Stems theme) — visible to both pre-reveal
+  sharedMetadata        Json?
+  revealedAt            DateTime?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  session               LabSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, stationId])
+  @@index([sessionId])
+  @@map("lab_station_states")
+}
+
+// =====================================================================
+// TETHERED TOGETHER — preserved from earlier feature, kept in schema
+// to prevent prisma db push from dropping production tables
+// =====================================================================
+
+model TetherCouple {
+  id              String       @id @default(cuid())
+  therapistToken  String       @unique @default(cuid())
+  partner1Label   String       @default("Partner A")
+  partner2Label   String       @default("Partner B")
+  createdAt       DateTime     @default(now())
+
+  lists           TetherList[]
+
+  @@index([therapistToken])
+  @@map("tether_couples")
+}
+
+model TetherList {
+  id              String       @id @default(cuid())
+  coupleId        String
+  name            String
+  date            DateTime     @default(now())
+  partner1Token   String       @unique @default(cuid())
+  partner2Token   String       @unique @default(cuid())
+  createdAt       DateTime     @default(now())
+
+  couple          TetherCouple @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  tasks           TetherTask[]
+
+  @@index([coupleId, date])
+  @@index([partner1Token])
+  @@index([partner2Token])
+  @@map("tether_lists")
+}
+
+model TetherTask {
+  id              String       @id @default(cuid())
+  listId          String
+  text            String
+  addedBy         TetherRole
+  completedBy     TetherRole?
+  completedAt     DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  list            TetherList   @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@index([listId])
+  @@map("tether_tasks")
+}
+
+enum TetherRole {
+  PARTNER1
+  PARTNER2
+  THERAPIST
+}
+
 // Audit Log (HIPAA Compliance Requirement)
 model AuditLog {
   id                String    @id @default(cuid())
