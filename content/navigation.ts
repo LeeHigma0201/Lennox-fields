@@ -21,6 +21,7 @@ export const navigation = [
     name: 'Resources',
     href: '/resources',
     submenu: [
+      { name: 'The Lab — for couples', href: '/lab' },
       { name: 'Screening Tools', href: '/tools/screening-tools' },
       { name: 'Worksheets', href: '/resources/worksheets' },
       { name: 'Habit Trackers', href: '/resources/habit-trackers' },
@@ -57,6 +58,7 @@ export const footerResourceLinks = [
   { name: 'Worksheets', href: '/resources/worksheets' },
   { name: 'Habit Trackers', href: '/resources/habit-trackers' },
   { name: 'Journaling Prompts', href: '/resources/journaling-prompts' },
+  { name: 'The Lab — for couples', href: '/lab' },
   { name: 'FAQ', href: '/faq' },
   { name: 'Contact', href: '/contact' },
 ]

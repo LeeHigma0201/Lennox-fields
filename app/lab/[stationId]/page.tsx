@@ -10,6 +10,7 @@ import {
   HonestyCard,
   LabHeader,
   OffRamp,
+  ReadyCheck,
   Reveal,
 } from '../components'
 import { getStationComponent, isStationImplemented } from '../stations/registry'
@@ -20,6 +21,7 @@ type Phase =
   | { kind: 'contra' }
   | { kind: 'fill' }
   | { kind: 'share'; nextRole: 'a' | 'b' | null; revealUrl?: string }
+  | { kind: 'ready' }
   | { kind: 'reveal' }
 
 export default function StationPage() {
@@ -86,7 +88,7 @@ export default function StationPage() {
     const aDone = next.a != null
     const bDone = next.b != null
     if (aDone && bDone) {
-      setPhase({ kind: 'reveal' })
+      setPhase({ kind: 'ready' })
       return
     }
     // We just filled either A or B. The next person to fill is the other one.
@@ -163,6 +165,22 @@ export default function StationPage() {
     )
   }
 
+  if (phase.kind === 'ready') {
+    // The receiver — the partner who just opened the final link. Gate before reveal.
+    const opener: 'a' | 'b' = state.a != null && state.b != null ? 'b' : 'a'
+    const otherName = opener === 'a' ? state.names.b : state.names.a
+    return (
+      <Page>
+        <ReadyCheck
+          station={station}
+          partnerName={otherName}
+          onReady={() => setPhase({ kind: 'reveal' })}
+          onLater={() => router.push(gridUrl())}
+        />
+      </Page>
+    )
+  }
+
   // reveal
   if (!Component || !isStationImplemented(stationId)) {
     return (
@@ -207,7 +225,8 @@ function initialPhase(state: LabUrlState | null): Phase {
   if (!state) return { kind: 'honesty' }
   const aDone = state.a != null
   const bDone = state.b != null
-  if (aDone && bDone) return { kind: 'reveal' }
+  // Both filled → the receiver got a fresh share link. Gate before showing the paired material.
+  if (aDone && bDone) return { kind: 'ready' }
   return { kind: 'honesty' }
 }
 
