@@ -866,6 +866,68 @@ export function WaitForPartner({
 // Reveal — paired side-by-side container (unchanged from v1)
 // =====================================================================
 
+// =====================================================================
+// ReadyCheck — gate before opening the reveal of difficult material.
+// Source: RESEARCH-BRIEF.md Part 3, "Reading without containment."
+// "A reveal of difficult material when one partner is at work / driving /
+//  in an argument with a colleague is harmful. Build a ready check…"
+// =====================================================================
+
+export function ReadyCheck({
+  station,
+  partnerName,
+  onReady,
+  onLater,
+}: {
+  station: Station
+  partnerName: string
+  onReady: () => void
+  onLater: () => void
+}) {
+  return (
+    <div className="max-w-xl mx-auto px-4 py-12 md:py-16">
+      <div className="text-center mb-8">
+        <Shield className="w-8 h-8 mx-auto text-primary-sage mb-4" />
+        <p className="text-[10px] uppercase tracking-wider text-primary-sage mb-2">A check before you open this</p>
+        <h2 className="font-heading text-2xl md:text-3xl font-bold text-text-dark mb-3">
+          Are you ready to read this carefully?
+        </h2>
+        <p className="text-sm text-warm-gray max-w-md mx-auto leading-relaxed">
+          {partnerName} just finished their side of <em>{station.name}</em>. The next screen pairs both of your answers.
+          Reading what your partner wrote in a hurry — between meetings, while driving, mid-argument with someone else —
+          tends to make things worse, not better.
+        </p>
+      </div>
+
+      <div className="bg-white border border-warm-gray/15 rounded-2xl p-6 space-y-5">
+        <p className="text-base text-text-dark leading-relaxed">
+          Do you have <strong>15 minutes alone</strong>, somewhere private, where you can read this carefully?
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={onLater}
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-warm-gray/40 text-text-dark hover:bg-warm-cream transition text-sm font-medium"
+          >
+            Not yet — later today
+          </button>
+          <button
+            type="button"
+            onClick={onReady}
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary-sage text-white hover:bg-primary-sage/90 transition text-sm font-medium"
+          >
+            I'm ready — open it
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+        <p className="text-xs text-warm-gray italic text-center pt-2 border-t border-warm-gray/15">
+          If you tap "later," the link stays valid. Come back when you have the space.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export function Reveal({
   station,
   children,
