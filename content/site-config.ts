@@ -10,7 +10,10 @@ export const siteConfig = {
   businessFullName: 'Lennox Fields Clinical Mental Health Services',
   legalName: 'Lennox Fields Clinical Mental Health Services LLC',
   tagline: 'Clinical Mental Health Services',
-  description: 'Evidence-based mental health care with compassion at its core',
+  // Brand voice: first-person, plain English, neurodiversity-first.
+  // Used in meta descriptions, OG card body, and footer.
+  description:
+    'Neurodiversity-affirming therapy for ADHD, autism, and trauma — slow on purpose, and yours all the way through',
   url: 'https://lennox-fields.vercel.app',
 
   // --- Owner / Therapist Info ---
@@ -45,9 +48,11 @@ export const siteConfig = {
   },
 
   // --- Logo ---
+  // Lotus mark from the Lennox Fields Design System.
+  // For wordmark + lotus combinations, prefer the dedicated SVGs in /images/brand.
   logo: {
-    src: '/images/LFLogo.jpeg',
-    alt: 'Lennox Fields Logo',
+    src: '/images/brand/lotus-mark.svg',
+    alt: 'Lennox Fields lotus mark',
   },
 
   // --- SEO Keywords ---

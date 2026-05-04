@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Download, Plus, Trash2, Save, FileText } from 'lucide-react'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 interface ThoughtRecord {
   id: string
@@ -127,7 +128,8 @@ ${'='.repeat(80)}
 
       {/* Instructions */}
       <section className="section-padding bg-gradient-warm-bg">
-        <div className="container-custom max-w-4xl">
+        <div className="container-custom max-w-4xl space-y-6">
+          <NotTherapyDisclaimer />
           <div className="card">
             <h2 className="text-2xl font-bold text-text-dark mb-4">How to Use This Tool</h2>
             <div className="space-y-3 text-warm-gray">

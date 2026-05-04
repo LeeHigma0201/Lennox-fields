@@ -211,14 +211,14 @@ export default function PCL5Page() {
                         <strong>Prolonged Exposure (PE):</strong> Gradual exposure to trauma memories in a safe environment
                       </li>
                       <li>
-                        <strong>Eye Movement Desensitization and Reprocessing (EMDR):</strong> Processes traumatic memories using bilateral stimulation
+                        <strong>Trauma-Focused CBT (TF-CBT):</strong> Combines cognitive-behavioral techniques with trauma-sensitive practices
                       </li>
                       <li>
                         <strong>Medication:</strong> SSRIs and other medications can reduce symptoms when combined with therapy
                       </li>
                     </ul>
                     <p className="text-text-dark mt-3 text-sm">
-                      At Lennox Fields, we offer EMDR therapy for trauma processing.
+                      We integrate somatics, parts work, TF-CBT, ACT, and trauma-affirming mindfulness practices to support the whole person, safely.
                     </p>
                   </div>
 

@@ -7,12 +7,12 @@ export default function ServicesOverview() {
     <section className="section-padding bg-white">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
-            Comprehensive Mental Health Services
+          <span className="block w-20 h-1 bg-gradient-sand rounded-full mx-auto mb-6" aria-hidden="true"></span>
+          <h2 className="text-4xl md:text-5xl font-bold text-ink mb-4 tracking-tight">
+            How we can help
           </h2>
-          <p className="text-xl text-warm-gray max-w-3xl mx-auto">
-            Whether you&apos;re seeking individual support, couples counseling, or professional development,
-            we&apos;re here to support your journey.
+          <p className="text-xl text-warm-gray max-w-3xl mx-auto leading-relaxed">
+            Individual therapy, couples and family work, career counseling, and substance-use support — built around a pace designed with you in mind.
           </p>
         </div>
 

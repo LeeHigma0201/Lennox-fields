@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 interface Question {
   id: string
@@ -69,6 +70,9 @@ export default function AssessmentLayout({
             <p className="text-text-dark">{instructions}</p>
           </div>
         </div>
+
+        {/* Not-a-substitute-for-therapy disclaimer — required on all clinical screening surfaces */}
+        <NotTherapyDisclaimer className="mb-8" />
 
         {/* Progress Bar */}
         <div className="bg-white rounded-xl shadow-soft p-6 mb-8">

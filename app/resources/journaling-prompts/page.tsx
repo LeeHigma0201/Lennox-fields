@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Download, ArrowLeft, Heart } from 'lucide-react'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 const allPrompts = [
   // Day 1-10: Foundation Building
@@ -55,8 +56,8 @@ export default function JournalingPromptsPage() {
             </div>
             <div className="flex items-center space-x-2">
               <Image
-                src="/images/LFLogo.jpeg"
-                alt="Lennox Fields Logo"
+                src="/images/brand/lotus-mark.svg"
+                alt="Lennox Fields lotus mark"
                 width={32}
                 height={32}
                 className="object-contain"
@@ -71,7 +72,7 @@ export default function JournalingPromptsPage() {
       <section className="section-padding bg-gradient-to-br from-warm-cream to-primary-sage/10">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="w-20 h-1 bg-gradient-sand rounded mx-auto mb-6"></div>
+            <div className="w-20 h-1 bg-gradient-sand rounded-full mx-auto mb-6"></div>
             <BookOpen className="w-16 h-16 text-primary-sage mx-auto mb-6" />
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-text-dark mb-6">
               30 Daily Journaling Prompts
@@ -96,8 +97,11 @@ export default function JournalingPromptsPage() {
       {/* How to Use */}
       <section className="section-padding bg-white">
         <div className="container-custom">
+          <div className="max-w-4xl mx-auto space-y-8 mb-12">
+            <NotTherapyDisclaimer />
+          </div>
           <div className="max-w-4xl mx-auto">
-            <div className="w-16 h-1 bg-gradient-sand rounded mb-6"></div>
+            <div className="w-16 h-1 bg-gradient-sand rounded-full mb-6"></div>
             <h2 className="text-3xl font-bold text-text-dark mb-8">How to Use This Workbook</h2>
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -153,7 +157,7 @@ export default function JournalingPromptsPage() {
                   key={item.day}
                   className="bg-white border-l-4 border-primary-sage rounded-lg p-6 hover:shadow-soft transition-shadow"
                 >
-                  <div className="w-12 h-1 bg-gradient-sand rounded mb-4"></div>
+                  <div className="w-12 h-1 bg-gradient-sand rounded-full mb-4"></div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-sm font-semibold text-warm-sand bg-primary-sage/10 px-2 py-1 rounded">
                       {item.category}

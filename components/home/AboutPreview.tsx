@@ -12,7 +12,7 @@ export default function AboutPreview() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div>
-            <div className="w-20 h-1 bg-gradient-sand rounded mb-6"></div>
+            <div className="w-20 h-1 bg-gradient-sand rounded-full mb-6"></div>
             <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-6">
               {aboutPreview.title}
             </h2>
@@ -58,7 +58,7 @@ export default function AboutPreview() {
             </div>
 
             <div className="card bg-white border-l-4 border-primary-sage">
-              <div className="w-16 h-1 bg-gradient-sand rounded mb-3"></div>
+              <div className="w-16 h-1 bg-gradient-sand rounded-full mb-3"></div>
               <h3 className="text-2xl font-bold mb-3 text-primary-sage">{aboutPreview.approachTitle}</h3>
               <p className="leading-relaxed text-text-dark">
                 {aboutPreview.approachText}
@@ -66,7 +66,7 @@ export default function AboutPreview() {
             </div>
 
             <div className="card bg-white">
-              <div className="w-16 h-1 bg-gradient-sand rounded mb-3"></div>
+              <div className="w-16 h-1 bg-gradient-sand rounded-full mb-3"></div>
               <h3 className="text-2xl font-bold text-text-dark mb-3">Specialized Training</h3>
               <ul className="space-y-2 text-text-dark">
                 {aboutPreview.trainingList.map((item) => (

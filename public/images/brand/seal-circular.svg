@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="140" height="140">
+  <circle cx="70" cy="70" r="68" fill="none" stroke="#2A2A28" stroke-width="1"></circle>
+  <circle cx="70" cy="70" r="62" fill="none" stroke="#2A2A28" stroke-width="0.5"></circle>
+  <text x="70" y="62" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-style="italic" font-weight="500" font-size="13" fill="#75856F">Lennox</text>
+  <line x1="50" y1="70" x2="90" y2="70" stroke="#2A2A28" stroke-width="0.6"></line>
+  <text x="70" y="86" text-anchor="middle" font-family="Playfair Display, Georgia, serif" font-weight="700" font-size="16" letter-spacing="-0.01em" fill="#2A2A28">Fields</text>
+  <path id="arc-top" d="M 22 70 A 48 48 0 0 1 118 70" fill="none"></path>
+  <path id="arc-bot" d="M 22 70 A 48 48 0 0 0 118 70" fill="none"></path>
+  <text font-family="Inter, sans-serif" font-weight="500" font-size="6" letter-spacing="0.32em" fill="#3F3F3F">
+    <textPath href="#arc-top" startOffset="50%" text-anchor="middle">CLINICAL · MENTAL · HEALTH</textPath>
+  </text>
+  <text font-family="Inter, sans-serif" font-weight="500" font-size="6" letter-spacing="0.32em" fill="#3F3F3F">
+    <textPath href="#arc-bot" startOffset="50%" text-anchor="middle">EST · 2024 · KENTUCKY</textPath>
+  </text>
+</svg>

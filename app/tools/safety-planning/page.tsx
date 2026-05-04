@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Save, Download, Shield, AlertTriangle, Phone } from 'lucide-react'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 interface SafetyPlan {
   warningSignsInternal: string[]
@@ -198,6 +199,7 @@ ${'='.repeat(80)}
       {/* Form */}
       <section className="section-padding">
         <div className="container-custom max-w-4xl space-y-8">
+          <NotTherapyDisclaimer />
           {/* Step 1 */}
           <div className="card">
             <div className="flex items-start gap-3 mb-4">

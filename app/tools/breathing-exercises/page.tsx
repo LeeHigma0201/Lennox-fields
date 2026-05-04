@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Play, Pause, RotateCcw } from 'lucide-react'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 interface BreathingPattern {
   name: string
@@ -237,6 +238,7 @@ export default function BreathingExercisesPage() {
       {/* Breathing Visualizer */}
       <section className="section-padding bg-gradient-warm-bg">
         <div className="container-custom max-w-4xl">
+          <NotTherapyDisclaimer className="mb-8" />
           <div className="card">
             {/* Visual Circle */}
             <div className="flex flex-col items-center justify-center min-h-[400px]">

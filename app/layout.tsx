@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Lennox Fields Clinical Mental Health Services — Tamara Walls, LPCA',
+        alt: 'Lennox Fields Clinical Mental Health Services — Tamara Walls, LPCA. Neurodiversity-affirming therapy in Kentucky.',
         type: 'image/png',
       },
     ],

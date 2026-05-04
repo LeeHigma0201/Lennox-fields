@@ -54,20 +54,35 @@
 }
 
 @layer components {
+  /* Buttons — synced with /Lennox Fields Design System/preview/buttons.html
+     Padding 12×24px, radius 8px, 15px Inter 500, ease-out 200ms cubic-bezier */
   .btn {
-    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-6 py-3 rounded-lg font-medium text-[15px] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .btn-primary {
-    @apply bg-primary-sage text-white hover:bg-earth-green focus:ring-primary-sage;
+    @apply bg-primary-sage text-warm-cream hover:bg-earth-green hover:-translate-y-px focus:ring-primary-sage;
   }
 
+  /* Secondary: editorial transparent + rule border per design system */
   .btn-secondary {
-    @apply bg-soft-rose text-white hover:bg-opacity-90 focus:ring-soft-rose;
+    @apply bg-transparent text-text-dark border border-rule hover:bg-paper hover:border-primary-sage focus:ring-primary-sage;
   }
 
+  /* Outline kept as alternate for places that explicitly want sage-on-cream emphasis */
   .btn-outline {
-    @apply border-2 border-primary-sage text-primary-sage hover:bg-primary-sage hover:text-white focus:ring-primary-sage;
+    @apply border-2 border-primary-sage text-primary-sage hover:bg-primary-sage hover:text-warm-cream focus:ring-primary-sage;
+  }
+
+  /* Ghost: low-emphasis link-button per design system (sand → earth on hover) */
+  .btn-ghost {
+    @apply bg-transparent text-warm-sand hover:text-earth-green focus:ring-warm-sand;
+  }
+
+  /* Gold: premium / editorial (book editions, certificate-feel CTAs) */
+  .btn-gold {
+    @apply bg-warm-cream text-accent-gold border border-accent-gold hover:bg-accent-gold hover:text-warm-cream focus:ring-accent-gold;
   }
 
   .card {
@@ -189,13 +204,29 @@
   }
 }
 
-/* Lennox Fields Design Elements */
+/* Lennox Fields signature elements — synced with design system preview/accent-bar.html
+   The sand gradient bar is the brand's signature mark. Always pill-rounded. */
 .accent-bar {
-  @apply w-20 h-1 bg-gradient-sand rounded;
+  @apply w-20 h-1 bg-gradient-sand rounded-full;
 }
 
+.accent-bar-sm {
+  @apply w-12 h-[3px] bg-gradient-sand rounded-full;
+}
+
+.accent-bar-lg {
+  @apply w-[120px] h-[5px] bg-gradient-sand rounded-full;
+}
+
+/* Legacy alias kept for older callsites; prefer accent-bar-sm. */
 .prompt-accent {
-  @apply w-12 h-1 bg-gradient-sand rounded;
+  @apply w-12 h-[3px] bg-gradient-sand rounded-full;
+}
+
+/* Editorial eyebrow — 11px Inter 500, 0.22em tracking, sage. Used above section h2s. */
+.lf-eyebrow {
+  @apply inline-block text-[11px] font-medium uppercase text-primary-sage;
+  letter-spacing: 0.22em;
 }
 
 .sage-border {

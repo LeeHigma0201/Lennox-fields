@@ -64,12 +64,11 @@ export default function ContactPage() {
       <section className="gradient-warm-bg py-20">
         <div className="container-custom text-center">
           <Calendar className="w-20 h-20 text-primary-sage mx-auto mb-6" aria-hidden="true" />
-          <h1 className="text-5xl md:text-6xl font-bold text-text-dark mb-6">
-            Get in Touch
+          <h1 className="text-5xl md:text-6xl font-bold text-ink mb-6 tracking-tight">
+            Get in touch
           </h1>
-          <p className="text-xl text-text-dark max-w-3xl mx-auto">
-            Ready to take the first step? Fill out the form below to schedule a complimentary
-            15-minute consultation.
+          <p className="text-xl text-text-dark max-w-3xl mx-auto leading-relaxed">
+            Fill out the form below to schedule a free 15-minute consultation. No commitment — just a conversation.
           </p>
         </div>
       </section>
@@ -217,9 +216,9 @@ export default function ContactPage() {
                       <MessageCircle className="w-4 h-4" aria-hidden="true" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-text-dark text-sm">Free Consultation</h4>
+                      <h4 className="font-semibold text-text-dark text-sm">Free consultation</h4>
                       <p className="text-warm-gray text-sm">
-                        A brief 15-minute call to discuss your needs and see if we&apos;re a good fit.
+                        A 15-minute call so we can hear what&apos;s been hard, and you can decide if we&apos;re the right fit.
                       </p>
                     </div>
                   </div>
@@ -346,11 +345,11 @@ export default function ContactPage() {
       {/* CTA */}
       <section className="section-padding bg-gradient-to-br from-primary-sage to-earth-green text-white text-center">
         <div className="container-custom max-w-3xl">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Begin Your Journey?
+          <h2 className="text-4xl font-bold mb-6 tracking-tight">
+            When you&apos;re ready
           </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Taking the first step is often the hardest. I&apos;m here to make it as easy as possible.
+          <p className="text-xl mb-8 opacity-90 leading-relaxed">
+            The first step is often the hardest part. Whenever it feels right, we&apos;ll be here.
           </p>
           <p className="text-sm opacity-75">
             Serving Kentucky &bull; Telehealth available
