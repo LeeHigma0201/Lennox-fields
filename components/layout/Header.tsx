@@ -32,19 +32,22 @@ export default function Header() {
       <nav className="container-custom py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-3" aria-label={`${siteConfig.businessName} home`}>
             <Image
               src={siteConfig.logo.src}
               alt={siteConfig.logo.alt}
               width={48}
               height={48}
               className="object-contain"
+              priority
             />
-            <div className="hidden md:block">
-              <span className="font-heading text-xl font-bold text-text-dark">
+            <div className="hidden md:block leading-tight">
+              <span className="font-heading text-xl font-bold text-ink tracking-tight block">
                 {siteConfig.businessName}
               </span>
-              <p className="text-xs text-warm-gray">{siteConfig.tagline}</p>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-warm-gray font-medium">
+                {siteConfig.tagline}
+              </p>
             </div>
           </Link>
 

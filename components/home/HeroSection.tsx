@@ -35,18 +35,20 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="animate-fade-in">
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-text-dark mb-6 leading-tight">
+            <span className="inline-block text-xs uppercase tracking-[0.22em] text-primary-sage font-medium mb-4">
+              {siteConfig.tagline} &middot; {siteConfig.contact.location}
+            </span>
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-ink mb-6 leading-tight tracking-tight">
               {renderHeadline()}
             </h1>
+            <span className="block w-20 h-1 bg-gradient-sand rounded-full mb-6" aria-hidden="true"></span>
             <p className="text-xl md:text-2xl text-text-dark mb-8 leading-relaxed">
               {hero.subheadline}
             </p>
 
-            {/* Personal Message */}
+            {/* Personal Message — no "Hi, I'm" prefix per Tamara 2026-05-04 */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-soft border-l-4 border-primary-sage">
-              <div className="w-20 h-1 bg-gradient-sand rounded mb-4"></div>
               <p className="text-lg text-text-dark leading-relaxed mb-4">
-                <span className="font-semibold text-primary-sage">Hi, I&apos;m {siteConfig.owner.fullTitle}.</span>{' '}
                 {hero.personalMessage}
               </p>
               <Link href={hero.personalMessageLink.href} className="text-warm-sand hover:text-primary-sage font-medium inline-flex items-center transition-colors">

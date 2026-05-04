@@ -6,20 +6,23 @@
 // ============================================================
 
 // --- Hero Section ---
+// Voice: collective ("we"), not forced first-person singular. Tamara approved 2026-05-04.
+// Hero headline + subheadline restored per her direction; personal message uses her exact wording.
 export const hero = {
-  // The main headline. Words wrapped in *asterisks* get colored.
-  headline: 'Welcome to Your Journey of Growth and Healing',
-  highlightWords: ['Growth', 'Healing'], // These words get special color styling
+  // The main headline. Words listed in highlightWords get a sage/sand color accent.
+  headline: 'Therapy that meets you where you are',
+  highlightWords: ['meets', 'are'],
   subheadline: 'Evidence-based mental health care with compassion at its core',
 
-  // Personal message box
+  // Personal message — Tamara's exact wording (2026-05-04 revision).
+  // Note: no "Hi, I'm Tamara Walls" prefix — she said the marketing copy isn't the place for that.
   personalMessage:
-    'I believe everyone deserves access to quality mental health care that honors their unique journey. At Lennox Fields, we combine clinical expertise with genuine warmth to help you build the life you envision.',
-  personalMessageLink: { text: 'Learn more about my approach', href: '/about' },
+    "Here for the parts of you that feel too big to name. We'll work at the pace your nervous system can keep up with, with an order that fits your life.",
+  personalMessageLink: { text: 'More about how I work', href: '/about' },
 
   // Call-to-action buttons
-  primaryButton: { text: 'Schedule a Free Consultation', href: '/contact' },
-  secondaryButton: { text: 'Explore Free Resources', href: '/resources' },
+  primaryButton: { text: 'Schedule a free consultation', href: '/contact' },
+  secondaryButton: { text: 'Browse free resources', href: '/resources' },
 }
 
 // --- Trust Indicators ---
@@ -134,11 +137,11 @@ export const resources = [
 
 // --- Call to Action Section ---
 export const ctaSection = {
-  title: 'Ready to Take the First Step?',
+  title: 'When you’re ready, we’re here',
   description:
-    "Starting therapy can feel overwhelming, but you don't have to do it alone. I offer free 15-minute consultations to answer your questions and ensure we're a good fit.",
-  primaryButton: { text: 'Schedule Free Consultation', href: '/contact' },
-  secondaryButton: { text: 'Explore Free Resources', href: '/resources' },
+    "Starting therapy is a real thing — uncertainty included. A free 15-minute consultation is just a conversation, no pressure to commit. We can talk about what's been hard, and whether we're the right fit.",
+  primaryButton: { text: 'Schedule a free consultation', href: '/contact' },
+  secondaryButton: { text: 'Browse free resources', href: '/resources' },
   footnote:
     'Currently accepting new clients in Kentucky. Telehealth and in-person options available.',
 }

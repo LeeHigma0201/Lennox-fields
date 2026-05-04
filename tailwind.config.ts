@@ -9,21 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Lennox Fields Brand Colors - Inspired by Journaling Template
-        'primary-sage': '#75856f', // Muted sage from template
-        'warm-sand': '#8a7362', // Warm sand accent (WCAG AA compliant)
-        'soft-rose': '#C09191',
-        'warm-gray': '#6B6560', // Darkened for WCAG AA contrast on cream
-        'warm-cream': '#faf9f7', // Background from template
-        'cream': '#faf9f7', // Alias for warm-cream (used across site)
-        'accent-gold': '#7A6E44', // Darkened for WCAG AA contrast
-        'earth-green': '#6B8E4E',
-        'text-dark': '#3f3f3f', // Dark gray from template
+        // Lennox Fields Brand Colors — synced with /Lennox Fields Design System/colors_and_type.css
+        'primary-sage': '#75856F', // Hero brand. Buttons, links, accents.
+        'earth-green': '#6B8E4E', // Hover/active state for sage.
+        'warm-sand': '#8A7362', // Secondary accent.
+        'soft-rose': '#C09191', // Tertiary accent. Care, warmth.
+        'accent-gold': '#7A6E44', // Premium / editorial.
+
+        // Surfaces
+        'warm-cream': '#FAF9F7',
+        'cream': '#FAF9F7', // Alias
+        'paper': '#F4F1EB', // Layered surface
+        'linen': '#EDE7DC', // Deeper paper
+
+        // Ink
+        'ink': '#2A2A28', // Headlines, near-black
+        'text-dark': '#3F3F3F',
+        'warm-gray': '#6B6560',
+        'rule': '#D4CDBF', // Hairlines
         'text-light': '#F5F5F5',
 
         // Clinical UI Colors
         'clinical-blue': '#4A90A4',
-        'alert-red': '#D64545',
+        'crisis-clay': '#B85C3F', // True crisis only
+        'alert-red': '#B85C3F', // Alias for legacy callsites
         'success-green': '#5C8B73',
         'warning-amber': '#D4A574',
       },

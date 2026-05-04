@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Brain, Heart, Focus, Users, Shield, Activity } from 'lucide-react'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 const screeningTools = [
   {
@@ -83,12 +84,8 @@ export default function ScreeningToolsPage() {
             Evidence-based, validated assessments to help you understand your mental health.
             All tools provide instant scoring and interpretation.
           </p>
-          <div className="inline-block bg-white/80 backdrop-blur-sm rounded-lg p-6 max-w-2xl">
-            <p className="text-text-dark">
-              <span className="font-semibold text-clinical-blue">Important:</span> These screening tools
-              are not diagnostic instruments. They are designed to help identify potential concerns that
-              should be discussed with a qualified mental health professional.
-            </p>
+          <div className="max-w-3xl mx-auto text-left">
+            <NotTherapyDisclaimer />
           </div>
         </div>
       </section>

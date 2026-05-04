@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Mail, MapPin, Linkedin, Facebook, Instagram } from 'lucide-react'
 import { siteConfig } from '@/content/site-config'
 import { footerQuickLinks, footerResourceLinks } from '@/content/navigation'
+import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
 
 export default function Footer() {
   const currentYear = 2026
@@ -13,17 +14,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex items-center space-x-3 mb-4">
               <Image
                 src={siteConfig.logo.src}
                 alt={siteConfig.logo.alt}
                 width={40}
                 height={40}
-                className="object-contain rounded"
+                className="object-contain"
               />
-              <span className="font-heading text-lg font-bold text-text-dark">{siteConfig.businessName}</span>
+              <span className="font-heading text-lg font-bold text-text-dark tracking-tight">{siteConfig.businessName}</span>
             </div>
-            <p className="text-sm text-warm-gray mb-4">
+            <p className="text-sm text-warm-gray mb-4 leading-relaxed">
               {siteConfig.description}.
             </p>
             <div className="flex space-x-4">
@@ -108,6 +109,9 @@ export default function Footer() {
           <p className="text-sm text-text-dark mt-4 text-center md:text-left bg-soft-rose/15 border border-soft-rose/30 rounded-lg p-3">
             <strong className="text-text-dark">Crisis Support:</strong> {siteConfig.crisis.message} <strong className="text-soft-rose">{siteConfig.crisis.phone}</strong> {siteConfig.crisis.suffix}
           </p>
+          <div className="mt-4">
+            <NotTherapyDisclaimer variant="inline" />
+          </div>
         </div>
       </div>
     </footer>

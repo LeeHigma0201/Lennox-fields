@@ -98,12 +98,12 @@ export default function ServicesPage() {
       {/* CTA */}
       <section className="section-padding gradient-sage-bg text-white text-center">
         <div className="container-custom max-w-3xl">
-          <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Schedule a free 15-minute consultation to discuss your needs and determine the best service for you.
+          <h2 className="text-4xl font-bold mb-6 tracking-tight">A free 15-minute conversation</h2>
+          <p className="text-xl mb-8 opacity-90 leading-relaxed">
+            No commitment, no script. Just a chance to talk about what you&apos;re working with and whether we&apos;re the right fit.
           </p>
           <Link href="/contact" className="btn bg-white text-primary-sage hover:bg-cream">
-            Schedule Free Consultation
+            Schedule a free consultation
           </Link>
         </div>
       </section>

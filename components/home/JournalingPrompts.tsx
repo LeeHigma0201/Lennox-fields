@@ -41,7 +41,7 @@ export default function JournalingPrompts() {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <div className="w-20 h-1 bg-gradient-sand rounded mx-auto mb-6"></div>
+            <div className="w-20 h-1 bg-gradient-sand rounded-full mx-auto mb-6"></div>
             <BookOpen className="w-16 h-16 text-primary-sage mx-auto mb-6" />
             <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
               Daily Journaling Prompts
@@ -59,7 +59,7 @@ export default function JournalingPrompts() {
                 key={item.day}
                 className="bg-warm-cream border-l-4 border-primary-sage rounded-lg p-6 hover:shadow-soft transition-shadow"
               >
-                <div className="w-12 h-1 bg-gradient-sand rounded mb-4"></div>
+                <div className="w-12 h-1 bg-gradient-sand rounded-full mb-4"></div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-semibold text-warm-sand bg-primary-sage/10 px-2 py-1 rounded">
                     {item.category}
