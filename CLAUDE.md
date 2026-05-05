@@ -29,37 +29,48 @@ All page content is driven by config files in `/content/`:
 |-------|--------|
 | `/` | Live |
 | `/about` | Live |
-| `/services` | Live |
-| `/services/individual-therapy` | Live |
-| `/services/career-counseling` | Live |
-| `/services/substance-use` | Live |
+| `/services` + `/services/{individual-therapy,career-counseling,substance-use}` | Live |
 | `/books` | Live |
-| `/contact` | Live (form non-functional) |
+| `/contact` | Live (Resend wiring in PR #2 — needs `RESEND_API_KEY` in Vercel) |
 | `/faq` | Live |
+| `/privacy`, `/terms`, `/hipaa` | Live |
+| `/lab` + `/lab/[stationId]` | Live (couples-exercises link-share, URL-encoded state, no DB) |
+| `/professional`, `/professional/supervision` | Live |
 | `/resources/journaling-prompts` | Live |
-| `/tools/screening-tools` | Live |
-| `/tools/screening-tools/phq-9` | Live |
-| `/tools/screening-tools/gad-7` | Live |
-| `/tools/screening-tools/pcl-5` | Live |
-| `/tools/breathing-exercises` | Live |
-| `/tools/cbt-thought-record` | Live |
-| `/tools/safety-planning` | Live |
+| `/tools/screening-tools` + `/phq-9`, `/gad-7`, `/pcl-5` | Live |
+| `/tools/{breathing-exercises,cbt-thought-record,safety-planning}` | Live |
+| `/tools/{sound-healing,treatment-planning,notes-templates}` | Live |
+| `sitemap.xml`, `robots.txt` | Live ([app/sitemap.ts](app/sitemap.ts), [app/robots.ts](app/robots.ts)) |
 
-## Known Issues (see audit-dashboard.html)
-- 17+ broken internal links (routes in nav/footer that don't have pages)
-- `bg-cream` Tailwind class not defined (used in 19+ files)
-- Contact form doesn't send data anywhere
-- Legal pages (privacy, terms, HIPAA) don't exist
-- All images use `<img>` instead of `next/image`
-- No loading/error/404 pages
-- No analytics, sitemap, or robots.txt
+## Design System (source of truth)
+- **Tokens:** Tamara's `/Lennox Fields Design System/colors_and_type.css` (folder lives outside this repo). Mirrored 1:1 in [tailwind.config.ts](tailwind.config.ts).
+- **Palette:** sage `#75856F` (primary), cream `#FAF9F7`, paper `#F4F1EB`, linen `#EDE7DC`, sand, soft-rose, accent-gold, ink `#2A2A28`, rule `#D4CDBF`, crisis-clay `#B85C3F` (true crisis only).
+- **Type:** Playfair Display (headings) + Inter (body), via Google Fonts in [app/layout.tsx](app/layout.tsx).
+- **Components:** rounded-full pills for the sand-gradient bar; `.btn-primary` (sage), `.btn-secondary` (transparent + rule-border), `.btn-ghost`, `.btn-gold` in [app/globals.css](app/globals.css).
+- **Logos:** use `lotus-mark.svg` from `/public/images/brand/`, NOT the legacy `LFLogo.jpeg`.
+- **Favicon:** [app/icon.svg](app/icon.svg) (sage L on cream).
+- **Don't:** introduce hex values inline. Always use Tailwind tokens.
+
+## Voice (per Tamara, locked 2026-05-04)
+- **"We" voice** in CTAs. Kill "Ready to..." imperatives.
+- **Hero:** "Therapy that meets you where you are" / "Evidence-based mental health care with compassion at its core"
+- **Home CTA:** "When you're ready, we're here"
+- **Modalities we name:** somatics, parts work, TF-CBT, ACT, trauma-affirming mindfulness. **Do NOT name EMDR** (Tamara doesn't practice it).
+- **NotTherapyDisclaimer** (`<NotTherapyDisclaimer />`) goes on every clinical tool — three variants: `card` (landing), `banner` (mid-page), `inline` (footer).
+- **Workflow:** Tamara approves visible changes via iMessage before merge. Keep that loop.
+
+## OG / social card
+- File: [public/og-image.png](public/og-image.png) — 1200×630 cream card with lotus + wordmark.
+- Wired in [app/layout.tsx](app/layout.tsx) for both `openGraph.images` and `twitter.images`.
+- **URL is versioned with `?v=YYYYMMDD`** — bump the version on every image swap so X / LinkedIn / iMessage / Facebook re-scrape.
+- **Verify with the [X Card Validator](https://cards.x.com/validator)** after every change. Don't trust file mtime.
 
 ## Owner Info
 - **Tamara Walls, LPCA** (Licensed Professional Clinical Counselor Associate)
 - Specializations: ADHD, Autism, CPTSD, Trauma
 - Focus: Neurodiversity-affirming care, primarily women
 - Location: Kentucky
-- Contact: tamara@lennoxfields.org, (502) 627-0781
+- Contact: tamara@lennoxfields.com, (502) 627-0781
 - Books: 3 children's mental health books on Amazon
 
 ## Commands
@@ -67,16 +78,29 @@ All page content is driven by config files in `/content/`:
 npm run dev    # Start dev server
 npm run build  # Production build
 npm run lint   # Run linter
+npm test       # Jest (currently the contact-form test suite — PR #2)
 ```
 
-## Recent Work (March 2026)
+## Open work (live status)
+- **PR #2 OPEN** — Resend wiring for contact form. 7 tests pass. Needs `RESEND_API_KEY` set in Vercel env before merge has effect. Without it, every contact submission silently drops.
+- **OG cache** — file is fresh; URL versioning is in place. If a swap doesn't propagate, paste lennoxfields.com into the X Card Validator first, then bump `?v=` if needed.
 
-- **Logo fix:** `rounded-full` + `object-cover` to fix edge bleeding on circular logo image
-- **Sticky hamburger menu:** DoorDash-style — hamburger appears on scroll, slides in from top, full-screen overlay nav
+## Lingering known issues (verified 2026-05-04)
+- Some `<img>` tags still in components — should migrate to `next/image` for LCP. Quick sweep.
+- JSON-LD MedicalBusiness schema in [app/layout.tsx](app/layout.tsx) lists `Psychiatry, ClinicalPsychology` — Tamara is LPCA. Review for accuracy.
+- Stripe / NextAuth / Prisma scaffolded but unused. Wire or delete.
+- `/public/` has artifacts (HTMLD.html, review.html, DEARMAN PDF) — verify intent.
+
+## Recently shipped (PRs since CLAUDE.md was last refreshed)
+- **PR #7** (2026-05-04) — Brand-voice + design-system pass + new OG. Tokens synced to design system, NotTherapyDisclaimer wired everywhere, voice cleanup, lotus-mark logo migration.
+- **PR #5+#6** (2026-04-30) — The Lab v2 (research brief, ready-check gate) + SSR fix.
+- **PR #3+#4** (2026-04-29) — The Lab v1 (link-share couples-exercises, no-DB).
+- **PR #1** (2026-03-25) — Tethered Together couples task tool.
+- **Misc commits** — 49 worksheets (`ab89de4`), sound-healing tool (`ff0232f`), full site update + nav + tools (`1adaa2c`).
 
 ## Future Vision
 
-Tamara is working on a **daily planner revamp** and has a vision for a **couples therapy tool**. These may eventually connect to or branch off the Lennox Fields brand/platform.
+Tamara is working on a **daily planner revamp** and has a vision for a **couples therapy tool** (The Lab may be the seed). These may eventually connect to or branch off the Lennox Fields brand/platform.
 
 
 ---

@@ -10,10 +10,11 @@ export const siteConfig = {
   businessFullName: 'Lennox Fields Clinical Mental Health Services',
   legalName: 'Lennox Fields Clinical Mental Health Services LLC',
   tagline: 'Clinical Mental Health Services',
-  // Brand voice: first-person, plain English, neurodiversity-first.
-  // Used in meta descriptions, OG card body, and footer.
+  // Brand voice: Tamara's approved hero subheadline — used in meta descriptions,
+  // OG card body, and footer. The previous "slow on purpose, and yours all the way
+  // through" line was retired per Tamara's 2026-05-04 direction.
   description:
-    'Neurodiversity-affirming therapy for ADHD, autism, and trauma — slow on purpose, and yours all the way through',
+    'Evidence-based mental health care with compassion at its core',
   url: 'https://lennox-fields.vercel.app',
 
   // --- Owner / Therapist Info ---
