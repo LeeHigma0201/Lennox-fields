@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.businessFullName,
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.png?v=20260504',
         width: 1200,
         height: 630,
         alt: 'Lennox Fields Clinical Mental Health Services — Tamara Walls, LPCA. Neurodiversity-affirming therapy in Kentucky.',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.businessFullName,
     description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky.`,
-    images: ['/og-image.png'],
+    images: ['/og-image.png?v=20260504'],
   },
   robots: {
     index: true,
