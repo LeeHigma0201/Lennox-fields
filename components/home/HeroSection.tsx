@@ -1,11 +1,9 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight, Calendar } from 'lucide-react'
 import { hero } from '@/content/home-page'
 import { siteConfig } from '@/content/site-config'
 
 export default function HeroSection() {
-  // Build headline with highlighted words
   const renderHeadline = () => {
     const words = hero.headline.split(' ')
     return words.map((word, i) => {
@@ -25,75 +23,54 @@ export default function HeroSection() {
 
   return (
     <section className="relative bg-gradient-to-br from-warm-cream to-primary-sage/10 section-padding overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-20 right-20 w-64 h-64 bg-primary-sage rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-40 w-96 h-96 bg-warm-sand rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-warm-sand rounded-full blur-3xl"></div>
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
-          <div className="animate-fade-in">
-            <span className="inline-block text-xs uppercase tracking-[0.22em] text-primary-sage font-medium mb-4">
-              {siteConfig.tagline} &middot; {siteConfig.contact.location}
+        <div className="max-w-3xl mx-auto text-center animate-fade-in">
+          <span className="inline-block text-xs uppercase tracking-[0.22em] text-primary-sage font-medium mb-4">
+            {siteConfig.tagline} &middot; {siteConfig.contact.location}
+          </span>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-ink mb-6 leading-tight tracking-tight">
+            {renderHeadline()}
+          </h1>
+          <span className="block w-20 h-1 bg-gradient-sand rounded-full mb-6 mx-auto" aria-hidden="true"></span>
+          <p className="text-xl md:text-2xl text-text-dark mb-8 leading-relaxed">
+            {hero.subheadline}
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <span className="inline-flex items-center bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-soft text-sm">
+              <span className="font-bold text-primary-sage mr-2">LPCA</span>
+              <span className="text-text-dark">Clinical Mental Health</span>
             </span>
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-ink mb-6 leading-tight tracking-tight">
-              {renderHeadline()}
-            </h1>
-            <span className="block w-20 h-1 bg-gradient-sand rounded-full mb-6" aria-hidden="true"></span>
-            <p className="text-xl md:text-2xl text-text-dark mb-8 leading-relaxed">
-              {hero.subheadline}
-            </p>
-
-            {/* Personal Message — no "Hi, I'm" prefix per Tamara 2026-05-04 */}
-            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-soft border-l-4 border-primary-sage">
-              <p className="text-lg text-text-dark leading-relaxed mb-4">
-                {hero.personalMessage}
-              </p>
-              <Link href={hero.personalMessageLink.href} className="text-warm-sand hover:text-primary-sage font-medium inline-flex items-center transition-colors">
-                {hero.personalMessageLink.text}
-                <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
-              </Link>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href={hero.primaryButton.href} className="bg-primary-sage text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-sage/90 transition-colors inline-flex items-center justify-center shadow-soft">
-                <Calendar className="mr-2 w-5 h-5" aria-hidden="true" />
-                {hero.primaryButton.text}
-              </Link>
-              <Link href={hero.secondaryButton.href} className="border-2 border-primary-sage text-primary-sage px-6 py-3 rounded-lg font-medium hover:bg-primary-sage hover:text-white transition-colors inline-flex items-center justify-center">
-                {hero.secondaryButton.text}
-                <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
-              </Link>
-            </div>
+            <span className="inline-flex items-center bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-soft text-sm">
+              <span className="font-bold text-earth-green mr-2">M.Ed.</span>
+              <span className="text-text-dark">KY Licensed</span>
+            </span>
           </div>
 
-          {/* Right Column - Image/Visual */}
-          <div className="relative animate-slide-up hidden md:block">
-            <div className="relative rounded-2xl overflow-hidden shadow-strong">
-              <div className="aspect-[4/5] relative">
-                <Image
-                  src="/images/tamara/field-portrait-bw.jpg"
-                  alt={`${siteConfig.owner.name}, Licensed Professional Counselor Associate, smiling outdoors`}
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 50vw, 40vw"
-                  priority
-                />
-              </div>
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mb-8 shadow-soft border-l-4 border-primary-sage text-left">
+            <p className="text-lg text-text-dark leading-relaxed mb-4">
+              {hero.personalMessage}
+            </p>
+            <Link href={hero.personalMessageLink.href} className="text-warm-sand hover:text-primary-sage font-medium inline-flex items-center transition-colors">
+              {hero.personalMessageLink.text}
+              <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
+            </Link>
+          </div>
 
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-medium p-4">
-                <p className="text-2xl font-bold text-primary-sage">LPCA</p>
-                <p className="text-sm text-text-dark">Clinical Mental Health</p>
-              </div>
-
-              <div className="absolute -top-6 -right-6 bg-white rounded-lg shadow-medium p-4">
-                <p className="text-2xl font-bold text-earth-green">M.Ed.</p>
-                <p className="text-sm text-text-dark">KY Licensed</p>
-              </div>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href={hero.primaryButton.href} className="bg-primary-sage text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-sage/90 transition-colors inline-flex items-center justify-center shadow-soft">
+              <Calendar className="mr-2 w-5 h-5" aria-hidden="true" />
+              {hero.primaryButton.text}
+            </Link>
+            <Link href={hero.secondaryButton.href} className="border-2 border-primary-sage text-primary-sage px-6 py-3 rounded-lg font-medium hover:bg-primary-sage hover:text-white transition-colors inline-flex items-center justify-center">
+              {hero.secondaryButton.text}
+              <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </div>
