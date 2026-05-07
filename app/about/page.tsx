@@ -11,33 +11,20 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="gradient-warm-bg py-20">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Image */}
-            <div className="order-2 lg:order-1">
-              <div className="rounded-2xl overflow-hidden shadow-strong">
-                <Image
-                  src="/images/tamara/christmas-portrait.jpg"
-                  alt={`${siteConfig.owner.name}, Licensed Professional Counselor Associate`}
-                  width={600}
-                  height={800}
-                  className="w-full h-auto object-cover object-top"
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* Right - Intro */}
-            <div className="order-1 lg:order-2">
-              <h1 className="text-5xl md:text-6xl font-bold text-text-dark mb-6">
-                {aboutHeader.title}
-              </h1>
-              <p className="text-xl text-text-dark mb-6 leading-relaxed">
-                {aboutHeader.subtitle}
-              </p>
-              <p className="text-lg text-text-dark leading-relaxed">
-                {aboutHeader.intro}
-              </p>
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="inline-block text-xs uppercase tracking-[0.22em] text-primary-sage font-medium mb-4">
+              {siteConfig.owner.credentials} &middot; {siteConfig.contact.location}
+            </span>
+            <h1 className="text-5xl md:text-6xl font-bold text-text-dark mb-6">
+              {aboutHeader.title}
+            </h1>
+            <span className="block w-20 h-1 bg-gradient-sand rounded-full mb-6 mx-auto" aria-hidden="true"></span>
+            <p className="text-xl text-text-dark mb-6 leading-relaxed">
+              {aboutHeader.subtitle}
+            </p>
+            <p className="text-lg text-text-dark leading-relaxed">
+              {aboutHeader.intro}
+            </p>
           </div>
         </div>
       </section>
