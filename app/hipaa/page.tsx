@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { siteConfig } from '@/content/site-config'
 
 export default function HipaaPage() {
@@ -148,8 +149,8 @@ export default function HipaaPage() {
                 For questions about this Notice or to exercise your rights, contact:<br /><br />
                 <strong>{siteConfig.owner.fullTitle}</strong><br />
                 {siteConfig.businessFullName}<br />
-                Email: <a href={`mailto:${siteConfig.contact.email}`} className="text-primary-sage">{siteConfig.contact.email}</a><br />
-                Phone: <a href={siteConfig.contact.phoneLink} className="text-primary-sage">{siteConfig.contact.phone}</a>
+                Phone: <a href={siteConfig.contact.phoneLink} className="text-primary-sage">{siteConfig.contact.phone}</a><br />
+                Or use our <Link href="/contact" className="text-primary-sage">contact form</Link>.
               </p>
             </div>
           </div>

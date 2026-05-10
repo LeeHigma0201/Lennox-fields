@@ -104,9 +104,12 @@ export default function TermsPage() {
             <div>
               <h2 className="text-3xl font-bold text-text-dark mb-4">Contact</h2>
               <p className="text-warm-gray">
-                For questions about these Terms, contact us at{' '}
-                <a href={`mailto:${siteConfig.contact.email}`} className="text-primary-sage hover:text-earth-green">
-                  {siteConfig.contact.email}
+                For questions about these Terms, please reach out through our{' '}
+                <Link href="/contact" className="text-primary-sage hover:text-earth-green">
+                  contact form
+                </Link>{' '}or by phone at{' '}
+                <a href={siteConfig.contact.phoneLink} className="text-primary-sage hover:text-earth-green">
+                  {siteConfig.contact.phone}
                 </a>.
               </p>
             </div>

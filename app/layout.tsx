@@ -62,7 +62,6 @@ export default function RootLayout({
               description: siteConfig.description,
               url: siteConfig.url,
               telephone: siteConfig.contact.phone,
-              email: siteConfig.contact.email,
               areaServed: { '@type': 'State', name: 'Kentucky' },
               founder: {
                 '@type': 'Person',

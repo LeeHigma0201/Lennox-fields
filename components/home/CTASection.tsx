@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Calendar, Mail, Phone } from 'lucide-react'
+import { Calendar, Phone } from 'lucide-react'
 import { ctaSection } from '@/content/home-page'
 import { siteConfig } from '@/content/site-config'
 
@@ -15,7 +15,7 @@ export default function CTASection() {
             {ctaSection.description}
           </p>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid md:grid-cols-2 gap-6 mb-10 max-w-2xl mx-auto">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
               <Calendar className="w-10 h-10 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-lg font-semibold mb-2">Schedule online</h3>
@@ -25,11 +25,6 @@ export default function CTASection() {
               <Phone className="w-10 h-10 mx-auto mb-3" aria-hidden="true" />
               <h3 className="text-lg font-semibold mb-2">Call</h3>
               <p className="text-sm opacity-90">{siteConfig.contact.phone}</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <Mail className="w-10 h-10 mx-auto mb-3" aria-hidden="true" />
-              <h3 className="text-lg font-semibold mb-2">Email</h3>
-              <p className="text-sm opacity-90">{siteConfig.contact.email}</p>
             </div>
           </div>
 

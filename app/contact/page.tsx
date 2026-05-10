@@ -39,7 +39,7 @@ export default function ContactPage() {
       setError(
         err instanceof Error
           ? err.message
-          : 'Something went wrong. Please email us directly at ' + siteConfig.contact.email
+          : `Something went wrong. Please try again, or call us at ${siteConfig.contact.phone}.`
       )
     } finally {
       setSubmitting(false)

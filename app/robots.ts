@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/portal/'],
     },
-    sitemap: 'https://lennoxfields.org/sitemap.xml',
+    sitemap: 'https://lennoxfields.com/sitemap.xml',
   }
 }

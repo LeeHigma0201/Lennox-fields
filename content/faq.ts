@@ -18,7 +18,7 @@ export const faqs = [
     questions: [
       {
         q: 'How do I schedule my first appointment?',
-        a: "You can schedule your free 15-minute consultation through our contact form or by emailing tamara@lennoxfields.org. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session. Please allow two business days for a response.",
+        a: "You can schedule your free 15-minute consultation through our contact form or by calling (502) 627-0781. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session. Please allow two business days for a response.",
       },
       {
         q: 'What should I expect in my first session?',
