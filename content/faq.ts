@@ -64,7 +64,7 @@ export const faqs = [
       },
       {
         q: 'What is your cancellation policy?',
-        a: "I ask for 24-hour notice for cancellations or rescheduling to avoid a cancellation fee. You can reschedule through the client portal, by calling, or emailing. Life happens—just let me know as soon as possible.",
+        a: "I ask for 24-hour notice for cancellations or rescheduling to avoid a cancellation fee. You can reschedule through the client portal or by calling (502) 627-0781. Life happens—just let me know as soon as possible.",
       },
       {
         q: 'Do you offer telehealth sessions?',

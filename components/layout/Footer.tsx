@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Mail, MapPin, Linkedin, Facebook, Instagram } from 'lucide-react'
+import { MapPin, Phone, Linkedin, Facebook, Instagram } from 'lucide-react'
 import { siteConfig } from '@/content/site-config'
 import { footerQuickLinks, footerResourceLinks } from '@/content/navigation'
 import NotTherapyDisclaimer from '@/components/NotTherapyDisclaimer'
@@ -83,9 +83,15 @@ export default function Footer() {
             <Link href="/contact" className="inline-block btn btn-primary text-sm mb-4">
               Contact Us
             </Link>
-            <div className="flex items-start space-x-2 text-sm text-warm-gray">
-              <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" aria-hidden="true" />
-              <span>{siteConfig.contact.location}</span>
+            <div className="space-y-2">
+              <a href={siteConfig.contact.phoneLink} className="flex items-start space-x-2 text-sm text-warm-gray hover:text-primary-sage transition-colors">
+                <Phone className="w-4 h-4 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <span>{siteConfig.contact.phone}</span>
+              </a>
+              <div className="flex items-start space-x-2 text-sm text-warm-gray">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                <span>{siteConfig.contact.location}</span>
+              </div>
             </div>
           </div>
         </div>
