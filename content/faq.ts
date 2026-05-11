@@ -39,7 +39,7 @@ export const faqs = [
       },
       {
         q: 'What are your session rates?',
-        a: 'Individual therapy is $150 per session, couples therapy is $200 per session, career counseling is $125 per session, and clinical supervision is $75 per hour. I also offer sliding scale rates for qualified clients experiencing financial hardship.',
+        a: 'Individual therapy is $150 per session, couples therapy is $200 per session, and career counseling is $125 per session. I also offer sliding scale rates for qualified clients experiencing financial hardship.',
       },
       {
         q: 'What payment methods do you accept?',
@@ -107,10 +107,6 @@ export const faqs = [
       {
         q: 'Do you prescribe medication?',
         a: 'No, as a Licensed Professional Counselor Associate (LPCA), I cannot prescribe medication. However, I can coordinate care with your psychiatrist or primary care provider if medication is part of your treatment plan.',
-      },
-      {
-        q: 'Do you offer clinical supervision?',
-        a: 'Yes! I provide clinical supervision for associates and interns pursuing licensure in Kentucky. Supervision includes case consultation, skill development, and ethical guidance.',
       },
     ],
   },
