@@ -95,9 +95,15 @@ export default function ContactPage() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <h2 className="text-3xl font-bold text-text-dark mb-2">Send a Message</h2>
-                  <p className="text-warm-gray mb-6">
-                    All fields marked with * are required. Your information is kept confidential.
+                  <p className="text-warm-gray mb-4">
+                    All fields marked with * are required.
                   </p>
+
+                  <div className="bg-soft-rose/10 border border-soft-rose/30 rounded-lg p-4 mb-2 text-sm text-text-dark">
+                    <p>
+                      <strong>Please use this form for scheduling and general inquiries only.</strong> Do not include clinical details, diagnoses, medications, or other protected health information. For anything sensitive, please call <strong>{siteConfig.contact.phone}</strong> &mdash; that is the secure channel until our HIPAA-covered email is in place.
+                    </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -158,13 +164,13 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="label">What brings you to counseling? *</label>
+                    <label htmlFor="message" className="label">Reason for contact *</label>
                     <textarea
                       id="message"
                       required
                       rows={5}
                       className="input"
-                      placeholder="Tell me a bit about what you're looking for — there's no wrong answer here."
+                      placeholder="A brief reason for getting in touch and your general availability is enough — please do not include clinical or health details here."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />
@@ -186,8 +192,7 @@ export default function ContactPage() {
                   </button>
 
                   <p className="text-xs text-warm-gray mt-2">
-                    By submitting this form, you consent to being contacted about counseling services.
-                    Your information will never be shared and is protected under HIPAA guidelines.
+                    By submitting this form, you consent to being contacted about counseling services. Information is not shared with third parties. Please note: standard email is not a HIPAA-secure channel &mdash; reserve the form for scheduling and general inquiries, and use phone or your client portal for anything clinical.
                   </p>
                 </form>
               )}
