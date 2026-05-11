@@ -76,9 +76,12 @@ export default function PrivacyPage() {
               <h2 className="text-3xl font-bold text-text-dark mb-4">Your Rights</h2>
               <p className="text-warm-gray">
                 You have the right to request access to, correction of, or deletion of your personal
-                information. To exercise these rights, please contact us at{' '}
-                <a href={`mailto:${siteConfig.contact.email}`} className="text-primary-sage hover:text-earth-green">
-                  {siteConfig.contact.email}
+                information. To exercise these rights, please reach out through our{' '}
+                <Link href="/contact" className="text-primary-sage hover:text-earth-green">
+                  contact form
+                </Link>{' '}or by phone at{' '}
+                <a href={siteConfig.contact.phoneLink} className="text-primary-sage hover:text-earth-green">
+                  {siteConfig.contact.phone}
                 </a>.
               </p>
             </div>
@@ -106,8 +109,8 @@ export default function PrivacyPage() {
               <p className="text-warm-gray">
                 If you have questions about this Privacy Policy, please contact us at:<br />
                 <strong>{siteConfig.businessFullName}</strong><br />
-                Email: <a href={`mailto:${siteConfig.contact.email}`} className="text-primary-sage">{siteConfig.contact.email}</a><br />
-                Phone: <a href={siteConfig.contact.phoneLink} className="text-primary-sage">{siteConfig.contact.phone}</a>
+                Phone: <a href={siteConfig.contact.phoneLink} className="text-primary-sage">{siteConfig.contact.phone}</a><br />
+                Or use our <Link href="/contact" className="text-primary-sage">contact form</Link>.
               </p>
             </div>
           </div>

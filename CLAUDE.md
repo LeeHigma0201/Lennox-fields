@@ -70,7 +70,7 @@ All page content is driven by config files in `/content/`:
 - Specializations: ADHD, Autism, CPTSD, Trauma
 - Focus: Neurodiversity-affirming care, primarily women
 - Location: Kentucky
-- Contact: tamara@lennoxfields.com, (502) 627-0781
+- Contact: (502) 627-0781 (no public email — `tamara@lennoxfields.com` mailbox isn't set up; site routes everything through `/contact` form + phone, see PR `claude/fix-website-email-q1hhb`)
 - Books: 3 children's mental health books on Amazon
 
 ## Commands

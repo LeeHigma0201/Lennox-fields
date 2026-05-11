@@ -15,7 +15,7 @@ export const siteConfig = {
   // through" line was retired per Tamara's 2026-05-04 direction.
   description:
     'Evidence-based mental health care with compassion at its core',
-  url: 'https://lennox-fields.vercel.app',
+  url: 'https://lennoxfields.com',
 
   // --- Owner / Therapist Info ---
   owner: {
@@ -29,9 +29,11 @@ export const siteConfig = {
   },
 
   // --- Contact Info ---
-  // Update these with your real contact details
+  // Update these with your real contact details.
+  // No email is listed publicly — the lennoxfields.com mailbox isn't set up,
+  // so contact runs through the form (/contact) and phone only. Re-add an
+  // `email` field here once a real, monitored mailbox exists.
   contact: {
-    email: 'tamara@lennoxfields.org',
     phone: '(502) 627-0781',
     phoneLink: 'tel:+15026270781', // used for click-to-call links
     location: 'Licensed in Kentucky',

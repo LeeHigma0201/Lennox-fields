@@ -33,13 +33,18 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     }
 
-    // Try to send email via SMTP if configured
+    // Try to send email via SMTP if configured.
+    // Submissions are only delivered to a mailbox when ADMIN_EMAIL (or
+    // SMTP_FROM_EMAIL) is set — there is no hardcoded fallback because no
+    // monitored mailbox exists at lennoxfields.com yet. If env is missing,
+    // the request falls through to the logging path below so submissions
+    // are still captured in Vercel function logs.
     const smtpHost = process.env.SMTP_HOST
     const smtpUser = process.env.SMTP_USER
     const smtpPass = process.env.SMTP_PASSWORD || process.env.SMTP_PASS
-    const emailTo = process.env.ADMIN_EMAIL || process.env.SMTP_FROM_EMAIL || 'tamara@lennoxfields.org'
+    const emailTo = process.env.ADMIN_EMAIL || process.env.SMTP_FROM_EMAIL
 
-    if (smtpHost && smtpUser && smtpPass) {
+    if (smtpHost && smtpUser && smtpPass && emailTo) {
       // Use nodemailer if SMTP is configured
       try {
         const nodemailer = require('nodemailer')
@@ -56,7 +61,7 @@ export async function POST(request: NextRequest) {
           replyTo: sanitizedData.email,
           subject: `New Contact Form: ${sanitizedData.name} - ${sanitizedData.service || 'General Inquiry'}`,
           text: `
-New contact form submission from lennoxfields.org
+New contact form submission from lennoxfields.com
 
 Name: ${sanitizedData.name}
 Email: ${sanitizedData.email}
@@ -73,7 +78,7 @@ Submitted: ${sanitizedData.timestamp}
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
   <div style="background: #75856f; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
     <h2 style="margin: 0;">New Contact Form Submission</h2>
-    <p style="margin: 4px 0 0; opacity: 0.9;">lennoxfields.org</p>
+    <p style="margin: 4px 0 0; opacity: 0.9;">lennoxfields.com</p>
   </div>
   <div style="background: #faf9f7; padding: 24px; border: 1px solid #e5e5e5; border-top: none; border-radius: 0 0 8px 8px;">
     <table style="width: 100%; border-collapse: collapse;">

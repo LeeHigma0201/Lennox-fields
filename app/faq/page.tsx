@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ChevronDown, Phone, Mail, Calendar } from 'lucide-react'
+import { ChevronDown, Phone, MessageCircle, Calendar } from 'lucide-react'
 import { faqs, faqPageHeader } from '@/content/faq'
 import { siteConfig } from '@/content/site-config'
 
@@ -95,17 +95,17 @@ export default function FAQPage() {
             </div>
 
             <div className="card text-center">
-              <Mail className="w-12 h-12 text-soft-rose mx-auto mb-4" aria-hidden="true" />
-              <h3 className="text-xl font-bold text-text-dark mb-3">Email</h3>
+              <MessageCircle className="w-12 h-12 text-soft-rose mx-auto mb-4" aria-hidden="true" />
+              <h3 className="text-xl font-bold text-text-dark mb-3">Send a Message</h3>
               <p className="text-warm-gray mb-4 text-sm">
-                Send your questions and I&apos;ll respond within two business days
+                Use our contact form and I&apos;ll respond within two business days
               </p>
-              <a
-                href={`mailto:${siteConfig.contact.email}?subject=FAQ Question`}
+              <Link
+                href="/contact"
                 className="btn btn-primary w-full text-sm"
               >
-                Send Email
-              </a>
+                Open Contact Form
+              </Link>
             </div>
           </div>
         </div>

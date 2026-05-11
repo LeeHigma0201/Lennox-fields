@@ -285,8 +285,9 @@ Built with:
 
 **Tamara Walls, M.Ed, LPCA**
 Founder, Lennox Fields Clinical Mental Health Services
-Email: tamara@lennoxfields.org
-Website: https://lennoxfields.org
+Phone: (502) 627-0781
+Website: https://lennoxfields.com
+Contact form: https://lennoxfields.com/contact
 
 ---
 
