@@ -187,7 +187,7 @@ export default function CouplesTherapyPage() {
       {/* Pricing & CTA */}
       <section className="section-padding gradient-sage-bg text-white">
         <div className="container-custom max-w-4xl text-center">
-          <h2 className="text-4xl font-bold mb-6">Invest in Your Relationship</h2>
+          <h2 className="text-4xl font-bold mb-6">Fees &amp; Services</h2>
 
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-8 inline-block">
             <p className="text-sm opacity-90 mb-2">Couples Session</p>

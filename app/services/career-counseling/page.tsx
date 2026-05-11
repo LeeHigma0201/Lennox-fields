@@ -83,7 +83,7 @@ export default function CareerCounselingPage() {
 
       <section className="section-padding gradient-sage-bg text-white text-center">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-4xl font-bold mb-6">Invest in Your Professional Future</h2>
+          <h2 className="text-4xl font-bold mb-6">Fees &amp; Services</h2>
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-8 inline-block">
             <p className="text-sm opacity-90 mb-2">Career Counseling Session</p>
             <p className="text-5xl font-bold mb-4">$125</p>

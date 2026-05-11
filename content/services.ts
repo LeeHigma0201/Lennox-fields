@@ -18,11 +18,11 @@ export const services = [
     title: 'Individual Counseling',
     slug: 'individual-therapy',
     description:
-      'One-on-one support for ADHD, autism, complex PTSD, anxiety, depression, and life transitions.',
+      'Individualized clinical work for adults navigating neurodivergent presentations, complex trauma, and co-occurring conditions. Neurodiversity-affirming and trauma-informed.',
     details: [
-      'Personalized treatment plans',
-      'Evidence-based approaches (DBT, CBT, TCM)',
-      'ADHD, autism, and CPTSD specialization',
+      'Comprehensive clinical intake and treatment planning',
+      'Evidence-based modalities including Dialectical Behavior Therapy (DBT), Trauma-Focused Cognitive Behavioral Therapy (TF-CBT), and Internal Family Systems (IFS)-informed parts work',
+      'Specialization in Attention-Deficit/Hyperactivity Disorder (ADHD), Autism Spectrum Disorder (ASD), and Complex Post-Traumatic Stress Disorder (C-PTSD)',
       'Telehealth sessions for Kentucky clients',
     ],
     price: '$150 per session',
@@ -94,7 +94,7 @@ export const servicesOverview = [
     icon: 'Heart' as const,
     title: 'Individual Counseling',
     description:
-      'One-on-one support for ADHD, autism, CPTSD, anxiety, depression, and life transitions. Evidence-based approaches tailored to your needs.',
+      'Individualized clinical work for adults navigating neurodivergent presentations, complex trauma, and co-occurring conditions. Evidence-based modalities sequenced to clinical presentation.',
     href: '/services/individual-therapy',
     color: 'text-primary-sage',
   },
@@ -145,16 +145,19 @@ export const paymentInfo = {
   insuranceDetails: [
     'Superbills provided for out-of-network reimbursement',
     'Contact your insurance to verify benefits',
-    "We'll help with paperwork",
+    'Insurance paperwork support provided',
   ],
 }
 
 // --- Pricing quick reference (shown on Contact page) ---
 export const pricingQuickRef = [
+  { service: 'Intake Session', price: '$250 (60–90 min)' },
   { service: 'Individual Therapy', price: '$150/session' },
+  { service: 'Monthly Continuity — Individual', price: '$500 (4 sessions)' },
   { service: 'Couples Therapy', price: '$200/session' },
+  { service: 'Couples Intensive', price: '$575 (half-day)' },
+  { service: 'Family Therapy', price: '$200/session' },
   { service: 'Career Counseling', price: '$125/session' },
-  { service: 'Clinical Supervision', price: '$75/hour' },
 ]
 
 export const paymentMethods = [
