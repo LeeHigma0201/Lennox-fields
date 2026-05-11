@@ -5,13 +5,13 @@ import { Resend } from 'resend'
 // Configuration (Vercel env)
 // ---------------------------------------------------------------------------
 // RESEND_API_KEY      — required. Get from resend.com dashboard.
-// CONTACT_TO_EMAIL    — optional override. Defaults to lennoxfields@gmail.com.
+// CONTACT_TO_EMAIL    — optional override. Defaults to lennoxfieldsllc@gmail.com.
 //                       Switch to a HIPAA-covered mailbox once the BAA is signed.
 // CONTACT_FROM_EMAIL  — optional. Must be a verified domain/address in Resend.
 //                       Defaults to Resend's free test sender (onboarding@resend.dev).
 // ---------------------------------------------------------------------------
 
-const CONTACT_TO = process.env.CONTACT_TO_EMAIL || 'lennoxfields@gmail.com'
+const CONTACT_TO = process.env.CONTACT_TO_EMAIL || 'lennoxfieldsllc@gmail.com'
 const CONTACT_FROM =
   process.env.CONTACT_FROM_EMAIL || 'Lennox Fields <onboarding@resend.dev>'
 
