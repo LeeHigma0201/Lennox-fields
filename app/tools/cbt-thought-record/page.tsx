@@ -117,7 +117,7 @@ ${'='.repeat(80)}
             Back to Worksheets
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
-            CBT Thought Record
+            Cognitive Behavioral Therapy (CBT) Thought Record
           </h1>
           <p className="text-lg text-warm-gray max-w-3xl">
             Challenge negative thinking patterns and develop more balanced perspectives. This interactive tool walks you

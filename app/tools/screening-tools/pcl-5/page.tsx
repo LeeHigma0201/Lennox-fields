@@ -83,7 +83,7 @@ export default function PCL5Page() {
         description: 'Your responses suggest moderate PTSD symptoms. Professional evaluation and treatment are recommended to help you process your experiences and reduce distress.',
         recommendations: [
           'Schedule an evaluation with a trauma-informed mental health professional',
-          'Consider evidence-based treatments like CPT or EMDR',
+          'Consider evidence-based treatments such as Cognitive Processing Therapy (CPT) or Trauma-Focused Cognitive Behavioral Therapy (TF-CBT)',
           'Practice grounding techniques for managing flashbacks',
           'Build a strong support network',
           'Avoid self-medicating with alcohol or substances',
@@ -98,7 +98,7 @@ export default function PCL5Page() {
         description: 'Your responses suggest significant PTSD symptoms. Professional treatment is strongly recommended. Effective treatments are available and can significantly reduce symptoms.',
         recommendations: [
           'Seek professional help from a trauma specialist as soon as possible',
-          'Evidence-based treatments (CPT, PE, EMDR) are highly effective for PTSD',
+          'Evidence-based treatments such as Cognitive Processing Therapy (CPT), Prolonged Exposure (PE), and Trauma-Focused Cognitive Behavioral Therapy (TF-CBT) are highly effective for Post-Traumatic Stress Disorder (PTSD)',
           'Consider both therapy and medication evaluation',
           'Inform trusted people in your life about your struggles',
           'Use crisis resources if experiencing thoughts of self-harm',
@@ -283,7 +283,7 @@ export default function PCL5Page() {
                     href="/services/individual-therapy"
                     className="bg-white rounded-lg p-4 hover:shadow-medium transition-shadow"
                   >
-                    <h4 className="font-bold text-text-dark mb-1">EMDR Therapy</h4>
+                    <h4 className="font-bold text-text-dark mb-1">Trauma-Focused CBT (TF-CBT)</h4>
                     <p className="text-sm text-warm-gray">Evidence-based trauma treatment</p>
                   </Link>
                 </div>

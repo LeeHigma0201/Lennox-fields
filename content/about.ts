@@ -9,7 +9,7 @@ export const aboutHeader = {
   title: 'Meet Tamara Walls, LPCA',
   subtitle: 'Founder of Lennox Fields Clinical Mental Health Services',
   intro:
-    'I believe that everyone deserves access to compassionate, effective mental health care that honors their unique journey. My approach combines evidence-based practices with genuine warmth to create a safe space for healing and growth.',
+    "Evidence-based mental health care delivered with clinical precision and genuine respect for each client's history. My approach combines structured, measurable treatment with the therapeutic relationship that makes change possible.",
 }
 
 // --- My Story / Journey Section ---
@@ -62,12 +62,12 @@ export const specializedTraining = [
   {
     icon: 'Lightbulb' as const,
     title: 'ADHD & Autism Support',
-    description: 'Neurodiversity-affirming assessment and support for women',
+    description: 'Neurodiversity-affirming clinical work for Attention-Deficit/Hyperactivity Disorder (ADHD) and Autism Spectrum Disorder (ASD), including late-diagnosis identity, masking, and burnout',
   },
   {
     icon: 'Target' as const,
     title: 'Complex PTSD',
-    description: 'Specialized approaches for developmental and complex trauma',
+    description: 'Specialized approaches for Complex Post-Traumatic Stress Disorder (C-PTSD), including developmental and chronic trauma',
   },
   {
     icon: 'Users' as const,
@@ -93,7 +93,7 @@ export const clinicalApproach = {
     {
       title: 'Evidence-Based & Flexible',
       description:
-        "I integrate multiple therapeutic approaches—including CBT, EMDR, and mindfulness-based interventions—tailoring treatment to what works best for you. Research shows that the therapeutic relationship is one of the strongest predictors of positive outcomes, so building trust and rapport is always my first priority.",
+        'I integrate multiple modalities — Dialectical Behavior Therapy (DBT), Trauma-Focused Cognitive Behavioral Therapy (TF-CBT), Solution-Focused Brief Therapy (SFBT), Emotionally Focused Therapy (EFT), and Internal Family Systems (IFS)-informed parts work — sequenced to clinical presentation and treatment goals. Research consistently identifies the therapeutic relationship as one of the strongest predictors of outcome; building that relationship is foundational to the work.',
     },
     {
       title: 'Strength-Based & Culturally Sensitive',
@@ -103,7 +103,7 @@ export const clinicalApproach = {
     {
       title: 'Goal-Oriented & Measurable',
       description:
-        "We'll establish clear, achievable goals and regularly assess progress. Therapy should lead to tangible improvements in your life, and I'm committed to helping you see and measure that change.",
+        'Treatment establishes clear, measurable goals and reviews progress at regular intervals. Therapy should produce tangible improvements; modalities and cadence are adjusted as clinical needs change.',
     },
   ],
 }
@@ -131,7 +131,7 @@ export const aboutPreview = {
   title: 'Meet Tamara Walls, LPCA',
   paragraphs: [
     "I'm a Licensed Professional Counselor Associate, Certified DBT practitioner, children's bibliotherapy author, and an avid advocate for vulnerable populations. My work is deep, and it's personal.",
-    "I specialize in ADHD, autism, and complex PTSD — primarily working with women. I built TCM programs, I write therapeutic books for kids, and I've been creating clinical tools and resources for over a decade. Lennox Fields is where all of that lives.",
+    "I specialize in Attention-Deficit/Hyperactivity Disorder (ADHD), Autism Spectrum Disorder (ASD), and Complex Post-Traumatic Stress Disorder (C-PTSD), working with adults, couples, and families. I built TCM programs, I write therapeutic books for kids, and I've been creating clinical tools and resources for over a decade. Lennox Fields is where all of that lives.",
   ],
   credentials: [
     { label: 'LPCA', detail: 'Licensed in Kentucky' },
@@ -140,7 +140,7 @@ export const aboutPreview = {
   ],
   approachTitle: 'My Approach',
   approachText:
-    "I believe therapy should be a collaborative partnership. Together, we'll identify your goals, build on your strengths, and develop practical strategies for lasting change. You're the expert on your life — I'm here to provide guidance, support, and evidence-based tools.",
+    'Therapy proceeds as a collaborative partnership. Treatment identifies clear goals, builds on existing strengths, and develops practical strategies for lasting change. You are the expert on your life; I bring clinical training, evidence-based tools, and the structure to make progress measurable.',
   trainingList: [
     'Dialectical Behavior Therapy (DBT)',
     'Trauma-Conscious Model (TCM)',

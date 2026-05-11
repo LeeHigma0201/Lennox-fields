@@ -6,18 +6,17 @@
 // ============================================================
 
 // --- Hero Section ---
-// Voice: collective ("we"), not forced first-person singular. Tamara approved 2026-05-04.
-// Hero headline + subheadline restored per her direction; personal message uses her exact wording.
+// Voice: warm but professionally authoritative — seasoned clinician, not life coach.
+// Per content overhaul 2026-05-11: tone tightened, "we'll" replaced with clinical phrasing.
 export const hero = {
   // The main headline. Words listed in highlightWords get a sage/sand color accent.
   headline: 'Therapy that meets you where you are',
   highlightWords: ['meets', 'are'],
   subheadline: 'Evidence-based mental health care with compassion at its core',
 
-  // Personal message — Tamara's exact wording (2026-05-04 revision).
-  // Note: no "Hi, I'm Tamara Walls" prefix — she said the marketing copy isn't the place for that.
+  // Personal message — clinical voice (revised 2026-05-11).
   personalMessage:
-    "Here for the parts of you that feel too big to name. We'll work at the pace your nervous system can keep up with, with an order that fits your life.",
+    'Clinical support for experiences that feel too big to name. Sessions move at the pace your nervous system can hold, in an order that fits your life.',
   personalMessageLink: { text: 'More about how I work', href: '/about' },
 
   // Call-to-action buttons
@@ -89,7 +88,7 @@ export const resources = [
     icon: 'Brain' as const,
     title: 'Free Screening Tools',
     description:
-      'Self-assessments for depression, anxiety, ADHD, autism, and PTSD with instant scoring and interpretation.',
+      'Self-assessments for depression, anxiety, Attention-Deficit/Hyperactivity Disorder (ADHD), Autism Spectrum Disorder (ASD), and Post-Traumatic Stress Disorder (PTSD) with instant scoring and interpretation.',
     href: '/tools/screening-tools',
     color: 'bg-clinical-blue',
   },
@@ -97,7 +96,7 @@ export const resources = [
     icon: 'FileText' as const,
     title: 'Therapeutic Worksheets',
     description:
-      'Downloadable worksheets for CBT, DBT, mindfulness, and more. Perfect for clients and therapists.',
+      'Downloadable worksheets for Cognitive Behavioral Therapy (CBT), Dialectical Behavior Therapy (DBT), mindfulness, and more. Useful for clients and clinicians.',
     href: '/resources/worksheets',
     color: 'bg-primary-sage',
   },

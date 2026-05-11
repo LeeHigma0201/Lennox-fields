@@ -18,11 +18,11 @@ export const faqs = [
     questions: [
       {
         q: 'How do I schedule my first appointment?',
-        a: "You can schedule your free 15-minute consultation through our contact form or by calling (502) 627-0781. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session. Please allow two business days for a response.",
+        a: 'You can schedule your free 15-minute consultation through our contact form or by calling (502) 627-0781. The consultation covers presenting concerns, clinical fit, and logistics before scheduling a full intake. Please allow two business days for a response.',
       },
       {
         q: 'What should I expect in my first session?',
-        a: "Your first session (intake) is typically 60-90 minutes. We'll discuss what brings you to therapy, your goals, relevant history, and create an initial treatment plan together. This is also a great time to ask questions about the therapy process and my approach.",
+        a: 'Your first session (intake) is typically 60–90 minutes. The intake covers what brings you to therapy, your goals, relevant biopsychosocial history, and collaborative treatment planning. It is also when you can ask questions about the therapy process and my approach.',
       },
       {
         q: "How do I know if we're a good fit?",
@@ -98,11 +98,11 @@ export const faqs = [
     questions: [
       {
         q: 'What issues do you specialize in?',
-        a: 'I specialize in ADHD, autism, and complex PTSD — primarily working with women. I also support clients with anxiety, depression, career transitions, substance use disorders, and relationship challenges. I work with individuals, couples, and families.',
+        a: 'I specialize in Attention-Deficit/Hyperactivity Disorder (ADHD), Autism Spectrum Disorder (ASD), and Complex Post-Traumatic Stress Disorder (C-PTSD), working with adults, couples, and families. I also support clients with anxiety, depression, career transitions, substance use disorders, and relationship challenges.',
       },
       {
         q: 'What therapy approaches do you use?',
-        a: "I primarily use Dialectical Behavior Therapy (DBT), Cognitive Behavioral Therapy (CBT), Acceptance and Commitment Therapy (ACT), and the Trauma-Conscious Model (TCM). I tailor my approach to each client's unique needs and preferences.",
+        a: "Treatment integrates Dialectical Behavior Therapy (DBT), Trauma-Focused Cognitive Behavioral Therapy (TF-CBT), Solution-Focused Brief Therapy (SFBT), Emotionally Focused Therapy (EFT), Existential Therapy, Psychoanalytic/Psychodynamic Therapy, Somatic-Informed Practice, and Internal Family Systems (IFS)-informed parts work, sequenced to the client's clinical presentation and goals.",
       },
       {
         q: 'Do you prescribe medication?',

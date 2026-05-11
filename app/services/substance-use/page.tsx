@@ -109,7 +109,7 @@ export default function SubstanceUsePage() {
               <Shield className="w-12 h-12 text-primary-sage mx-auto mb-4" />
               <h3 className="text-xl font-bold text-text-dark mb-3">Evidence-Based</h3>
               <p className="text-warm-gray">
-                Utilizing proven interventions including CBT, motivational interviewing, and relapse prevention.
+                Utilizing proven interventions including Cognitive Behavioral Therapy (CBT), motivational interviewing, and relapse prevention.
               </p>
             </div>
 
