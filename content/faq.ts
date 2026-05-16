@@ -64,7 +64,23 @@ export const faqs = [
       },
       {
         q: 'What is your cancellation policy?',
-        a: "I ask for 24-hour notice for cancellations or rescheduling to avoid a cancellation fee. You can reschedule through the client portal or by calling (502) 627-0781. Life happens—just let me know as soon as possible.",
+        a: "We require at least 48 business hours' notice to cancel or reschedule without penalty. Cancellations made within 48 business hours are charged the full session fee and count as a no-show toward your attendance record.",
+      },
+      {
+        q: 'What counts as a no-show?',
+        a: "Any missed appointment or late cancellation (less than 48 business hours' notice) is recorded as a no-show. Two no-shows within a 12-month period will result in the loss of your recurring appointment slot and placement back on our waitlist.",
+      },
+      {
+        q: 'Is there any flexibility?',
+        a: 'Yes. Every client receives one courtesy exception per year. It waives the fee and the no-show record for that occurrence. It does not roll over.',
+      },
+      {
+        q: 'What if I lose my slot?',
+        a: "You're welcome to rejoin the waitlist at any time. We'll reach out when an opening becomes available that fits your needs.",
+      },
+      {
+        q: 'What if I have an ongoing scheduling conflict?',
+        a: "Please contact us before missing an appointment whenever possible. We'd rather problem-solve with you than lose you as a client.",
       },
       {
         q: 'Do you offer telehealth sessions?',
