@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/portal/'],
+      disallow: ['/api/', '/portal/', '/translator'],
     },
     sitemap: 'https://lennoxfields.com/sitemap.xml',
   }

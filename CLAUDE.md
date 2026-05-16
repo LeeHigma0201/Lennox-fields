@@ -37,6 +37,7 @@ All page content is driven by config files in `/content/`:
 | `/lab` + `/lab/[stationId]` | Live (couples-exercises link-share, URL-encoded state, no DB) |
 | `/professional`, `/professional/supervision` | Live |
 | `/resources/journaling-prompts` | Live |
+| `/translator` | **Private side project for Jason + Tam.** `robots: noindex`, blocked in [robots.ts](app/robots.ts), not in nav/sitemap. Requires `GOOGLE_API_KEY` (Gemini) in Vercel env. See "Feelings Translator" below. |
 | `/tools/screening-tools` + `/phq-9`, `/gad-7`, `/pcl-5` | Live |
 | `/tools/{breathing-exercises,cbt-thought-record,safety-planning}` | Live |
 | `/tools/{sound-healing,treatment-planning,notes-templates}` | Live |
@@ -97,6 +98,36 @@ npm test       # Jest (currently the contact-form test suite — PR #2)
 - **PR #3+#4** (2026-04-29) — The Lab v1 (link-share couples-exercises, no-DB).
 - **PR #1** (2026-03-25) — Tethered Together couples task tool.
 - **Misc commits** — 49 worksheets (`ab89de4`), sound-healing tool (`ff0232f`), full site update + nav + tools (`1adaa2c`).
+
+## Feelings Translator (`/translator`) — private side project
+
+Bilateral primary-emotion-first translator for Jason ↔ Tamara. Ported from the standalone HTML artifact at `/Users/jason/feelings-translator/public/index.html` into this codebase so it inherits Lennox aesthetics and Vercel hosting.
+
+**Surface area:**
+- [app/translator/page.tsx](app/translator/page.tsx) — Suspense wrapper
+- [app/translator/TranslatorClient.tsx](app/translator/TranslatorClient.tsx) — full UI (role gate → body check → flood lock → direction → raw → primary emotion → intent gate → framework picker → translation + repair attempts + send)
+- [app/translator/constants.ts](app/translator/constants.ts) — regex guards, prompts, `ft1:` thread encoding (compatible with the HTML artifact's tokens)
+- [app/api/translator/route.ts](app/api/translator/route.ts) — server-side Gemini proxy (`responseMimeType: application/json`)
+
+**Env required:** `GOOGLE_API_KEY` in Vercel — same key Jason already uses for ChargeRight/InspectRight. Anthropic Startup Program was rejected (per `reference_accounts_map.md`) so we route through Google AI Studio instead. Without it the API returns 503 with a clear error and the UI surfaces "set GOOGLE_API_KEY and redeploy." Optional `GEMINI_MODEL` overrides the default `gemini-2.5-flash`.
+
+**Privacy:** `robots: noindex` in the layout metadata + `/translator` added to [app/robots.ts](app/robots.ts) disallow. Not in sitemap. Not linked from nav. Direct-URL only.
+
+**Color convention:** Jason = `primary-sage`, Tamara = `soft-rose` (matches the Lab's partner-color split, not the HTML artifact's purple).
+
+**Guardrails (enforced in code, NOT just in prompt):**
+- Safety patterns (988 / DV / self-harm) → resource panel, stop
+- Partner-diagnosis regex ("you always", "you're a narcissist", clinical labels) → blocked before the model is called
+- 20-min flood lock with countdown timer on `bodyState === 'flooded'`
+- Intent gate refuses "I want to win" with the Gottman-contempt warning
+- Model prompt forbids diagnosing the listener; polyvagal always appends Deb Dana contested-science caveat
+
+**Bilateral flow (works without the partner installing anything):**
+1. Jason writes raw → translator surfaces primary emotion → he picks framework → gets translation
+2. "Open iMessage to Tam" opens `sms:+15029311043&body=...` with translation + a thread link (`/translator#ft1:...`) + raw `ft1:` token
+3. Tam reads in iMessage. If she wants the raw or to reply through the tool, she taps the link or pastes the token
+
+Model: `gemini-2.5-flash` (override via `GEMINI_MODEL` env or bump in `constants.ts → MODEL_ID`).
 
 ## Future Vision
 
