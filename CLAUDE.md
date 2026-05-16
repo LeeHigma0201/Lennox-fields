@@ -37,7 +37,7 @@ All page content is driven by config files in `/content/`:
 | `/lab` + `/lab/[stationId]` | Live (couples-exercises link-share, URL-encoded state, no DB) |
 | `/professional`, `/professional/supervision` | Live |
 | `/resources/journaling-prompts` | Live |
-| `/translator` | **Private side project for Jason + Tam.** `robots: noindex`, blocked in [robots.ts](app/robots.ts), not in nav/sitemap. Requires `ANTHROPIC_API_KEY` in Vercel env. See "Feelings Translator" below. |
+| `/translator` | **Private side project for Jason + Tam.** `robots: noindex`, blocked in [robots.ts](app/robots.ts), not in nav/sitemap. Requires `GOOGLE_API_KEY` (Gemini) in Vercel env. See "Feelings Translator" below. |
 | `/tools/screening-tools` + `/phq-9`, `/gad-7`, `/pcl-5` | Live |
 | `/tools/{breathing-exercises,cbt-thought-record,safety-planning}` | Live |
 | `/tools/{sound-healing,treatment-planning,notes-templates}` | Live |
@@ -107,9 +107,9 @@ Bilateral primary-emotion-first translator for Jason ↔ Tamara. Ported from the
 - [app/translator/page.tsx](app/translator/page.tsx) — Suspense wrapper
 - [app/translator/TranslatorClient.tsx](app/translator/TranslatorClient.tsx) — full UI (role gate → body check → flood lock → direction → raw → primary emotion → intent gate → framework picker → translation + repair attempts + send)
 - [app/translator/constants.ts](app/translator/constants.ts) — regex guards, prompts, `ft1:` thread encoding (compatible with the HTML artifact's tokens)
-- [app/api/translator/route.ts](app/api/translator/route.ts) — server-side Anthropic proxy
+- [app/api/translator/route.ts](app/api/translator/route.ts) — server-side Gemini proxy (`responseMimeType: application/json`)
 
-**Env required:** `ANTHROPIC_API_KEY` in Vercel. Without it the API returns 503 with a clear error and the UI surfaces "set ANTHROPIC_API_KEY and redeploy."
+**Env required:** `GOOGLE_API_KEY` in Vercel — same key Jason already uses for ChargeRight/InspectRight. Anthropic Startup Program was rejected (per `reference_accounts_map.md`) so we route through Google AI Studio instead. Without it the API returns 503 with a clear error and the UI surfaces "set GOOGLE_API_KEY and redeploy." Optional `GEMINI_MODEL` overrides the default `gemini-2.5-flash`.
 
 **Privacy:** `robots: noindex` in the layout metadata + `/translator` added to [app/robots.ts](app/robots.ts) disallow. Not in sitemap. Not linked from nav. Direct-URL only.
 
@@ -127,7 +127,7 @@ Bilateral primary-emotion-first translator for Jason ↔ Tamara. Ported from the
 2. "Open iMessage to Tam" opens `sms:+15029311043&body=...` with translation + a thread link (`/translator#ft1:...`) + raw `ft1:` token
 3. Tam reads in iMessage. If she wants the raw or to reply through the tool, she taps the link or pastes the token
 
-Model: `claude-sonnet-4-6` (current Sonnet as of this commit's knowledge update; bump in `constants.ts → MODEL_ID`).
+Model: `gemini-2.5-flash` (override via `GEMINI_MODEL` env or bump in `constants.ts → MODEL_ID`).
 
 ## Future Vision
 

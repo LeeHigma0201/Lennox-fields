@@ -2,10 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { MODEL_ID } from '@/app/translator/constants'
 
 // ---------------------------------------------------------------------------
-// Anthropic API proxy for the Feelings Translator.
-// Private side project — used only by Jason and Tamara. Requires ANTHROPIC_API_KEY
-// in Vercel env. Returns the model's raw text response so the client can run
-// the same parseJsonish strip that the HTML artifact uses.
+// Gemini proxy for the Feelings Translator.
+//
+// Why Gemini: Jason's Anthropic Startup Program application was rejected
+// (see reference_accounts_map.md), and he already uses Google AI Studio in
+// ChargeRight + InspectRight production. Same env var name (`GOOGLE_API_KEY`)
+// so it slots into Vercel without inventing a new convention.
+//
+// Returns the model's raw text response so the client's parseJsonish strip
+// keeps working unchanged. We also pass `responseMimeType: application/json`
+// so Gemini emits JSON without code fences in the first place.
 // ---------------------------------------------------------------------------
 
 export const runtime = 'nodejs'
@@ -31,12 +37,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Prompt too long.' }, { status: 400 })
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
+  const apiKey = process.env.GOOGLE_API_KEY
   if (!apiKey) {
     return NextResponse.json(
       {
         error:
-          'ANTHROPIC_API_KEY is not set. Add it in Vercel env (Project → Settings → Environment Variables) and redeploy.',
+          'GOOGLE_API_KEY is not set. Add it in Vercel env (Project → Settings → Environment Variables) — same key Jason already uses for ChargeRight/InspectRight.',
       },
       { status: 503 }
     )
@@ -47,24 +53,28 @@ export async function POST(req: NextRequest) {
       ? body.maxTokens
       : 1024
 
+  const model = process.env.GEMINI_MODEL || MODEL_ID
+
   let upstream: Response
   try {
-    upstream = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: MODEL_ID,
-        max_tokens: maxTokens,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    })
+    upstream = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: 'application/json',
+            maxOutputTokens: maxTokens,
+            temperature: 0.7,
+          },
+        }),
+      }
+    )
   } catch (err) {
     return NextResponse.json(
-      { error: 'Could not reach Anthropic.', detail: String(err) },
+      { error: 'Could not reach Gemini.', detail: String(err) },
       { status: 502 }
     )
   }
@@ -72,18 +82,29 @@ export async function POST(req: NextRequest) {
   if (!upstream.ok) {
     const detail = await upstream.text().catch(() => '')
     return NextResponse.json(
-      { error: `Anthropic returned ${upstream.status}.`, detail: detail.slice(0, 500) },
+      { error: `Gemini returned ${upstream.status}.`, detail: detail.slice(0, 500) },
       { status: 502 }
     )
   }
 
   const data = (await upstream.json()) as {
-    content?: Array<{ type: string; text?: string }>
+    candidates?: Array<{
+      content?: { parts?: Array<{ text?: string }> }
+      finishReason?: string
+    }>
+    promptFeedback?: { blockReason?: string }
   }
+
+  if (data.promptFeedback?.blockReason) {
+    return NextResponse.json(
+      { error: `Gemini blocked the prompt: ${data.promptFeedback.blockReason}` },
+      { status: 502 }
+    )
+  }
+
   const text =
-    (data.content || [])
-      .filter((b) => b.type === 'text')
-      .map((b) => b.text || '')
+    (data.candidates?.[0]?.content?.parts || [])
+      .map((p) => p.text || '')
       .join('') || ''
 
   return NextResponse.json({ text })

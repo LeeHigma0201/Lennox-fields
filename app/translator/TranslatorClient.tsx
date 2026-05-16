@@ -275,8 +275,8 @@ DO NOT OUTPUT ANYTHING OTHER THAN VALID JSON. DO NOT INCLUDE BACKTICKS OR CODE F
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Network error.'
       setError(
-        msg.includes('ANTHROPIC_API_KEY')
-          ? 'The translator needs an Anthropic API key on the server. Set ANTHROPIC_API_KEY in Vercel env and redeploy.'
+        msg.includes('GOOGLE_API_KEY')
+          ? 'The translator needs GOOGLE_API_KEY in Vercel env (same key as ChargeRight/InspectRight). Set it and redeploy.'
           : 'The translator is having a moment. Take a breath and try again.'
       )
     } finally {

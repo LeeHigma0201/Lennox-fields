@@ -165,7 +165,9 @@ export const FRAMEWORK_INSTRUCTIONS: Record<FrameworkId, string> = {
   plain: `TRANSLATE FROM CLINICAL/THERAPEUTIC LANGUAGE INTO PLAIN, CONCRETE LANGUAGE. Strip ALL clinical terms: no "needs," no "parts," no "ventral," no "attachment," no "boundaries," no "co-regulation." Rewrite as: one specific feeling in plain English, one specific concrete observation, one specific thing the listener could DO in the next 24 hours. Kitchen-table English only. If the input is itself analysis or advice (not a feeling), translate it as a feeling first.`,
 }
 
-// Model id — kept current with the latest Claude knowledge update (Sonnet 4.6).
-// The original brief specified claude-sonnet-4-5-20250929; bumped to the current
-// model because 4.6 is the released successor and follows the same JSON-output contract.
-export const MODEL_ID = 'claude-sonnet-4-6'
+// Model id — Gemini, not Anthropic.
+// Jason's Anthropic Startup Program application was rejected and he already
+// uses Google AI Studio (GOOGLE_API_KEY) in ChargeRight/InspectRight. The
+// strict-JSON output is enforced server-side via responseMimeType: application/json.
+// Override with GEMINI_MODEL env var if a newer model lands.
+export const MODEL_ID = 'gemini-2.5-flash'
