@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Brain, FileText, CheckSquare, BookOpen, Shield, Wind } from 'lucide-react'
+import { Brain, FileText, CheckSquare, BookOpen, Shield, Wind, Coins } from 'lucide-react'
 
 const resources = [
   {
@@ -48,6 +48,14 @@ const resources = [
     description: 'Guided breathing exercises including box breathing, 4-7-8 technique, and more for managing anxiety.',
     href: '/tools/breathing-exercises',
     color: 'bg-accent-gold',
+    available: true,
+  },
+  {
+    icon: Coins,
+    title: 'Kids Coin Tracker',
+    description: 'A gentle, strengths-based reward chart for kids — earn coins for the good stuff, trade them for rewards you choose together. Built with neurodivergent families in mind.',
+    href: '/tools/coin-tracker',
+    color: 'bg-earth-green',
     available: true,
   },
 ]

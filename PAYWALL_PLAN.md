@@ -11,6 +11,34 @@
 
 ---
 
+## Morning Summary (read this first) - overnight build 2026-05-25
+
+**DONE + committed on branch `feat/lennox-paywall`** (4 commits; every `npm run build` verified green by me, not on faith):
+1. **Paywall foundation** - NextAuth magic-link auth (Auth-prefixed models that avoid your clinical
+   User/Session schema), Stripe subscriptions (checkout + portal + webhook), gating middleware
+   (paid routes only - free/live tools untouched), and the **send-to-client private-link loop**.
+2. **/pricing page** - Free / $9 Toolkit / $29 Pro (proposed), verified rendering in-browser.
+3. **Kids Coin Tracker** (`/tools/coin-tracker`) - real, working token-economy reward chart
+   (verified interactive: balance updates on click). Linked from /resources.
+4. **Therapist dashboard shell** (`/dashboard`) - send-a-tool form + responses inbox empty state
+   (compile-verified; gated, so visual pending auth).
+
+**YOUR MOVE to go live** (this is the only thing blocking):
+- [ ] Provision a DB (Supabase free tier) -> set DATABASE_URL + DIRECT_URL, then `npx prisma migrate dev`.
+- [ ] Set NEXTAUTH_SECRET + NEXTAUTH_URL (REQUIRED, or the paid /tools + /dashboard routes error).
+- [ ] Create Stripe products (test mode first) -> set the price-ID + key env vars.
+- [ ] Confirm with Tamara: pricing tiers, free-vs-paid coin tracker, who-pays-first (consumer vs therapist).
+- [ ] Log into Google Voice so Tamara's queued announcement text sends.
+
+**PARKED (needs the DB above):** tool persistence, reading client responses, Tethered Together real
+auth/DB wiring, live payments. Nothing pushed or deployed.
+
+**Pre-existing bug found (NOT from this work):** the `.card` component class renders with no
+background/shadow on /resources even after a clean reload, though it is defined correctly in globals.css.
+Affects card-based pages on the live site. Flagged for a separate fix.
+
+---
+
 ## The Dream (what Lennox Fields becomes)
 
 Not a brochure for one therapist. A **sellable clinical-tools platform** Tamara owns, that does
@@ -131,6 +159,12 @@ stripe 16.2.0, zod 3.23.8.
   `prisma migrate dev`. Nothing runs until then.
 
 ## Loop Log (newest first)
+- 2026-05-25 f: built therapist dashboard shell (app/dashboard - send-a-tool form + responses inbox empty
+  state; compile-verified; gated so visual pending auth) and made the Coin Tracker discoverable on /resources
+  (card added + verified present). FINDING (pre-existing, NOT my change): the `.card` component class renders
+  with no background/shadow on /resources even after a clean reload, though defined in globals.css and direct
+  utilities work - undiagnosed, flagged for a separate fix. All DB-INDEPENDENT paywall work is now done ->
+  WOUND DOWN the loop. Remaining is parked for Jason (DB + Stripe + env). 4 commits on the branch.
 - 2026-05-25 e: built the kids Coin Tracker (app/tools/coin-tracker) as a free lead magnet - token-economy
   reward chart, strengths-based ("coins earned, never taken away"), localStorage now. VERIFIED: build green,
   renders + works in preview (balance updated on click; screenshot captured). Rewrote middleware to gate ONLY
