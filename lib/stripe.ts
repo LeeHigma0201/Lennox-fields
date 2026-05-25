@@ -68,3 +68,19 @@ export const PRODUCTS = {
 }
 
 export type ProductKey = keyof typeof PRODUCTS
+
+// Subscription products for the paywall
+export const SUBSCRIPTION_PRODUCTS = {
+  THERAPIST_PRO: {
+    name: 'Pro — Therapist',
+    priceId: process.env.STRIPE_PRO_PRICE_ID ?? '',
+    description: 'Full niche library, print PDFs, send-to-client tool links',
+  },
+  CONSUMER_ACCESS: {
+    name: 'Toolkit — Consumer',
+    priceId: process.env.STRIPE_CONSUMER_PRICE_ID ?? '',
+    description: 'All worksheets, tools, Tethered Together, kids coin tracker',
+  },
+} as const
+
+export type SubscriptionProductKey = keyof typeof SUBSCRIPTION_PRODUCTS

@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // User Authentication and Authorization
@@ -358,4 +359,246 @@ model AuditLog {
   @@index([userId, timestamp])
   @@index([resourceType, resourceId])
   @@map("audit_logs")
+}
+
+// ============================================================
+// Tethered Together — Shared Family/Couples Task Management
+// Inspired by Eve Rodsky's Fair Play framework
+// ============================================================
+
+model TetherUser {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  displayName   String
+  avatarColor   String?   // Personalized color for task claiming UI
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  memberships   TetherMember[]
+  claimedTasks  TetherTask[]   @relation("TaskClaimedBy")
+  createdTasks  TetherTask[]   @relation("TaskCreatedBy")
+
+  @@map("tether_users")
+}
+
+model TetherFamily {
+  id            String    @id @default(cuid())
+  name          String    // e.g. "The Walls Family"
+  inviteCode    String    @unique @default(cuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  members       TetherMember[]
+  lists         TetherList[]
+  goals         TetherGoal[]
+
+  @@map("tether_families")
+}
+
+model TetherMember {
+  id            String       @id @default(cuid())
+  userId        String
+  familyId      String
+  displayName   String
+  role          TetherRole   @default(PARTNER)
+  joinedAt      DateTime     @default(now())
+
+  user          TetherUser   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  family        TetherFamily @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, familyId])
+  @@map("tether_members")
+}
+
+enum TetherRole {
+  PARTNER
+  THERAPIST
+}
+
+model TetherList {
+  id              String          @id @default(cuid())
+  familyId        String
+  name            String          // e.g. "Monday Tasks", "Weekly Household"
+  listType        TetherListType  @default(DAILY)
+  deadline        DateTime?       // Custom deadline for the list
+  bedtimeTarget   String?         // Time string "20:30" for bedtime countdown
+  closedForDay    Boolean         @default(false)
+  isActive        Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  family          TetherFamily    @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  tasks           TetherTask[]
+
+  @@index([familyId, listType])
+  @@map("tether_lists")
+}
+
+enum TetherListType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  CUSTOM
+}
+
+model TetherTask {
+  id              String             @id @default(cuid())
+  listId          String
+  title           String
+  description     String?
+  claimedById     String?
+  createdById     String
+  ownership       TetherOwnership    @default(UNCLAIMED)
+  status          TetherTaskStatus   @default(PENDING)
+  priority        Int                @default(0)
+  dueAt           DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  list            TetherList         @relation(fields: [listId], references: [id], onDelete: Cascade)
+  claimedBy       TetherUser?        @relation("TaskClaimedBy", fields: [claimedById], references: [id])
+  createdBy       TetherUser         @relation("TaskCreatedBy", fields: [createdById], references: [id])
+
+  @@index([listId, status])
+  @@map("tether_tasks")
+}
+
+enum TetherOwnership {
+  UNCLAIMED
+  INDIVIDUAL
+  BOTH
+}
+
+enum TetherTaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+model TetherGoal {
+  id            String            @id @default(cuid())
+  familyId      String
+  title         String
+  description   String?
+  status        TetherGoalStatus  @default(ACTIVE)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  family        TetherFamily      @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  @@index([familyId])
+  @@map("tether_goals")
+}
+
+// ============================================================
+// Paywall / Auth — NextAuth + Stripe subscription models
+// Auth-prefixed to avoid collision with clinical User/Session
+// ============================================================
+
+model AuthUser {
+  id                   String              @id @default(cuid())
+  email                String?             @unique
+  emailVerified        DateTime?
+  name                 String?
+  image                String?
+  stripeCustomerId     String?             @unique
+  subscriptionId       String?             @unique
+  subscriptionStatus   String?
+  subscriptionPriceId  String?
+  subscriptionEnds     DateTime?
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  accounts             AuthAccount[]
+  sessions             AuthSession[]
+  verificationTokens   VerificationToken[]
+  toolAssignments      ToolAssignment[]
+  toolResponses        ToolResponse[]
+
+  @@map("auth_users")
+}
+
+model AuthAccount {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  id_token          String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  session_state     String?
+
+  user              AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("auth_accounts")
+}
+
+model AuthSession {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user         AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("auth_sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  userId     String?
+
+  user       AuthUser? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model ToolAssignment {
+  id           String    @id @default(cuid())
+  therapistId  String
+  tool         String
+  clientEmail  String
+  clientName   String
+  token        String    @unique @default(cuid())
+  tokenExpires DateTime
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+
+  therapist    AuthUser      @relation(fields: [therapistId], references: [id], onDelete: Cascade)
+  responses    ToolResponse[]
+
+  @@index([therapistId])
+  @@index([token])
+  @@map("tool_assignments")
+}
+
+model ToolResponse {
+  id           String   @id @default(cuid())
+  assignmentId String
+  therapistId  String
+  responseData Json
+  submittedAt  DateTime @default(now())
+
+  assignment   ToolAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  therapist    AuthUser       @relation(fields: [therapistId], references: [id])
+
+  @@index([assignmentId])
+  @@index([therapistId])
+  @@map("tool_responses")
+}
+
+enum TetherGoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
 }

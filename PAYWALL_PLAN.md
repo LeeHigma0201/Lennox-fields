@@ -28,11 +28,21 @@ Three things sell here, and she already has the raw material for all three:
    - **Kids coin/reward system** (gamified, child-facing) - idea only, building from scratch.
    - **Tethered Together** (couples mental-load tool) - polished prototype, fake auth, not sellable yet.
 
-### Who pays (strategic fork - validating tonight, confirm with Tamara)
-- **Consumer / client-facing** (parents, families, individuals): premium tools, worksheets,
-  kids coin system, couples tool. Likely a low monthly sub + one-time worksheet packs.
-- **B2B / other therapists** (the TherapistAssist model): send-to-client loop + tool library, ~$20/mo.
-- Leaning: lead consumer (matches "coin system with the kids" + couples), add therapist tier later.
+### Pricing model (research-validated 2026-05-25)
+TherapistAssist (RETRIEVED, therapistassist.app/pricing): Free forever (1 client, 5 sends/mo,
+1 AI gen/week) + Solo $20/mo ($16/mo annual = unlimited). Comparables (retrieved): Quenza $25/mo,
+Carepatron $15.50-19.50/mo, Mentalyc $19.99+/mo, TherapyByPro ~$499 bundle.
+
+**THE WEDGE (retrieved):** TherapistAssist has NOTHING for ADHD/autism/neurodiversity, parenting/
+family, or couples - Tamara's entire niche. No competitor has a clinician-curated ADHD/autism/family
+library. Lead with the niche.
+
+Proposed tiers (INFERENCE/recommendation - confirm with Tamara + Jason):
+- **Free lead magnets** (no login): PHQ-9, GAD-7, 1 breathing exercise, 1 journaling set + email capture.
+- **Consumer "Lennox Fields Toolkit" ~$9/mo or $79/yr:** all 51 worksheets + 7 tools + Tethered
+  Together + kids coin tracker. Below the $15-20 consumer "feels expensive" line.
+- **Therapist B2B ~$29/mo:** niche library + print-formatted PDFs + the send-to-client private-link
+  workflow + quarterly new tools. Differentiation = the niche no one else serves.
 
 ---
 
@@ -86,13 +96,46 @@ only needs the gate layer.
 
 ---
 
+## Hard Constraints (do NOT violate)
+- **NEVER text/email Tamara a link to a feature that is not DEPLOYED.** Everything on this branch is
+  undeployed. (2026-04-15 incident: a localhost-only /tools/sound-healing link was sent to her and
+  burned credibility.) Deploy-verify before any external link. Double-care because it is Tamara.
+- No push, no deploy, no paid infra, no LIVE Stripe without Jason.
+
 ## Tamara Text Status
-- [ ] BLOCKED 2026-05-25: Voice tab not logged in (redirects to Workspace page). Message queued,
-  auto-retries each loop iteration. Sends once Jason logs into Google Voice in Chrome.
+- Tamara (LPCA, 502-931-1043) has been in a shared Google Voice thread with Jason + Claude since
+  2026-04-28 and can text the GV number to spawn work. READ that thread first when the bridge is up
+  (she may have already said what she wants), THEN send the announcement.
+- [ ] BLOCKED 2026-05-25: Voice tab not logged in (redirects to Workspace page). Message queued
+  (no links), auto-retries each loop iteration. Sends once Jason logs into Google Voice in Chrome.
 
 ---
 
+## Technical Architecture (research playbook, 2026-05-25)
+Stack (RETRIEVED from package.json): next 14.2.5, next-auth 4.24.7 (v4, NOT Auth.js v5), prisma 5.17.0,
+stripe 16.2.0, zod 3.23.8.
+- **Schema collision:** clinical models already use `User` + `Session`. Do NOT rename them. Add
+  Auth-prefixed models (AuthUser/AuthAccount/AuthSession/VerificationToken) + a custom NextAuth adapter.
+- **Auth:** NextAuth v4, EMAIL MAGIC LINK only (no stored passwords = lower HIPAA liability) via Resend SMTP.
+  Session strategy = JWT so middleware can gate without a DB hit; 1-day maxAge.
+- **Stripe:** checkout + customer portal + webhook (checkout.session.completed,
+  customer.subscription.updated/deleted) -> writes subscriptionStatus onto AuthUser. Test-mode; Price IDs from env.
+- **Gating:** middleware.ts on /tools/* + /dashboard/*; lib/require-premium.ts for server/data gating;
+  Resource.isPremium for worksheets.
+- **Send-to-client loop:** ToolAssignment + ToolResponse models; OPAQUE DB token (cuid, revocable, expiring),
+  not JWT; client opens /client/[token] with NO account; responses POST back to therapist dashboard.
+- **DB:** Supabase recommended (free tier, SOC2) - JASON PROVISIONS. Needs DATABASE_URL + DIRECT_URL, then
+  `prisma migrate dev`. Nothing runs until then.
+
 ## Loop Log (newest first)
-- 2026-05-25 setup: created branch, audited codebase, fixed Stripe build-throw, wrote this plan,
-  spawned 2 research agents (TherapistAssist+market teardown; Stripe/NextAuth implementation playbook).
-  Tamara text blocked on Voice login. Next: synthesize research -> build auth + Stripe foundation.
+- 2026-05-25 c: both research agents done. Dispatched a Sonnet implementer to build the foundation on the
+  branch (schema additions + auth + Stripe routes + gating + send-to-client loop + /pricing), make
+  `npm run build` green, with NO migrate/push/deploy/commit. Verifying its output next. ~/lennox-couples-vision
+  holds only the static questionnaire (no saved answers on disk).
+- 2026-05-25 b: read local knowledge stores (wiki/rolodex/cortex archive) per Jason. Folded in the
+  deploy-before-link gotcha, Tamara's GV coordination thread (since 04-28), and the couples vision
+  tool at ~/lennox-couples-vision (Sunday Mission lineage). Seeded the empty Lennox project memory.
+  Agent 1 (TherapistAssist + market) delivered the pricing model above. Agent 2 (Stripe/NextAuth
+  playbook) still running. Next: with agent 2's playbook, build auth + Stripe + gating foundation.
+- 2026-05-25 a setup: created branch, audited codebase, fixed Stripe build-throw, wrote this plan,
+  spawned 2 research agents. Tamara text blocked on Voice login. Next: auth + Stripe foundation.
