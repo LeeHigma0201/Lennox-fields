@@ -1,13 +1,25 @@
 import Stripe from 'stripe'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not defined')
-}
+let _stripe: Stripe | null = null
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
-  typescript: true,
-})
+/**
+ * Lazily instantiate the Stripe client. Importing this module must never throw
+ * at build time when STRIPE_SECRET_KEY is absent (it broke `next build` on any
+ * env without the secret). It throws only when actually used without a key,
+ * i.e. at request time on a real checkout/webhook call.
+ */
+export function getStripe(): Stripe {
+  if (_stripe) return _stripe
+  const key = process.env.STRIPE_SECRET_KEY
+  if (!key) {
+    throw new Error('STRIPE_SECRET_KEY is not defined')
+  }
+  _stripe = new Stripe(key, {
+    apiVersion: '2024-06-20',
+    typescript: true,
+  })
+  return _stripe
+}
 
 // Product definitions for Lennox Fields services
 export const PRODUCTS = {
