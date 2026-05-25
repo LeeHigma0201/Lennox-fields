@@ -26,6 +26,7 @@ export const PRICING_TIERS: PricingTier[] = [
       '1 guided breathing exercise',
       '1 journaling prompt set',
       'Safety planning template',
+      'Kids coin reward tracker',
     ],
     cta: 'Get started free',
     highlighted: false,

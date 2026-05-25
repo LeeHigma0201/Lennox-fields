@@ -87,6 +87,9 @@ only needs the gate layer.
 ---
 
 ## Decisions Needed From Jason (turn-key, morning)
+- **Deploy gate:** before deploying feat/lennox-paywall, set NEXTAUTH_SECRET (+ NEXTAUTH_URL) in Vercel, or the
+  paid /tools/* routes + /dashboard return a config error. The live free tools are safe (no longer matched).
+- **Coin tracker placement:** shipped FREE as a lead magnet - confirm free vs Toolkit-paid with Tamara.
 - **DB provider:** Supabase vs Vercel Postgres (marketplace). I will build against a standard
   `DATABASE_URL`; you pick + provision, I run migrations. (Costs money -> parked.)
 - **Stripe keys:** I build test-mode. You add live keys + approve products before real charges. (Parked.)
@@ -128,6 +131,17 @@ stripe 16.2.0, zod 3.23.8.
   `prisma migrate dev`. Nothing runs until then.
 
 ## Loop Log (newest first)
+- 2026-05-25 e: built the kids Coin Tracker (app/tools/coin-tracker) as a free lead magnet - token-economy
+  reward chart, strengths-based ("coins earned, never taken away"), localStorage now. VERIFIED: build green,
+  renders + works in preview (balance updated on click; screenshot captured). Rewrote middleware to gate ONLY
+  paid tool routes explicitly - caught a regression: matching all /tools would have broken the LIVE free tools
+  (PHQ-9/GAD-7/breathing/safety-planning) on any deploy missing NEXTAUTH_SECRET. Next: therapist dashboard shell.
+- 2026-05-25 d: foundation built + VERIFIED. I ran `npm run build` myself = green (49 pages, 0 errors).
+  Fixed the gate so free lead-magnet tools (PHQ-9, GAD-7, breathing, safety-planning) stay public while
+  premium tools require a subscription (middleware FREE_TOOL_PATHS - confirm split with Tamara). Committed
+  the foundation (17 new files + schema/stripe/env). Verified /pricing renders in the browser (on-brand,
+  3 tiers, screenshot captured). Next: kids coin system (DB-independent) + therapist dashboard shell.
+  Parked until Jason provisions DB: tool persistence, Tethered wiring, reading client responses.
 - 2026-05-25 c: both research agents done. Dispatched a Sonnet implementer to build the foundation on the
   branch (schema additions + auth + Stripe routes + gating + send-to-client loop + /pricing), make
   `npm run build` green, with NO migrate/push/deploy/commit. Verifying its output next. ~/lennox-couples-vision

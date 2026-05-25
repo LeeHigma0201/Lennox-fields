@@ -1,66 +1,50 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 
-// Free lead-magnet tools — open to everyone, no login or subscription.
-// MUST stay in sync with the Free tier in content/pricing.ts.
-const FREE_TOOL_PATHS = new Set([
-  '/tools/screening-tools', // hub
-  '/tools/screening-tools/phq-9',
-  '/tools/screening-tools/gad-7',
-  '/tools/breathing-exercises',
-  '/tools/safety-planning',
-])
+// IMPORTANT: only PAID routes are listed in `config.matcher` below. Free
+// lead-magnet tools (PHQ-9, GAD-7, breathing, safety-planning, coin-tracker)
+// and everything else are NOT matched, so they keep working exactly as they do
+// today — no auth, and no dependency on NEXTAUTH_SECRET. When you add a new PAID
+// tool, add its path here AND reflect it in content/pricing.ts.
 
 export default withAuth(
   function middleware(req) {
     const { pathname } = req.nextUrl
     const token = req.nextauth.token
 
-    if (pathname.startsWith('/tools')) {
-      // Free lead magnets bypass the gate entirely.
-      if (FREE_TOOL_PATHS.has(pathname)) return NextResponse.next()
-
-      // Premium tools: must be signed in...
-      if (!token) {
-        const url = req.nextUrl.clone()
-        url.pathname = '/auth/signin'
-        url.searchParams.set('callbackUrl', pathname)
-        return NextResponse.redirect(url)
-      }
-      // ...and have an active/trialing subscription.
-      const status = token?.subscriptionStatus as string | null | undefined
-      const isActive = status === 'active' || status === 'trialing'
-      if (!isActive) {
-        const url = req.nextUrl.clone()
-        url.pathname = '/pricing'
-        url.searchParams.set('gate', 'tools')
-        return NextResponse.redirect(url)
-      }
+    // /dashboard/* only needs the user to be signed in (enforced by `authorized`).
+    if (pathname.startsWith('/dashboard')) {
       return NextResponse.next()
     }
 
-    // /dashboard/* needs auth only.
-    if (pathname.startsWith('/dashboard') && !token) {
+    // Premium tools also require an active/trialing subscription.
+    const status = token?.subscriptionStatus as string | null | undefined
+    const isActive = status === 'active' || status === 'trialing'
+    if (!isActive) {
       const url = req.nextUrl.clone()
-      url.pathname = '/auth/signin'
-      url.searchParams.set('callbackUrl', pathname)
+      url.pathname = '/pricing'
+      url.searchParams.set('gate', 'tools')
       return NextResponse.redirect(url)
     }
-
     return NextResponse.next()
   },
   {
     callbacks: {
-      // All gating is handled in the middleware function above so that free
-      // tool paths can stay public; never auto-redirect on token absence here.
-      authorized: () => true,
+      // Must be signed in to reach any matched (paid/dashboard) route.
+      authorized: ({ token }) => !!token,
     },
-    pages: {
-      signIn: '/auth/signin',
-    },
+    pages: { signIn: '/auth/signin' },
   }
 )
 
 export const config = {
-  matcher: ['/tools/:path*', '/dashboard/:path*'],
+  matcher: [
+    // PAID tools only — keep in sync with content/pricing.ts paid tiers.
+    '/tools/cbt-thought-record/:path*',
+    '/tools/notes-templates/:path*',
+    '/tools/treatment-planning/:path*',
+    '/tools/sound-healing/:path*',
+    '/tools/screening-tools/pcl-5',
+    '/dashboard/:path*',
+  ],
 }
