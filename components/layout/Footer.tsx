@@ -3,9 +3,10 @@ import Image from 'next/image'
 import { Mail, MapPin, Linkedin, Facebook, Instagram } from 'lucide-react'
 import { siteConfig } from '@/content/site-config'
 import { footerQuickLinks, footerResourceLinks } from '@/content/navigation'
+import BuiltWithClaude from '@/components/BuiltWithClaude'
 
 export default function Footer() {
-  const currentYear = 2026
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer className="bg-gradient-to-br from-soft-rose/10 via-warm-cream to-primary-sage/10">
@@ -106,8 +107,12 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-sm text-text-dark mt-4 text-center md:text-left bg-soft-rose/15 border border-soft-rose/30 rounded-lg p-3">
-            <strong className="text-text-dark">Crisis Support:</strong> {siteConfig.crisis.message} <strong className="text-soft-rose">{siteConfig.crisis.phone}</strong> {siteConfig.crisis.suffix}
+            <strong className="text-text-dark">Crisis Support:</strong> {siteConfig.crisis.message}{' '}
+            <a href={`tel:${siteConfig.crisis.phone}`} className="font-bold text-soft-rose underline decoration-soft-rose/40 hover:decoration-soft-rose">{siteConfig.crisis.phone}</a>, <a href="sms:741741" className="font-bold text-soft-rose underline decoration-soft-rose/40 hover:decoration-soft-rose">text HOME to 741741</a>, or go to your nearest emergency room.
           </p>
+          <div className="mt-6">
+            <BuiltWithClaude />
+          </div>
         </div>
       </div>
     </footer>

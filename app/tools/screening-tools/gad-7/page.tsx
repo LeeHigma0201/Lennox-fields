@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { AlertCircle, CheckCircle, Download, ArrowLeft } from 'lucide-react'
 import AssessmentLayout from '@/components/assessments/AssessmentLayout'
+import CrisisResources from '@/components/CrisisResources'
 
 const questions = [
   {
@@ -163,7 +164,7 @@ export default function GAD7Page() {
             </div>
 
             {/* Score Display */}
-            <div className="bg-gradient-sage-bg text-white rounded-lg p-8 text-center mb-8">
+            <div className="gradient-sage-bg text-white rounded-lg p-8 text-center mb-8">
               <p className="text-lg mb-2 opacity-90">Your Score</p>
               <p className="text-6xl font-bold mb-2">{results.total}</p>
               <p className="text-sm opacity-90">out of 21 points</p>
@@ -238,6 +239,8 @@ export default function GAD7Page() {
               </Link>
             )}
           </div>
+
+          {results.total >= 10 && <CrisisResources className="mt-8" />}
 
           {/* Disclaimer */}
           <div className="mt-8 bg-clinical-blue/10 border-l-4 border-clinical-blue p-6 rounded">

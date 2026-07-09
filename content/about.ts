@@ -34,15 +34,15 @@ export const credentials = [
   },
   {
     title: 'Certified in Dialectical Behavior Therapy (C-DBT)',
-    subtitle: 'Specialized Training',
+    subtitle: 'Intensive Post-Graduate Certification',
     description:
-      'Advanced certification in DBT for treating complex trauma, emotional dysregulation, and interpersonal challenges.',
+      'Intensive post-graduate certification in traditional Dialectical Behavior Therapy — separate from graduate training — for emotional regulation, distress tolerance, and interpersonal effectiveness.',
   },
   {
-    title: 'Trauma-Conscious Model (TCM)',
-    subtitle: 'Program Builder & Practitioner',
+    title: 'Targeted Case Management (TCM)',
+    subtitle: 'Substance Use Disorder',
     description:
-      'Developed and implemented TCM programs integrating trauma-informed and neurodiversity-affirming approaches.',
+      'Medicaid targeted case management for individuals with a substance use disorder, connecting clients to the services and supports they need.',
   },
 ]
 
@@ -56,8 +56,8 @@ export const specializedTraining = [
   },
   {
     icon: 'Heart' as const,
-    title: 'Trauma-Conscious Model (TCM)',
-    description: 'Built and implemented TCM programs for complex trauma processing',
+    title: 'Targeted Case Management (TCM)',
+    description: 'Medicaid case management for individuals with a substance use disorder',
   },
   {
     icon: 'Lightbulb' as const,
@@ -93,7 +93,7 @@ export const clinicalApproach = {
     {
       title: 'Evidence-Based & Flexible',
       description:
-        "I integrate multiple therapeutic approaches—including CBT, EMDR, and mindfulness-based interventions—tailoring treatment to what works best for you. Research shows that the therapeutic relationship is one of the strongest predictors of positive outcomes, so building trust and rapport is always my first priority.",
+        "I integrate multiple evidence-based approaches—including DBT, Trauma-Focused CBT, and mindfulness-based interventions—tailoring treatment to what works best for you. Research shows that the therapeutic relationship is one of the strongest predictors of positive outcomes, so building trust and rapport is always my first priority.",
     },
     {
       title: 'Strength-Based & Culturally Sensitive',
@@ -143,7 +143,7 @@ export const aboutPreview = {
     "I believe therapy should be a collaborative partnership. Together, we'll identify your goals, build on your strengths, and develop practical strategies for lasting change. You're the expert on your life — I'm here to provide guidance, support, and evidence-based tools.",
   trainingList: [
     'Dialectical Behavior Therapy (DBT)',
-    'Trauma-Conscious Model (TCM)',
+    'Trauma-Focused Cognitive Behavioral Therapy (TF-CBT)',
     'ADHD & Autism Assessment and Support',
     'Complex PTSD and Trauma Processing',
     'Career Development and Counseling',

@@ -44,7 +44,6 @@ export const config = {
     '/tools/notes-templates/:path*',
     '/tools/treatment-planning/:path*',
     '/tools/sound-healing/:path*',
-    '/tools/screening-tools/pcl-5',
     '/dashboard/:path*',
   ],
 }

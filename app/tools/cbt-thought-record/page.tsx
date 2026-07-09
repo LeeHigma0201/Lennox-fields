@@ -126,7 +126,7 @@ ${'='.repeat(80)}
       </section>
 
       {/* Instructions */}
-      <section className="section-padding bg-gradient-warm-bg">
+      <section className="section-padding gradient-warm-bg">
         <div className="container-custom max-w-4xl">
           <div className="card">
             <h2 className="text-2xl font-bold text-text-dark mb-4">How to Use This Tool</h2>

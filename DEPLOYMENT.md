@@ -8,7 +8,7 @@ This comprehensive guide will walk you through deploying your Lennox Fields plat
 
 ### 1.1 Domain Registration
 
-**Register: lennoxfields.org**
+**Register: lennoxfields.com**
 
 Recommended registrars:
 - Namecheap
@@ -32,11 +32,11 @@ Recommended registrars:
 
 **Required Email Addresses:**
 ```
-tamara@lennoxfields.org (your main email)
-intake@lennoxfields.org (client inquiries)
-billing@lennoxfields.org (payment questions)
-support@lennoxfields.org (technical support)
-resources@lennoxfields.org (resource requests)
+tamara@lennoxfields.com (your main email)
+intake@lennoxfields.com (client inquiries)
+billing@lennoxfields.com (payment questions)
+support@lennoxfields.com (technical support)
+resources@lennoxfields.com (resource requests)
 ```
 
 ### 1.3 LLC Formation & Insurance
@@ -208,7 +208,7 @@ Create `.env.local` file:
 DATABASE_URL="postgresql://..."
 
 # NextAuth
-NEXTAUTH_URL="https://lennoxfields.org"
+NEXTAUTH_URL="https://lennoxfields.com"
 NEXTAUTH_SECRET="[generate with: openssl rand -base64 32]"
 
 # Encryption Keys (HIPAA Compliance)
@@ -223,9 +223,9 @@ STRIPE_WEBHOOK_SECRET="whsec_..."
 # Email (Google Workspace SMTP)
 SMTP_HOST="smtp.gmail.com"
 SMTP_PORT=587
-SMTP_USER="tamara@lennoxfields.org"
+SMTP_USER="tamara@lennoxfields.com"
 SMTP_PASSWORD="[app-specific password]"
-EMAIL_FROM="tamara@lennoxfields.org"
+EMAIL_FROM="tamara@lennoxfields.com"
 
 # Optional: CarePatron
 CAREPATRON_API_KEY="..."
@@ -271,7 +271,7 @@ vercel --prod
 
 **Configure in Vercel Dashboard:**
 1. Add all environment variables
-2. Configure custom domain: lennoxfields.org
+2. Configure custom domain: lennoxfields.com
 3. Enable automatic deployments from main branch
 4. Set up preview deployments for testing
 
@@ -341,7 +341,7 @@ TXT     @       v=spf1 include:_spf.google.com ~all
 
 1. Create therapist profile
 2. Add photo, credentials, specialties
-3. Link to lennoxfields.org
+3. Link to lennoxfields.com
 4. Enable client messaging
 
 ### 6.3 Professional Networks

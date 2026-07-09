@@ -66,7 +66,7 @@ function buildConfirmationHtml(name: string) {
     <ul>
       <li><strong>Call 911</strong> or go to the nearest emergency room</li>
       <li><strong>Call 988</strong> — Suicide &amp; Crisis Lifeline</li>
-      <li><strong>Text "HELLO" to 741741</strong> — Crisis Text Line</li>
+      <li><strong>Text HOME to 741741</strong> — Crisis Text Line</li>
     </ul>
     <p style="margin-top:24px;">Warm regards,<br/>Tamara Walls, LPCA<br/>Lennox Fields Clinical Mental Health Services</p>
     <p style="font-size:12px;color:#888;margin-top:24px;">
@@ -193,7 +193,7 @@ export async function POST(request: NextRequest) {
         'If you need immediate support:',
         '  • Call 911 or go to the nearest emergency room',
         '  • Call 988 — Suicide & Crisis Lifeline',
-        '  • Text "HELLO" to 741741 — Crisis Text Line',
+        '  • Text HOME to 741741 — Crisis Text Line',
         '',
         'Warm regards,',
         'Tamara Walls, LPCA',

@@ -11,7 +11,7 @@ export const siteConfig = {
   legalName: 'Lennox Fields Clinical Mental Health Services LLC',
   tagline: 'Clinical Mental Health Services',
   description: 'Evidence-based mental health care with compassion at its core',
-  url: 'https://lennox-fields.vercel.app',
+  url: 'https://lennoxfields.com',
 
   // --- Owner / Therapist Info ---
   owner: {
@@ -27,7 +27,7 @@ export const siteConfig = {
   // --- Contact Info ---
   // Update these with your real contact details
   contact: {
-    email: 'tamara@lennoxfields.org',
+    email: 'tamara@lennoxfields.com',
     phone: '(502) 627-0781',
     phoneLink: 'tel:+15026270781', // used for click-to-call links
     location: 'Licensed in Kentucky',
@@ -71,8 +71,8 @@ export const siteConfig = {
   // --- Crisis Info ---
   // This appears in the footer - do not remove
   crisis: {
-    message: 'If you or someone you know is in crisis, please call the National Suicide Prevention Lifeline at',
+    message: 'If you or someone you know is in crisis, call or text the Suicide & Crisis Lifeline at',
     phone: '988',
-    suffix: 'or visit your nearest emergency room.',
+    suffix: ', text HOME to 741741, or go to your nearest emergency room.',
   },
 }

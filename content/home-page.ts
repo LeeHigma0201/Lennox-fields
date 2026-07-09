@@ -44,7 +44,7 @@ export const booksSection = {
 export const professionalSection = {
   title: 'For Mental Health Professionals',
   description:
-    'Access comprehensive professional tools including supervision tracking, billing management, treatment plan generators, and state-specific licensing guides.',
+    'Access professional tools including treatment plan generators, progress note templates, and clinical screening tools.',
   buttonText: 'Explore Professional Tools',
   buttonHref: '/professional',
   columns: [
@@ -60,9 +60,9 @@ export const professionalSection = {
     {
       title: 'Practice Management',
       items: [
-        'Supervision hours tracker',
-        'Billing and invoicing',
-        'Client portal access',
+        'Progress note templates',
+        'Treatment plan generator',
+        'Screening tools',
         'Document storage',
       ],
     },

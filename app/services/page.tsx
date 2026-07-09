@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { services, servicesPageHeader, paymentInfo } from '@/content/services'
 import { iconMap, type IconName } from '@/content/icons'
+import { siteConfig } from '@/content/site-config'
 
 export default function ServicesPage() {
   return (
@@ -91,6 +92,36 @@ export default function ServicesPage() {
                 ))}
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Good Faith Estimate — No Surprises Act */}
+      <section className="section-padding bg-white">
+        <div className="container-custom max-w-4xl">
+          <div className="card-clinical">
+            <h2 className="text-2xl font-bold text-text-dark mb-4">Your Right to a Good Faith Estimate</h2>
+            <p className="text-warm-gray mb-3">
+              You have the right to receive a Good Faith Estimate explaining how much your care will cost.
+            </p>
+            <p className="text-warm-gray mb-3">
+              Under the federal No Surprises Act, health care providers must give clients who are uninsured,
+              or who are not using insurance, an estimate of expected charges before a scheduled service, or
+              any time you ask. You can request a Good Faith Estimate before you schedule a session. If you
+              receive a bill that is at least $400 more than your Good Faith Estimate, you may dispute it.
+              Keep a copy of any estimate you receive.
+            </p>
+            <p className="text-warm-gray">
+              To request an estimate or ask questions, contact{' '}
+              <a href={`mailto:${siteConfig.contact.email}`} className="text-primary-sage hover:text-earth-green">
+                {siteConfig.contact.email}
+              </a>
+              . For more information, visit{' '}
+              <a href="https://www.cms.gov/nosurprises" target="_blank" rel="noopener noreferrer" className="text-primary-sage hover:text-earth-green">
+                cms.gov/nosurprises
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>

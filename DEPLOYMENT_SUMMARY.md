@@ -197,7 +197,7 @@ After deploying, personalize your site:
 3. **Share with 2-3 trusted colleagues** - Get feedback
 
 ### **This Week** (2-3 hours)
-1. **Register domain** - lennoxfields.org
+1. **Register domain** - lennoxfields.com
 2. **Add custom domain** - In Vercel settings
 3. **Replace placeholder images** - Your professional photos
 4. **Update About page** - Your personal story

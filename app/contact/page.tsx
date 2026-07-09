@@ -277,7 +277,7 @@ export default function ContactPage() {
                 <ul className="text-sm text-text-dark space-y-1">
                   <li><strong>Call 911</strong> or go to the nearest emergency room</li>
                   <li><strong>Call 988</strong> — Suicide & Crisis Lifeline</li>
-                  <li><strong>Text &ldquo;HELLO&rdquo; to 741741</strong> — Crisis Text Line</li>
+                  <li><strong>Text HOME to 741741</strong> — Crisis Text Line</li>
                 </ul>
               </div>
             </div>
@@ -298,9 +298,9 @@ export default function ContactPage() {
                 Do you accept insurance?
               </h3>
               <p className="text-warm-gray">
-                I&apos;m currently working on insurance credentialing. In the meantime, I provide superbills
-                for out-of-network reimbursement. Many clients receive 50-80% reimbursement from their
-                insurance companies.
+                I am not currently in-network with insurance. I provide a superbill you can submit to your
+                insurance company for possible out-of-network reimbursement. Reimbursement varies by plan, so
+                please check directly with your insurer about your out-of-network benefits.
               </p>
             </div>
 

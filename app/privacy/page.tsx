@@ -29,8 +29,10 @@ export default function PrivacyPage() {
               <h2 className="text-3xl font-bold text-text-dark mb-4">Information We Collect</h2>
               <h3 className="text-xl font-semibold text-text-dark mb-2">Website Visitors</h3>
               <p className="text-warm-gray mb-4">
-                When you browse our website, we do not use cookies, analytics tracking, or any third-party
-                data collection services. Your browsing activity is not tracked or stored.
+                When you browse our website, we use Vercel Analytics, a privacy-focused service that
+                collects aggregate, anonymized usage data (such as page views and general country-level
+                location) to help us improve the site. It does not use cookies, does not collect
+                personally identifiable information, and does not track you across other websites.
               </p>
 
               <h3 className="text-xl font-semibold text-text-dark mb-2">Contact Form Submissions</h3>

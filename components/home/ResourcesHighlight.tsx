@@ -45,7 +45,7 @@ export default function ResourcesHighlight() {
 
         <div className="mt-12 text-center">
           <p className="text-lg text-text-dark mb-6">
-            All resources are free to use. No account required for basic access.
+            Many of our self-help tools are free to use, with no account required. A few advanced tools are part of our paid plans.
           </p>
           <Link href="/resources" className="btn btn-primary">
             Browse All Resources

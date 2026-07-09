@@ -235,7 +235,7 @@ export default function BreathingExercisesPage() {
       </section>
 
       {/* Breathing Visualizer */}
-      <section className="section-padding bg-gradient-warm-bg">
+      <section className="section-padding gradient-warm-bg">
         <div className="container-custom max-w-4xl">
           <div className="card">
             {/* Visual Circle */}

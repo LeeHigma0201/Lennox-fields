@@ -1,13 +1,7 @@
 import Link from 'next/link'
-import { Briefcase, BookOpen, ClipboardList, FileText, GraduationCap } from 'lucide-react'
+import { BookOpen, ClipboardList, FileText } from 'lucide-react'
 
 const tools = [
-  {
-    icon: GraduationCap,
-    title: 'Clinical Supervision',
-    description: 'Information about clinical supervision for associates and interns pursuing licensure in Kentucky.',
-    href: '/professional/supervision',
-  },
   {
     icon: ClipboardList,
     title: 'Treatment Plan Generator',

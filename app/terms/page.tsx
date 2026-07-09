@@ -62,7 +62,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-6 text-warm-gray space-y-2 mt-3">
                 <li>Call <strong>911</strong> or go to the nearest emergency room</li>
                 <li>Call the Suicide &amp; Crisis Lifeline at <strong>988</strong></li>
-                <li>Text &ldquo;HELLO&rdquo; to <strong>741741</strong> for the Crisis Text Line</li>
+                <li>Text HOME to <strong>741741</strong> for the Crisis Text Line</li>
               </ul>
             </div>
 

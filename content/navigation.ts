@@ -34,7 +34,6 @@ export const navigation = [
     href: '/professional',
     submenu: [
       { name: 'For Clinicians', href: '/professional' },
-      { name: 'Clinical Supervision', href: '/professional/supervision' },
       { name: 'Treatment Planning', href: '/tools/treatment-planning' },
       { name: 'Notes Templates', href: '/tools/notes-templates' },
     ],

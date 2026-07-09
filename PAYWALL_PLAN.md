@@ -137,8 +137,16 @@ only needs the gate layer.
 - Tamara (LPCA, 502-931-1043) has been in a shared Google Voice thread with Jason + Claude since
   2026-04-28 and can text the GV number to spawn work. READ that thread first when the bridge is up
   (she may have already said what she wants), THEN send the announcement.
-- [ ] BLOCKED 2026-05-25: Voice tab not logged in (redirects to Workspace page). Message queued
-  (no links), auto-retries each loop iteration. Sends once Jason logs into Google Voice in Chrome.
+- [x] SENT (verified, Voice API HTTP 200): announcement delivered to +15029311043, no links.
+  The claudright MCP could NOT send it (AppleScript-opened tabs put gapi in an isolated world; Voice
+  sits on account /u/1/ here). Sent instead via the Claude-in-Chrome main-world gapi path
+  (working_send.js recipe). NOTE: the claudright MCP bridge is still broken for this and needs a fix.
+- CONVERSATION 2026-05-25: Tamara replied with her priority order (coin system > couples > worksheets),
+  gave Coin Tracker requirements (families LOG IN, per-kid names + age-appropriate chores, 3 reference
+  images Jason has), and is signing up for Google Workspace business email. I texted the coin-tracker
+  answer + the Workspace signup steps. Watch STOPPED after she went quiet through 1+5+10 min (likely
+  mid-signup). She can text anytime to resume. OPEN: free-vs-paid coin tracker; the domain-verify DNS
+  handoff (add Workspace MX + verification TXT in Namecheap when she reaches that step).
 
 ---
 
@@ -159,6 +167,14 @@ stripe 16.2.0, zod 3.23.8.
   `prisma migrate dev`. Nothing runs until then.
 
 ## Loop Log (newest first)
+- 2026-05-25 g: Tamara (via SMS) gave real Coin Tracker requirements: a FILLABLE version where families
+  LOG IN on the site, enter their kids' names, and set age-appropriate chores per kid, persisted to their
+  account. She sent 3 reference images (Jason has them; design refs to match). This = the auth + DB +
+  per-user-persistence version, i.e. exactly the foundation already built, but needs the DB live. Current
+  coin tracker is single-device localStorage only. Free-vs-paid placement STILL unanswered (she pivoted to
+  features). Separately: her business email is being set up on lennoxfields.com (Google Workspace + HIPAA
+  BAA); DNS is at Namecheap BasicDNS, Jason logged in; ClaudeRight to add MX/TXT when she reaches the
+  domain-verify step. Steps texted to her.
 - 2026-05-25 f: built therapist dashboard shell (app/dashboard - send-a-tool form + responses inbox empty
   state; compile-verified; gated so visual pending auth) and made the Coin Tracker discoverable on /resources
   (card added + verified present). FINDING (pre-existing, NOT my change): the `.card` component class renders

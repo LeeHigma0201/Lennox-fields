@@ -23,6 +23,7 @@ export const PRICING_TIERS: PricingTier[] = [
     features: [
       'PHQ-9 depression screening',
       'GAD-7 anxiety screening',
+      'PCL-5 PTSD screening',
       '1 guided breathing exercise',
       '1 journaling prompt set',
       'Safety planning template',

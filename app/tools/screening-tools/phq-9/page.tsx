@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Download, Share2 } from 'lucide-react'
 import AssessmentLayout from '@/components/assessments/AssessmentLayout'
+import CrisisResources from '@/components/CrisisResources'
 
 const PHQ9_QUESTIONS_TEXT = [
   'Little interest or pleasure in doing things',
@@ -127,6 +128,9 @@ export default function PHQ9Page() {
 
   const score = calculateScore()
   const interpretation = getInterpretation(score)
+  // Item 9 (id phq9-8) screens for suicidal ideation. ANY endorsement (>= 1) must
+  // surface crisis support regardless of total score — standard PHQ-9 safety practice.
+  const item9 = responses['phq9-8'] ?? 0
 
   return (
     <div className="min-h-screen bg-cream">
@@ -151,6 +155,17 @@ export default function PHQ9Page() {
             <div className="space-y-8">
               {/* Results Card */}
               <div className="card">
+                {item9 >= 1 && (
+                  <div className="bg-alert-red/10 border-2 border-alert-red rounded-lg p-6 mb-8">
+                    <h3 className="text-xl font-bold text-alert-red mb-2">Your safety comes first</h3>
+                    <p className="text-text-dark mb-4">
+                      You said you&apos;ve had thoughts that you would be better off dead, or of hurting
+                      yourself. Thank you for answering honestly — that takes courage. Whatever your total
+                      score is, please know that support is available right now, and you deserve it.
+                    </p>
+                    <CrisisResources heading={null} intro="" />
+                  </div>
+                )}
                 <div className="text-center mb-8">
                   <h2 className="text-3xl font-bold text-text-dark mb-4">Your Results</h2>
                   <div className="inline-block">
@@ -178,25 +193,7 @@ export default function PHQ9Page() {
                     ))}
                   </ul>
 
-                  {score >= 10 && (
-                    <div className="bg-alert-red/10 border border-alert-red/30 rounded-lg p-6 mb-6">
-                      <h4 className="font-bold text-alert-red mb-2">Crisis Support Available 24/7</h4>
-                      <p className="text-text-dark mb-3">
-                        If you're experiencing thoughts of self-harm or suicide, help is available right now:
-                      </p>
-                      <div className="space-y-2 text-text-dark">
-                        <p>
-                          <strong>Call 988</strong> - Suicide & Crisis Lifeline
-                        </p>
-                        <p>
-                          <strong>Text "HELLO" to 741741</strong> - Crisis Text Line
-                        </p>
-                        <p>
-                          <strong>Visit your nearest emergency room</strong> if you feel unsafe
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                  {score >= 10 && item9 === 0 && <CrisisResources className="mb-6" />}
 
                   <h3 className="text-xl font-bold text-text-dark mb-3">Understanding Your Score</h3>
                   <div className="grid sm:grid-cols-2 gap-4 mb-6">

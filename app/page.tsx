@@ -59,7 +59,7 @@ export default function HomePage() {
       </section>
 
       {/* Professional Resources Teaser */}
-      <section className="section-padding bg-gradient-sage-bg text-white">
+      <section className="section-padding gradient-sage-bg text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <Brain className="w-16 h-16 mx-auto mb-6 opacity-90" aria-hidden="true" />

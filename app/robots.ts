@@ -5,8 +5,18 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/portal/'],
+      // Keep in-progress / private / auth / tokenized routes out of search results
+      // until they are launched. Public marketing pages remain crawlable.
+      disallow: [
+        '/api/',
+        '/portal/',
+        '/auth/',
+        '/dashboard',
+        '/pricing',
+        '/client/',
+        '/tethered-together',
+      ],
     },
-    sitemap: 'https://lennoxfields.org/sitemap.xml',
+    sitemap: 'https://lennoxfields.com/sitemap.xml',
   }
 }

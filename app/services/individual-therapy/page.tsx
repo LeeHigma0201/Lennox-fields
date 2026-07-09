@@ -18,7 +18,7 @@ export default function IndividualTherapyPage() {
             </div>
             <p className="text-xl text-text-dark">
               Personalized one-on-one support specializing in ADHD, autism, and complex PTSD.
-              Neurodiversity-affirming, trauma-conscious care for women.
+              Neurodiversity-affirming, trauma-informed care for women.
             </p>
           </div>
         </div>
@@ -92,28 +92,28 @@ export default function IndividualTherapyPage() {
 
             <div className="card">
               <h3 className="text-2xl font-bold text-text-dark mb-4">
-                EMDR (Eye Movement Desensitization and Reprocessing)
+                Trauma-Focused Cognitive Behavioral Therapy (TF-CBT)
               </h3>
               <p className="text-warm-gray mb-4">
-                EMDR is a powerful therapy for processing trauma and reducing distressing memories.
-                It helps your brain reprocess traumatic experiences in a safe, controlled way.
+                TF-CBT is an evidence-based approach for processing trauma and reducing its impact,
+                helping you make sense of difficult experiences in a safe, structured way.
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-primary-sage mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-text-dark">Process traumatic memories</span>
+                  <span className="text-text-dark">Process traumatic experiences</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-primary-sage mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-text-dark">Reduce emotional distress</span>
+                  <span className="text-text-dark">Reduce trauma-related distress</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-primary-sage mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-text-dark">Reframe negative beliefs</span>
+                  <span className="text-text-dark">Reframe unhelpful beliefs</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-primary-sage mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-text-dark">Build adaptive coping</span>
+                  <span className="text-text-dark">Build healthy coping skills</span>
                 </li>
               </ul>
             </div>

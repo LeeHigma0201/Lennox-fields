@@ -40,7 +40,7 @@ After deploying, add your custom domain:
 
 1. Go to your project in Vercel Dashboard
 2. Click "Settings" → "Domains"
-3. Add `lennoxfields.org`
+3. Add `lennoxfields.com`
 4. Follow DNS configuration instructions
 5. Wait for SSL certificate (automatic, ~5 minutes)
 
@@ -99,7 +99,7 @@ STRIPE_SECRET_KEY="sk_live_..."
 
 # Email (when you add contact forms)
 SMTP_HOST="smtp.gmail.com"
-SMTP_USER="tamara@lennoxfields.org"
+SMTP_USER="tamara@lennoxfields.com"
 SMTP_PASSWORD="your-app-password"
 ```
 

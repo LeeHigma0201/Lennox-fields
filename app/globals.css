@@ -225,3 +225,67 @@
     @apply bg-white text-black;
   }
 }
+
+/* Built with Claude — gradient-cycle text (ported from ChargeRight) */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-gradient-cycle {
+  background: linear-gradient(90deg, #3b82f6, #10b981, #8b5cf6, #D97757, #3b82f6);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient-cycle {
+    animation: none;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #9CA3AF;
+  }
+}
+
+/* ============================================================
+   Comfort & Access — visitor-controlled sensory settings.
+   Set as data attributes on <html> by components/ComfortCorner.tsx
+   (and applied before paint by the inline script in layout.tsx).
+   Designed for our neurodivergent audience: the page adapts to them.
+   ============================================================ */
+
+/* Text size — scales the whole rem-based UI from the root element */
+html[data-lf-text='large'] { font-size: 18px; }
+html[data-lf-text='xlarge'] { font-size: 20px; }
+
+/* Calm mode — softer, less saturated palette for sensory comfort */
+html[data-lf-calm='on'] body {
+  filter: saturate(0.72) contrast(0.97);
+}
+
+/* Easier reading — looser spacing and a plain, highly legible font */
+html[data-lf-readable='on'] body {
+  font-family: Verdana, 'Segoe UI', Tahoma, sans-serif;
+  letter-spacing: 0.015em;
+  word-spacing: 0.06em;
+  line-height: 1.85;
+}
+html[data-lf-readable='on'] p,
+html[data-lf-readable='on'] li {
+  line-height: 1.9;
+}
+
+/* Reduce motion — visitor opt-in, mirrors the prefers-reduced-motion behavior */
+html[data-lf-motion='reduced'] *,
+html[data-lf-motion='reduced'] *::before,
+html[data-lf-motion='reduced'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}

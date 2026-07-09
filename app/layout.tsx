@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ComfortCorner from '@/components/ComfortCorner'
 import { siteConfig } from '@/content/site-config'
 
 export const metadata: Metadata = {
@@ -69,7 +70,6 @@ export default function RootLayout({
                 name: siteConfig.owner.name,
                 jobTitle: siteConfig.owner.role,
               },
-              medicalSpecialty: ['Psychiatry', 'ClinicalPsychology'],
               availableService: [
                 { '@type': 'MedicalTherapy', name: 'Individual Counseling' },
                 { '@type': 'MedicalTherapy', name: 'Couples Counseling' },
@@ -77,6 +77,12 @@ export default function RootLayout({
                 { '@type': 'MedicalTherapy', name: 'Career Counseling' },
               ],
             }),
+          }}
+        />
+        {/* Apply saved Comfort & Access settings before paint (no flash of unstyled page) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=JSON.parse(localStorage.getItem('lf-comfort')||'{}');var e=document.documentElement;if(s.text)e.setAttribute('data-lf-text',s.text);if(s.calm)e.setAttribute('data-lf-calm','on');if(s.readable)e.setAttribute('data-lf-readable','on');if(s.motion)e.setAttribute('data-lf-motion',s.motion);}catch(_){}})();`,
           }}
         />
       </head>
@@ -93,6 +99,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ComfortCorner />
         <Analytics />
       </body>
     </html>

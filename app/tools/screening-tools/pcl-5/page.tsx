@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import AssessmentLayout from '@/components/assessments/AssessmentLayout'
+import CrisisResources from '@/components/CrisisResources'
 
 const PCL5_QUESTIONS_TEXT = [
   'Repeated, disturbing, and unwanted memories of the stressful experience',
@@ -83,7 +84,7 @@ export default function PCL5Page() {
         description: 'Your responses suggest moderate PTSD symptoms. Professional evaluation and treatment are recommended to help you process your experiences and reduce distress.',
         recommendations: [
           'Schedule an evaluation with a trauma-informed mental health professional',
-          'Consider evidence-based treatments like CPT or EMDR',
+          'Consider evidence-based treatments like CPT or Prolonged Exposure',
           'Practice grounding techniques for managing flashbacks',
           'Build a strong support network',
           'Avoid self-medicating with alcohol or substances',
@@ -98,7 +99,7 @@ export default function PCL5Page() {
         description: 'Your responses suggest significant PTSD symptoms. Professional treatment is strongly recommended. Effective treatments are available and can significantly reduce symptoms.',
         recommendations: [
           'Seek professional help from a trauma specialist as soon as possible',
-          'Evidence-based treatments (CPT, PE, EMDR) are highly effective for PTSD',
+          'Evidence-based treatments (CPT, PE) are highly effective for PTSD',
           'Consider both therapy and medication evaluation',
           'Inform trusted people in your life about your struggles',
           'Use crisis resources if experiencing thoughts of self-harm',
@@ -141,7 +142,7 @@ export default function PCL5Page() {
                     <strong>Content Warning:</strong> This assessment asks about potentially distressing experiences. If you feel overwhelmed at any point, it's okay to stop and seek support.
                   </p>
                   <p className="text-sm text-text-dark">
-                    <strong>Crisis Support:</strong> If you're in crisis, call 988 (Suicide & Crisis Lifeline) or text "HELLO" to 741741.
+                    <strong>Crisis Support:</strong> If you're in crisis, call or text 988 (Suicide & Crisis Lifeline) or text HOME to 741741.
                   </p>
                 </div>
               }
@@ -211,31 +212,15 @@ export default function PCL5Page() {
                         <strong>Prolonged Exposure (PE):</strong> Gradual exposure to trauma memories in a safe environment
                       </li>
                       <li>
-                        <strong>Eye Movement Desensitization and Reprocessing (EMDR):</strong> Processes traumatic memories using bilateral stimulation
-                      </li>
-                      <li>
                         <strong>Medication:</strong> SSRIs and other medications can reduce symptoms when combined with therapy
                       </li>
                     </ul>
                     <p className="text-text-dark mt-3 text-sm">
-                      At Lennox Fields, we offer EMDR therapy for trauma processing.
+                      At Lennox Fields, I offer trauma-focused therapy, including Trauma-Focused CBT, to support trauma processing.
                     </p>
                   </div>
 
-                  {score >= 31 && (
-                    <div className="bg-alert-red/10 border border-alert-red/30 rounded-lg p-6 mb-6">
-                      <h4 className="font-bold text-alert-red mb-2">If You're in Crisis</h4>
-                      <p className="text-text-dark mb-3">
-                        If you're experiencing thoughts of self-harm or suicide, help is available 24/7:
-                      </p>
-                      <div className="space-y-2 text-text-dark">
-                        <p><strong>Call 988</strong> - Suicide & Crisis Lifeline</p>
-                        <p><strong>Text "HELLO" to 741741</strong> - Crisis Text Line</p>
-                        <p><strong>Call 1-800-273-8255</strong> - Veterans Crisis Line (Press 1)</p>
-                        <p><strong>Visit your nearest emergency room</strong> if you feel unsafe</p>
-                      </div>
-                    </div>
-                  )}
+                  <CrisisResources showVeterans className="mb-6" />
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
@@ -283,7 +268,7 @@ export default function PCL5Page() {
                     href="/services/individual-therapy"
                     className="bg-white rounded-lg p-4 hover:shadow-medium transition-shadow"
                   >
-                    <h4 className="font-bold text-text-dark mb-1">EMDR Therapy</h4>
+                    <h4 className="font-bold text-text-dark mb-1">Trauma-Focused Therapy</h4>
                     <p className="text-sm text-warm-gray">Evidence-based trauma treatment</p>
                   </Link>
                 </div>

@@ -88,7 +88,7 @@ ${plan.professionalContacts.map((contact, i) => `${i + 1}. ${contact.name} (${co
 
 24/7 CRISIS RESOURCES:
 - National Suicide Prevention Lifeline: 988
-- Crisis Text Line: Text "HELLO" to 741741
+- Crisis Text Line: Text "HOME" to 741741
 - Veterans Crisis Line: 1-800-273-8255 (Press 1)
 
 ${'='.repeat(80)}
@@ -159,7 +159,7 @@ ${'='.repeat(80)}
           <div className="flex items-center justify-center gap-4 text-sm sm:text-base">
             <AlertTriangle className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
             <p className="font-medium">
-              <strong>In Crisis Now?</strong> Call 988 (Suicide & Crisis Lifeline) or Text "HELLO" to 741741
+              <strong>In Crisis Now?</strong> Call 988 (Suicide & Crisis Lifeline) or Text "HOME" to 741741
             </p>
           </div>
         </div>
@@ -489,7 +489,7 @@ ${'='.repeat(80)}
                 <p className="font-bold text-text-dark mb-2">24/7 Crisis Resources:</p>
                 <div className="space-y-1 text-sm text-text-dark">
                   <p><Phone className="w-4 h-4 inline mr-2" aria-hidden="true" /><strong>988</strong> - Suicide & Crisis Lifeline</p>
-                  <p><Phone className="w-4 h-4 inline mr-2" aria-hidden="true" />Text <strong>"HELLO"</strong> to <strong>741741</strong> - Crisis Text Line</p>
+                  <p><Phone className="w-4 h-4 inline mr-2" aria-hidden="true" />Text <strong>"HOME"</strong> to <strong>741741</strong> - Crisis Text Line</p>
                   <p><Phone className="w-4 h-4 inline mr-2" aria-hidden="true" /><strong>1-800-273-8255 (Press 1)</strong> - Veterans Crisis Line</p>
                 </div>
               </div>

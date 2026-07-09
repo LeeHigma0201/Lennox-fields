@@ -154,7 +154,6 @@ export const pricingQuickRef = [
   { service: 'Individual Therapy', price: '$150/session' },
   { service: 'Couples Therapy', price: '$200/session' },
   { service: 'Career Counseling', price: '$125/session' },
-  { service: 'Clinical Supervision', price: '$75/hour' },
 ]
 
 export const paymentMethods = [

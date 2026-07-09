@@ -1,5 +1,11 @@
 # Lennox Fields - Clinical Mental Health Services Website
 
+## Cortex Integration
+This project is tracked in Jason's knowledge graph. Before major changes:
+- `cortex_context("your task")` — returns cross-project context and patterns
+- `cortex_log("product-lennox-fields", "what you did")` — log findings for the next agent
+- Patterns from previous agents are in `~/cortex/notes/product-lennox-fields.md`
+
 ## Project Overview
 Marketing/informational website for **Lennox Fields Clinical Mental Health Services** (Tamara Walls, LPCA), built with Next.js 14, deployed on Vercel.
 
@@ -59,7 +65,7 @@ All page content is driven by config files in `/content/`:
 - Specializations: ADHD, Autism, CPTSD, Trauma
 - Focus: Neurodiversity-affirming care, primarily women
 - Location: Kentucky
-- Contact: tamara@lennoxfields.org, (502) 627-0781
+- Contact: tamara@lennoxfields.com, (502) 627-0781
 - Books: 3 children's mental health books on Amazon
 
 ## Commands

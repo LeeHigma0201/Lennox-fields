@@ -18,7 +18,7 @@ export const faqs = [
     questions: [
       {
         q: 'How do I schedule my first appointment?',
-        a: "You can schedule your free 15-minute consultation through our contact form or by emailing tamara@lennoxfields.org. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session. Please allow two business days for a response.",
+        a: "You can schedule your free 15-minute consultation through our contact form or by emailing tamara@lennoxfields.com. During the consultation, we'll discuss your needs and determine if we're a good fit before scheduling your first full session. Please allow two business days for a response.",
       },
       {
         q: 'What should I expect in my first session?',
@@ -35,11 +35,11 @@ export const faqs = [
     questions: [
       {
         q: 'Do you accept insurance?',
-        a: "I'm currently working on insurance credentialing. In the meantime, I provide superbills for out-of-network reimbursement. Many clients receive 50-80% reimbursement from their insurance companies. I can help you verify your out-of-network benefits.",
+        a: "I am not currently in-network with insurance. I provide a superbill you can submit to your insurance company for possible out-of-network reimbursement. Reimbursement varies by plan, so please check directly with your insurer about your out-of-network benefits.",
       },
       {
         q: 'What are your session rates?',
-        a: 'Individual therapy is $150 per session, couples therapy is $200 per session, career counseling is $125 per session, and clinical supervision is $75 per hour. I also offer sliding scale rates for qualified clients experiencing financial hardship.',
+        a: 'Individual therapy is $150 per session, couples therapy is $200 per session, and career counseling is $125 per session. I also offer sliding scale rates for qualified clients experiencing financial hardship.',
       },
       {
         q: 'What payment methods do you accept?',
@@ -102,15 +102,11 @@ export const faqs = [
       },
       {
         q: 'What therapy approaches do you use?',
-        a: "I primarily use Dialectical Behavior Therapy (DBT), Cognitive Behavioral Therapy (CBT), Acceptance and Commitment Therapy (ACT), and the Trauma-Conscious Model (TCM). I tailor my approach to each client's unique needs and preferences.",
+        a: "Treatment integrates Dialectical Behavior Therapy (DBT), Trauma-Focused Cognitive Behavioral Therapy (TF-CBT), Solution-Focused Brief Therapy (SFBT), Emotionally Focused Therapy (EFT), Existential Therapy, Psychoanalytic/Psychodynamic Therapy, Somatic-Informed Practice, and Internal Family Systems (IFS)-informed parts work, sequenced to the client's clinical presentation and goals.",
       },
       {
         q: 'Do you prescribe medication?',
         a: 'No, as a Licensed Professional Counselor Associate (LPCA), I cannot prescribe medication. However, I can coordinate care with your psychiatrist or primary care provider if medication is part of your treatment plan.',
-      },
-      {
-        q: 'Do you offer clinical supervision?',
-        a: 'Yes! I provide clinical supervision for associates and interns pursuing licensure in Kentucky. Supervision includes case consultation, skill development, and ethical guidance.',
       },
     ],
   },
@@ -119,11 +115,11 @@ export const faqs = [
     questions: [
       {
         q: 'What are your credentials?',
-        a: 'I am a Licensed Professional Counselor Associate (LPCA) in Kentucky with additional certifications in Dialectical Behavior Therapy (C-DBT) and Trauma-Conscious Model (TCM). I specialize in ADHD, autism, and complex PTSD.',
+        a: 'I am a Licensed Professional Counselor Associate (LPCA) in Kentucky. I hold C-DBT, an intensive post-graduate certification in traditional Dialectical Behavior Therapy (DBT). I specialize in ADHD, autism, and complex PTSD.',
       },
       {
         q: 'What does LPCA mean?',
-        a: "LPCA stands for Licensed Professional Counselor Associate. This means I'm a fully qualified licensed counselor working under clinical supervision as required by state boards. I provide the same quality care as fully licensed counselors (LPC).",
+        a: "LPCA stands for Licensed Professional Counselor Associate, a counselor licensed by the Kentucky Board of Licensed Professional Counselors who practices under board-approved clinical supervision while completing the requirements for full LPCC licensure. I practice under the clinical supervision of Regina Hancock, LPCC-S.",
       },
       {
         q: 'In which states are you licensed?',
@@ -136,7 +132,7 @@ export const faqs = [
     questions: [
       {
         q: "What if I'm in crisis?",
-        a: 'If you\'re experiencing a mental health emergency, please call 988 (Suicide & Crisis Lifeline), text "HELLO" to 741741 (Crisis Text Line), or go to your nearest emergency room. For non-emergency urgent matters between sessions, you can leave a voicemail and I\'ll return your call within one business day.',
+        a: 'If you\'re experiencing a mental health emergency, please call 988 (Suicide & Crisis Lifeline), text HOME to 741741 (Crisis Text Line), or go to your nearest emergency room. For non-emergency urgent matters between sessions, you can leave a voicemail and I\'ll return your call within one business day.',
       },
       {
         q: 'Do you offer emergency sessions?',
