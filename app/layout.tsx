@@ -1,42 +1,41 @@
 import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import { siteConfig } from '@/content/site-config'
 
+// The site is retired — every route is rewritten to the /unavailable holding
+// page by middleware.ts, so this shell renders nothing but that page. The
+// header, footer, analytics, and MedicalBusiness structured data have been
+// removed along with the marketing metadata.
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: siteConfig.businessFullName,
-  description: `Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma. ${siteConfig.owner.fullTitle} — individual, couples, and family counseling in Kentucky.`,
-  keywords: siteConfig.keywords,
-  authors: [{ name: siteConfig.owner.fullTitle }],
+  title: 'Lennox Fields',
+  description: 'This site is no longer available.',
   openGraph: {
-    title: siteConfig.businessFullName,
-    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky.`,
+    title: 'Lennox Fields',
+    description: 'This site is no longer available.',
     url: siteConfig.url,
     type: 'website',
     locale: 'en_US',
-    siteName: siteConfig.businessFullName,
+    siteName: 'Lennox Fields',
     images: [
       {
-        url: '/og-image.png?v=20260515',
+        url: '/og-image.png?v=20260806',
         width: 1200,
         height: 630,
-        alt: 'Lennox Fields Clinical Mental Health Services — Tamara Walls, LPCA. Neurodiversity-affirming therapy in Kentucky.',
+        alt: 'Lennox Fields',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.businessFullName,
-    description: `${siteConfig.description}. ${siteConfig.owner.fullTitle} — Neurodiversity-affirming therapy specializing in ADHD, autism, and trauma in Kentucky.`,
-    images: ['/og-image.png?v=20260515'],
+    title: 'Lennox Fields',
+    description: 'This site is no longer available.',
+    images: ['/og-image.png?v=20260806'],
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
 }
 
@@ -52,48 +51,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'MedicalBusiness',
-              name: siteConfig.businessFullName,
-              description: siteConfig.description,
-              url: siteConfig.url,
-              telephone: siteConfig.contact.phone,
-              areaServed: { '@type': 'State', name: 'Kentucky' },
-              founder: {
-                '@type': 'Person',
-                name: siteConfig.owner.name,
-                jobTitle: siteConfig.owner.role,
-              },
-              medicalSpecialty: ['Psychiatry', 'ClinicalPsychology'],
-              availableService: [
-                { '@type': 'MedicalTherapy', name: 'Individual Counseling' },
-                { '@type': 'MedicalTherapy', name: 'Couples Counseling' },
-                { '@type': 'MedicalTherapy', name: 'Family Counseling' },
-                { '@type': 'MedicalTherapy', name: 'Career Counseling' },
-              ],
-            }),
-          }}
-        />
       </head>
-      <body className="min-h-screen flex flex-col">
-        {/* Skip Navigation for Accessibility */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-sage focus:text-white focus:rounded-lg focus:shadow-lg"
-        >
-          Skip to main content
-        </a>
-        <Header />
-        <main id="main-content" className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <Analytics />
-      </body>
+      <body className="min-h-screen">{children}</body>
     </html>
   )
 }
