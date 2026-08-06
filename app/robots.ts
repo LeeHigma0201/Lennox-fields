@@ -1,12 +1,11 @@
 import { MetadataRoute } from 'next'
 
+// Site retired — nothing here should be crawled or indexed.
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/portal/', '/translator'],
+      disallow: '/',
     },
-    sitemap: 'https://lennoxfields.com/sitemap.xml',
   }
 }
